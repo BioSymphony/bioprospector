@@ -1,0 +1,6 @@
+control_id	step_id	control_type	query_or_dataset	expected_result	observed_result	status	blocks_promotion	notes
+DC-VAN-S002-UNRELATED	S002	unrelated_family	Q-VAN-S002-SEED_vs_unrelated_family	low_or_no_hit	not_run	planned	true	Required before promoting wide S002 candidates.
+DC-VAN-S002-SHUFFLED	S002	shuffled_sequence	Q-VAN-S002-SEED_shuffled	low_or_no_hit	not_run	planned	true	Blocks sequence-only overpromotion.
+DC-VAN-S003-NEGATIVE	S003	negative_taxon	Q-VAN-S003-SEED_vs_negative_taxon	low_or_no_hit	not_run	planned	true	Alternative route candidates need negative-control review.
+DC-VAN-S005-BLANK	S005	blank_search	dark_step_blank_or_unrelated_query	low_or_no_hit	not_run	planned	true	Dark-step search needs decoy sanity check.
+DC-VAN-S006-UNRELATED	S006	unrelated_family	Q-VAN-S006-SEED_vs_unrelated_family	low_or_no_hit	not_run	planned	true	UGT-like hits require specificity skepticism and decoy controls.

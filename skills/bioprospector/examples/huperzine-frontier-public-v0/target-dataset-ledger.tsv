@@ -1,0 +1,5 @@
+dataset_id	organism_id	dataset_type	dataset_label	source_pointer	materialized_status	checksum_or_version	target_evidence_role	license_boundary	notes
+DS001	ORG001	literature	huperzia_public_reference_context	LIT001	declared	review_before_execution	reference_context	open_summary_only	No raw sequence or full text stored.
+DS002	ORG002	literature	endophyte_comparator_context	LIT002	declared	review_before_execution	reference_context	open_summary_only	Comparator only; not target evidence.
+DS003	ORG003	annotation	host_to_be_selected_context	target-contract.json	declared	not_applicable	host_context	not_applicable	Execution target not selected.
+DS004	ORG004	reference_only	decoy_source_context	decoy-control-ledger.tsv	declared	not_applicable	negative_control	open_summary_only	Required before candidate promotion.

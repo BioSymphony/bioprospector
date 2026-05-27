@@ -1,0 +1,7 @@
+input_id	input_class	declared_in	expected_artifact	materialized_status	location_or_pointer	checksum_or_version	operator_required	missing_operator_item	notes
+IA001	manifest	campaign-manifest.json	campaign-manifest.json	materialized	campaign-manifest.json	git_tracked	false	none	Campaign manifest is present and must be read before asking operator questions.
+IA002	target_contract	campaign-manifest.json	target-contract.json	materialized	target-contract.json	git_tracked	false	none	Target contract is present.
+IA003	target_dataset	target-dataset-ledger.tsv	target evidence summaries	declared	remote_or_provider_summary_needed	review_before_run	false	none	Public demo declares the target-evidence gap without requiring raw data in repo.
+IA004	operator_intake	operator-intake-ledger.tsv	operator-intake-ledger.tsv	materialized	operator-intake-ledger.tsv	git_tracked	false	none	Intake assumptions and confirmation gates are present for the public demo.
+IA005	provenance	stage-contract-ledger.tsv;stage-progress-ledger.tsv	long-run stage contract and progress ledgers	materialized	stage-contract-ledger.tsv;stage-progress-ledger.tsv	git_tracked	false	none	Long-run stages must report progress; provider RUNNING status alone is not proof.
+IA006	provenance	provider-launch-preflight-ledger.tsv	provider launch preflight ledger	materialized	provider-launch-preflight-ledger.tsv	git_tracked	false	none	Launch blockers for image pull, registry auth, volume, payload, snapshot, and secrets are present.

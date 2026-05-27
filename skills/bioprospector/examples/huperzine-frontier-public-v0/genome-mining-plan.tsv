@@ -1,0 +1,3 @@
+search_id	target_taxa	database_or_source	query_family	anchor_gene	neighborhood_window	budget_usd	approval_status	notes
+GM001	public_lycophyte_proteomes_or_genomes	NCBI_Datasets_or_approved_external_path	CAO_DAO_and_tailoring_context	CAO_or_tailoring_seed_after_review	25kb	25.00	operator_review_required	Plan only; raw genomes and GFF files stay outside this repo.
+GM002	public_endophyte_comparator_context	NCBI_Datasets_or_approved_external_path	amine_oxidase_comparator	CAO_or_DAO_seed_after_review	25kb	25.00	operator_review_required	Comparator context only; cannot satisfy target-organism evidence.

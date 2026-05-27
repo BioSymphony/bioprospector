@@ -1,0 +1,5 @@
+route_id	route_status	intermediate_compatibility	cofactor_fit	host_precursor_fit	toxicity_risk	transport_or_protection_need	missing_steps	integration_verdict	notes
+R001	seed	unknown	unknown	unknown	medium	unknown	unknown	not_reviewed	Await enzyme casting.
+R002	seed	unknown	unknown	unknown	high	unknown	unknown	not_reviewed	Await route chemistry review.
+R003	seed	unknown	unknown	unknown	high	unknown	unknown	not_reviewed	Await host flux review.
+R004	seed	unknown	unknown	unknown	medium	likely	unknown	not_reviewed	Await UGT and product-handling review.

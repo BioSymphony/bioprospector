@@ -1,0 +1,4 @@
+organism_id	taxon_name	strain_or_accession	sample_id	role	evidence_type	data_status	source_pointer	license_boundary	notes
+ORG001	Callitropsis nootkatensis	public_seed	no_sample	source_organism	literature_seed	reference_only	literature_ledger	open_summary_only	Source organism for canonical valencene synthase style seeds; not target-host evidence.
+ORG002	Saccharomyces cerevisiae	review_before_run	no_sample	target_host	host_context	declared	target-contract.json	open_summary_only	Yeast is the intended host context; no production evidence is claimed.
+ORG003	mixed public source organisms	review_before_run	no_sample	reference_organism	homolog_context	reference_only	resource-ledger.tsv	open_summary_only	Reference organisms may supply homologs but cannot satisfy target evidence alone.

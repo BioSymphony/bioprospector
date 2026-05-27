@@ -1,0 +1,6 @@
+citation_id	source_type	identifier_or_url	claim_supported	evidence_class	license_boundary	used_in_claim_ids	notes
+LIT001	literature	PMID:28089246;DOI:10.1016/j.phytochem.2016.12.022	public LDC and CAO first-step context; not full pathway proof	literature	open_summary_only	C001;C002	PubMed seed citation for early Huperzia serrata LDC/CAO context; no sequence or full text copied.
+LIT002	literature	PMID:30671042;DOI:10.3389/fmicb.2018.03237	endophyte source-context separation and candidate-gene uncertainty	literature	open_summary_only	C003	Genomic endophyte study supports keeping plant and endophyte contexts separate.
+LIT003	literature	PMID:28744720;DOI:10.1007/s13659-017-0140-z	lycopodium alkaloid scaffold diversity context	literature	open_summary_only	C004	Used only to frame scaffold-family uncertainty and dark-step review.
+LIT004	literature	query_plan:lycopodium_alkaloid_PKSIII_condensation	PKS-III or condensation ambiguity	literature	open_summary_only	C004	Search plan placeholder; requires accession-backed curation before candidate promotion.
+LIT005	literature	query_plan:huperzine_A_final_tailoring	final-tailoring uncertainty	literature	open_summary_only	C002;C004	Keeps final HupA claims blocked.

@@ -1,0 +1,3 @@
+hit_id	search_id	accession_or_locus	organism	contig	coordinates_or_pointer	domain_call	neighborhood_support	claim_level	notes
+GH-VAN-001	GM-VAN-S005-DARK	provider_output_after_run:S005/genome-context.tsv#top-hit	pending_public_taxon	provider_pointer	provider_pointer	Pfam_after_run	pending	hypothesis	Placeholder joined pointer only; no genome coordinates copied yet.
+GH-VAN-002	GM-VAN-S006-UGT	provider_output_after_run:S006/genome-context.tsv#top-hit	pending_public_taxon	provider_pointer	provider_pointer	Pfam_after_run	pending	hypothesis	Neighborhood evidence is support only, not function proof.

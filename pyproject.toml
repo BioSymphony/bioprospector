@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biosymphony-bioprospector"
+version = "0.1.0"
+description = "An agentic harness for discovering biosynthetic pathways to target molecules: enzyme mining, pathway stitching, host-fit review, construct hypotheses, and compute-portable work graphs."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "BioSymphony" }]
+keywords = [
+  "bioprospecting",
+  "pathway-design",
+  "agentic-workflows",
+  "bioinformatics",
+  "planning",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/BioSymphony/biosymphony-bioprospector"
+Repository = "https://github.com/BioSymphony/biosymphony-bioprospector"
+Documentation = "https://github.com/BioSymphony/biosymphony-bioprospector/tree/main/docs"
+Issues = "https://github.com/BioSymphony/biosymphony-bioprospector/issues"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "build>=1.0",
+  "twine>=5.0",
+]
+release = [
+  "pytest>=8.0",
+  "build>=1.0",
+  "twine>=5.0",
+]
+
+[project.scripts]
+bioprospector = "biosymphony_bioprospector.cli:main"
+bioprospector-agent-brief = "biosymphony_bioprospector.cli:agent_brief"
+bioprospector-campaign-graph = "biosymphony_bioprospector.cli:campaign_graph"
+bioprospector-campaign-handoff = "biosymphony_bioprospector.cli:campaign_handoff"
+bioprospector-campaign-status = "biosymphony_bioprospector.cli:campaign_status"
+bioprospector-candidate-package = "biosymphony_bioprospector.cli:candidate_package"
+bioprospector-contract-self-check = "biosymphony_bioprospector.cli:contract_self_check"
+bioprospector-doctor = "biosymphony_bioprospector.cli:doctor"
+bioprospector-dossier-export = "biosymphony_bioprospector.cli:dossier_export"
+bioprospector-elasticblast-bundle = "biosymphony_bioprospector.cli:elasticblast_bundle"
+bioprospector-elasticblast-probe = "biosymphony_bioprospector.cli:elasticblast_probe"
+bioprospector-evidence-ingest = "biosymphony_bioprospector.cli:evidence_ingest"
+bioprospector-genecluster-atlas-contracts = "biosymphony_bioprospector.cli:genecluster_atlas_contracts"
+bioprospector-genecluster-atlas-normalizers = "biosymphony_bioprospector.cli:genecluster_atlas_normalizers"
+bioprospector-genecluster-atlas-plan = "biosymphony_bioprospector.cli:genecluster_atlas_plan"
+bioprospector-input-audit = "biosymphony_bioprospector.cli:input_audit"
+bioprospector-issue-dry-run = "biosymphony_bioprospector.cli:issue_dry_run"
+bioprospector-new-campaign = "biosymphony_bioprospector.cli:new_campaign"
+bioprospector-pareto-rank = "biosymphony_bioprospector.cli:pareto_rank"
+bioprospector-preflight = "biosymphony_bioprospector.cli:preflight"
+bioprospector-public-demo-smoke = "biosymphony_bioprospector.cli:public_demo_smoke"
+bioprospector-retrospective = "biosymphony_bioprospector.cli:retrospective"
+bioprospector-runpod-bundle = "biosymphony_bioprospector.cli:runpod_bundle"
+bioprospector-self-learning = "biosymphony_bioprospector.cli:self_learning"
+bioprospector-stage-contract = "biosymphony_bioprospector.cli:stage_contract"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q"

@@ -1,0 +1,25 @@
+{
+  "target_molecule": "vanillin",
+  "host": "Saccharomyces cerevisiae",
+  "campaign_goal": "Enumerate, compare, and rank heterologous routes for vanillin or protected vanillin-like product formation in yeast.",
+  "allowed_modes": [
+    "fed_substrate",
+    "de_novo",
+    "protected_product",
+    "alternative_route"
+  ],
+  "optimization_goals": [
+    "minimal_genes",
+    "highest_evidence",
+    "clearest_validation_handoff",
+    "best_host_fit",
+    "ambitious_de_novo",
+    "diversity_library"
+  ],
+  "hard_boundaries": [
+    "planning_only",
+    "no_private_sequences",
+    "no_claim_of_target_host_production_without_direct_validation",
+    "no_wet_lab_protocols"
+  ]
+}

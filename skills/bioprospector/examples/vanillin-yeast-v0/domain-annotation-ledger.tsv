@@ -1,0 +1,10 @@
+annotation_id	candidate_id	step_id	domain_source	domain_accession	domain_name	domain_start	domain_end	motif_or_active_site	confidence	notes
+DA-VAN-S001-FA	E-VAN-S001-FA-MODULE	S001	Pfam-A	review_before_run	feruloyl_activation_or_transforming_domain	0	0	active_site_review_needed	planned	Provider-side HMMER/Pfam map after search.
+DA-VAN-S002-CAN	E-VAN-S002-CANONICAL	S002	Pfam-A	review_before_run	aldehyde_forming_or_cleavage_domain	0	0	substrate_pocket_review_needed	planned	Domain map expected before candidate promotion.
+DA-VAN-S002-DIV	E-VAN-S002-DIVERSE	S002	Pfam-A	review_before_run	remote_aldehyde_or_cleavage_domain	0	0	motif_conservation_review_needed	planned	Remote candidates need stricter motif review.
+DA-VAN-S003-OX	E-VAN-S003-OXIDATIVE	S003	Pfam-A	review_before_run	oxidoreductase_or_isomerization_domain	0	0	cofactor_and_active_site_review_needed	planned	Map domain and cofactor risk compactly.
+DA-VAN-S003-DIV	E-VAN-S003-DIVERSE	S003	Pfam-A	review_before_run	remote_oxidation_domain	0	0	motif_conservation_review_needed	planned	Diversity bin must not outrank evidence without motif support.
+DA-VAN-S004-HOST	E-VAN-S004-HOST-FLUX	S004	not_required	not_required	host_flux_context	0	0	not_required	unknown	No domain map expected for host model context row.
+DA-VAN-S005-DARK	E-VAN-S005-DARK	S005	Pfam-A	review_before_run	dark_step_candidate_domain	0	0	unknown_motif_review_needed	planned	Used to split dark step into enzyme-family hypotheses.
+DA-VAN-S006-UGT	E-VAN-S006-UGT	S006	Pfam-A	review_before_run	UDP_glycosyltransferase_domain	0	0	PSPG_or_equivalent_motif_review_needed	planned	Specificity skepticism remains after domain match.
+DA-VAN-S006-WEIRD	E-VAN-S006-WEIRD	S006	Pfam-A	review_before_run	remote_glycosyltransferase_domain	0	0	remote_motif_review_needed	planned	Weird bin tracked separately from UGT canonical hits.

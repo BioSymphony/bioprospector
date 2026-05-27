@@ -1,0 +1,6 @@
+route_id	route_name	target_product	host	feedstock_mode	route_class	evidence_level	route_status	primary_risk	notes
+R001	public-literature-pathway-map	huperzine A	host_to_be_selected	public_reference_only	pathway_big_bang	hypothesis	seed	unresolved_pathway_order	Map public route hypotheses and dark steps; no execution or production claim.
+R002	lycophyte-enzyme-frontier	huperzine A	host_to_be_selected	external_public_accessions_after_review	enzyme_frontier	hypothesis	seed	candidate_family_inflation	Search-planning lane for lycophyte enzyme families; raw sequences stay external.
+R003	endophyte-comparator-frontier	huperzine A	host_to_be_selected	public_literature_context	endophyte_comparator	hypothesis	seed	source_confounding	Keep endophyte evidence separate from lycophyte evidence before any candidate promotion.
+R004	host-fit-after-evidence	huperzine A	host_to_be_selected	no_feedstock_selected	host_fit_review	hypothesis	seed	toxicity_and_measurement	Host review is downstream of evidence joins; it does not imply construct design.
+R005	claim-audit-no-complete-route	huperzine A	host_to_be_selected	not_applicable	red_team	hypothesis	seed	overclaim_risk	Deliberately blocks complete-route claims until target evidence, controls, and self-check pass.

@@ -1,0 +1,5 @@
+host	route_id	step_id	burden	precursor_fit	compartment_fit	toxicity	analytics_fit	verdict	notes
+Saccharomyces_cerevisiae	R004	S009	unknown	unknown	unknown	medium	good	review	Possible future planning host; no expression or production claim.
+Nicotiana_benthamiana	R004	S009	unknown	unknown	plant_context_possible	medium	good	review	Possible transient-expression review context; not an execution path here.
+cell_free_or_in_vitro_context	R004	S009	medium	not_applicable	not_applicable	low	good	review	Possible evidence-discrimination context; no protocol details.
+host_to_be_selected	R005	S010	unknown	unknown	unknown	unknown	unknown	blocked	Host fit cannot promote the route before evidence joins.

@@ -1,0 +1,5 @@
+family_id	step_id	seed_accessions	family_scope	domain_model	motifs_required	raw_hits	clusters	representatives	known_activity_refs	risk	next_lane	notes
+FAM-VAN-S002-ALD	S002	review_before_run	aldehyde_forming_or_cleavage	Pfam_review_before_run	active_site_or_substrate_motif_review	0	0	0	LS-VAN-S002	high	sequence_search	RunPod search planned; no hits yet.
+FAM-VAN-S003-OX	S003	review_before_run	oxidoreductase_or_isomerization	Pfam_review_before_run	cofactor_and_active_site_review	0	0	0	LS-VAN-S003	high	sequence_search	Alternative route family needs side-product skepticism.
+FAM-VAN-S005-DARK	S005	review_before_run	dark_step_plausible_families	Pfam_review_before_run	chemistry_inferred_motifs	0	0	0	LS-VAN-S005	high	dark_step_resolver	Split if chemistry yields several enzyme classes.
+FAM-VAN-S006-UGT	S006	review_before_run	UDP_glycosyltransferase	Pfam_review_before_run	PSPG_or_equivalent_motif_review	0	0	0	LS-VAN-S006	high	sequence_search	Specificity evidence required after family hit compression.

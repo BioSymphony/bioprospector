@@ -1,0 +1,5 @@
+organism_id	taxon_name	strain_or_accession	sample_id	role	evidence_type	data_status	source_pointer	license_boundary	notes
+ORG001	Huperzia_serrata	public_reference	no_sample	source_organism	literature_context	reference_only	LIT001	open_summary_only	Lycophyte public context only; no raw sequence in repo.
+ORG002	endophyte_comparator_public_context	public_reference	no_sample	reference_organism	literature_context	reference_only	LIT002	open_summary_only	Comparator lane for source-context separation.
+ORG003	host_to_be_selected	not_applicable	no_sample	target_host	planning_context	declared	target-contract.json	not_applicable	No host execution or validation.
+ORG004	negative_control_taxa	public_reference	no_sample	decoy	planning_context	declared	decoy-control-ledger.tsv	open_summary_only	Negative-control role only.

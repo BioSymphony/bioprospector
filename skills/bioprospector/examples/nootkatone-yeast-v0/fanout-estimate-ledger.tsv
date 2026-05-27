@@ -1,0 +1,9 @@
+estimate_id	stage_id	lane_id	step_id	input_unit	input_count	expansion_factor	estimated_items	estimated_runtime_minutes	estimated_cost_usd	decision	status	notes
+FE-NOOT-001	STG004	LANE-NOOT-001	S002	query_family	2	400	800	60	4.00	operator_review_required	reviewed	Terpene synthase diversity should start as capped scout search.
+FE-NOOT-002	STG004	LANE-NOOT-001	S003	query_family	3	9000	27000	360	18.00	shard	reviewed	P450/oxidase frontier search must split by family and motif before evidence review.
+FE-NOOT-003	STG004	LANE-NOOT-001	S004	query_family	2	1500	3000	120	7.00	operator_review_required	reviewed	SDR/dehydrogenase support lane needs capped scout search and route-stitching review.
+FE-NOOT-004	STG004	LANE-NOOT-001	S007	query_family	4	6000	24000	300	15.00	shard	reviewed	Alternate valencene synthase lane should split by clade/product stereochemistry.
+FE-NOOT-005	STG004	LANE-NOOT-001	S006	query_family	2	1200	2400	90	6.00	operator_review_required	reviewed	Fed-substrate bioconversion route should separate control/native proof from discovery candidates.
+FE-NOOT-006	STG005	LANE-NOOT-002	S008	candidate_hit	2000	15	30000	420	20.00	annotate_once_join_many	reviewed	Domain/context annotation should scan candidate proteome once and join many rather than repeat per window.
+FE-NOOT-007	STG005	LANE-NOOT-002	S009	candidate_construct_risk	500	8	4000	120	8.00	operator_review_required	reviewed	P450 localization/fusion risk review should cap topology and fusion candidates before deeper modeling.
+FE-NOOT-008	STG004	LANE-NOOT-001	S011	route_hypothesis	3	12000	36000	480	22.00	operator_review_required	reviewed	Two-step oxidation ambiguity needs operator review before broad search expansion.

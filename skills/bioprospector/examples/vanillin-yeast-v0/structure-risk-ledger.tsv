@@ -1,0 +1,5 @@
+risk_id	candidate_id	structure_source	confidence	active_site_residues	cofactor_or_membrane_risk	substrate_access_risk	oligomerization_risk	claim_boundary	verdict	notes
+SR-VAN-S002-CAN	E-VAN-S002-CANONICAL	planned_Foldseek_or_AlphaFoldDB_review	unknown	review_needed	unknown	unknown	unknown	structure_risk_is_not_activity_validation	review	Check monomer/dimer or active-site issues after shortlist only.
+SR-VAN-S003-OX	E-VAN-S003-OXIDATIVE	planned_Foldseek_or_AlphaFoldDB_review	unknown	review_needed	cofactor_unknown	unknown	unknown	structure_risk_is_not_activity_validation	review	Cofactor and substrate-access risks matter for host-fit ranking.
+SR-VAN-S005-DARK	E-VAN-S005-DARK	planned_after_candidate_materialization	unknown	review_needed	unknown	unknown	unknown	structure_risk_is_not_activity_validation	review	Do not run bulk structure prediction for thousands of hits.
+SR-VAN-S006-UGT	E-VAN-S006-UGT	planned_Foldseek_or_AlphaFoldDB_review	unknown	review_needed	unknown	substrate_access_review_needed	oligomerization_review_needed	structure_risk_is_not_activity_validation	review	Track specificity and oligomerization concerns; no raw structures in repo.

@@ -1,0 +1,3 @@
+guard_id	stage_id	artifact_id	input_hash	code_hash	output_hash	done_marker	validation_status	stale_check_status	notes
+SOG-VAN-001	STG-VAN-002	EX-VAN-001	not_required_for_planning	not_required_for_planning	not_materialized	runpod_bundle_done	not_required	not_required	Readiness bundle is planned/dry-run; not live evidence.
+SOG-VAN-002	STG-VAN-004	EX-VAN-004	pending_live_input_hash	pending_live_code_hash	pending_live_output_hash	sequence_search_done	planned	unknown	Future live candidate package must bind done marker to input/code/output hashes before resume or closeout.

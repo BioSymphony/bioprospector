@@ -1,0 +1,43 @@
+{
+  "run_manifest_id": "runpod-readiness-nootkatone-yeast-v0",
+  "campaign_id": "pathway-big-bang-nootkatone-yeast-v0",
+  "status": "planning_only",
+  "provider_class": "runpod_manual_pod",
+  "launch_allowed": false,
+  "runpod_api_calls": false,
+  "network_volume_mount": "/workspace",
+  "remote_workdir": "/workspace/bioprospector/runs/pathway-big-bang-nootkatone-yeast-v0",
+  "scout_budget_usd": 25,
+  "image_pull_contract": {
+    "image": "TODO:digest-pinned-bioprospector-image",
+    "digest_pinned": false,
+    "image_access": "unknown",
+    "registry_auth_verified": false,
+    "launch_blockers": [
+      "image_not_digest_pinned",
+      "image_access_unknown"
+    ]
+  },
+  "provider_launch_preflight": "provider-launch-preflight-ledger.tsv",
+  "stage_contracts": "stage-contract-ledger.tsv",
+  "stage_progress": "stage-progress-ledger.tsv",
+  "data_policy": {
+    "public_open_first": true,
+    "private_sequences_allowed": false,
+    "large_database_downloads_allowed": false,
+    "copy_back_policy": "compact_summaries_only"
+  },
+  "planned_lanes": [
+    "Swiss-Prot and curated seed search",
+    "UniRef50 or selected proteome DIAMOND/MMseqs2 search",
+    "Pfam/HMMER domain review",
+    "candidate compression and scoring",
+    "AWS ElasticBLAST escalation only after operator approval"
+  ],
+  "external_paths": {
+    "db_cache": "/workspace/bioprospector/db",
+    "work": "/workspace/bioprospector/runs/pathway-big-bang-nootkatone-yeast-v0/work",
+    "outputs": "/workspace/bioprospector/runs/pathway-big-bang-nootkatone-yeast-v0/outputs"
+  },
+  "claim_boundary": "No RunPod execution, downloads, searches, or biological validation were performed when creating this manifest."
+}

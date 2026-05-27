@@ -1,0 +1,2 @@
+hit_id	search_id	accession_or_locus	organism	contig	coordinates_or_pointer	domain_call	neighborhood_support	claim_level	notes
+GH001	GM001	planned_after_operator_review	mixed_public_taxa	external_pointer_required	external_secure_or_accession_pointer	P450_domain	pending	hypothesis	Placeholder row records output shape only; no genome mining has run.

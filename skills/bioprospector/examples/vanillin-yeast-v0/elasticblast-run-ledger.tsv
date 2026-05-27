@@ -1,0 +1,4 @@
+run_id	search_id	status	submitted_at	completed_at	cloud_provider	region	result_uri	cleanup_status	estimated_cost_usd	output_summary	notes
+EBRUN-VAN-S002	EB-VAN-S002	planned	not_submitted	not_completed	aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-vanillin-yeast-v0/S002	not_started	0.00	not_run	No AWS calls made.
+EBRUN-VAN-S005	EB-VAN-S005	planned	not_submitted	not_completed	aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-vanillin-yeast-v0/S005	not_started	0.00	not_run	No AWS calls made.
+EBRUN-VAN-S006	EB-VAN-S006	planned	not_submitted	not_completed	aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-vanillin-yeast-v0/S006	not_started	0.00	not_run	No AWS calls made.

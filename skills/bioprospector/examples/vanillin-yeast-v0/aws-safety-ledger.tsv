@@ -1,0 +1,6 @@
+control_id	control_type	control_name	required_status	verification_mode	verification_command	blocking_before_submit	last_verified	owner	notes
+AWS-VAN-001	budget	scout budget and billing alarm	required	operator_review	no_repo_command	true	not_verified	operator	Budget and billing alarm must be handled outside repo before submit.
+AWS-VAN-002	quota	ElasticBLAST quota and region	required	operator_review	no_repo_command	true	not_verified	operator	Use AWS account controls outside repo.
+AWS-VAN-003	s3	S3 bucket lifecycle and cleanup	required	operator_review	no_repo_command	true	not_verified	operator	No bucket creation in this scaffold.
+AWS-VAN-004	credentials	no AWS keys in repo or Linear	required	secret_scan	manual_secret_scan	true	not_verified	operator	Credentials must never enter tracked files or Linear.
+AWS-VAN-005	query_data	query upload rights and sensitivity	required	operator_review	no_repo_command	true	not_verified	operator	Only public approved query sequences can be uploaded.

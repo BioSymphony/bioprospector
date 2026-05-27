@@ -1,0 +1,2 @@
+summary_id	run_id	stage_id	lane_id	summary_pointer	written_at	status	completed_items	failed_items	deferred_items	claim_level	resume_pointer	notes
+PS-NOOT-001	NOOT-DEMO	STG004	LANE-NOOT-001	summaries/nootkatone-planning-partial-summary.json	2026-04-30T00:00:00Z	written	1	0	1	hypothesis	resume from remote workdir checkpoint after live execution is approved	Public planning demo records skipped execution as partial, not as biological search success.

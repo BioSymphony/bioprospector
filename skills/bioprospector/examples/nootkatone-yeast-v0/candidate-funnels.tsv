@@ -1,0 +1,13 @@
+step_id	raw_hits	quality_filtered	domain_valid	clustered_representatives	evidence_reviewed	shortlisted	final_picks	funnel_status	notes
+S001	0	0	0	0	0	0	0	not_started	Host flux context; candidate counts may not apply.
+S002	0	0	0	0	0	0	0	not_started	Valencene synthase diversity lane.
+S003	0	0	0	0	0	0	0	not_started	P450 frontier lane.
+S004	0	0	0	0	0	0	0	not_started	SDR/dehydrogenase lane.
+S005	0	0	0	0	0	0	0	not_started	CPR/redox partner review.
+S006	0	0	0	0	0	0	0	not_started	Fed-substrate bioconversion lane.
+S007	0	0	0	0	0	0	0	not_started	Alternate terpene synthase frontier.
+S008	0	0	0	0	0	0	0	not_started	Alternate P450/oxidase frontier.
+S009	0	0	0	0	0	0	0	not_started	Construct design and localization lane.
+S010	0	0	0	0	0	0	0	not_started	Product handling lane.
+S011	0	0	0	0	0	0	0	not_started	Two-step route discovery lane.
+S012	0	0	0	0	0	0	0	not_started	Red-team module.

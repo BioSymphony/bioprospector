@@ -1,0 +1,4 @@
+query_id	step_id	query_type	query_label	source_organism	source_pointer	materialized_status	checksum_or_version	license_boundary	notes
+Q001	S002	protein	CnVS-like valencene synthase seed	Callitropsis nootkatensis	public_literature_seed_review_before_run	declared	review_before_run	accession_summary_only	Seed query must be materialized provider-side before search.
+Q002	S003	protein	CYP706M1/HPO-like valencene oxidase seeds	public plant sources	public_literature_seed_review_before_run	declared	review_before_run	accession_summary_only	P450 query set is declared but not downloaded in the repo.
+Q003	S004	domain_model	SDR or dehydrogenase family model	mixed public sources	Pfam_or_HMM_review_before_run	declared	review_before_run	domain_summary_only	Domain query supports exploration only, not activity claims.

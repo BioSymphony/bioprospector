@@ -1,0 +1,7 @@
+step_id	route_id	step_order	transformation	substrate	product	enzyme_role	evidence_need	candidate_search_width	required_output	notes
+S001	R001	1	activate_or_transform_ferulic_acid	ferulic_acid	vanillin_precursor	feruloyl_transforming_module	literature_and_accession	medium	enzyme_draft_board	Represent as module until exact route chemistry is frozen.
+S002	R001	2	form_vanillin_aldehyde	vanillin_precursor	vanillin	aldehyde_forming_or_cleavage_module	substrate_and_route_stitching	wide	route_stitching_scorecard	High risk for side products.
+S003	R002	1	convert_eugenol_or_isoeugenol	eugenol_or_isoeugenol	vanillin_precursor	oxidation_or_isomerization_module	literature_and_substrate	wide	enzyme_draft_board	Alternative route; explicit toxicity review required.
+S004	R003	1	increase_aromatic_precursor_flux	central_carbon	aromatic_precursor	host_flux_module	host_fit	medium	host_fit_scorecard	Host-native flux issue, not just heterologous enzyme mining.
+S005	R003	2	convert_aromatic_precursor_to_vanillin_precursor	aromatic_precursor	vanillin_precursor	mixed_enzyme_module	route_and_step_discovery	frontier	unknown_step_ledger	May split into multiple child steps after route freeze.
+S006	R004	1	protect_vanillin_or_intermediate	vanillin_or_intermediate	glucosylated_product	glycosyltransferase	substrate_specificity	frontier	enzyme_draft_board	Many UGT-like candidates; needs strong specificity skepticism.

@@ -1,0 +1,6 @@
+run_id	issue_id	lane	expected_artifact	heartbeat_status	blocker	next_review_at	owner	notes
+MON-VAN-001	VANILLIN-input-audit-00-known-inputs	input_audit	input-audit-ledger.tsv	planned	target_contract_review	manual_review	operator	Read before asking operator questions.
+MON-VAN-002	VANILLIN-runpod-00-campaign-prep	runpod_prep	provider-launch-preflight-ledger.tsv	planned	image_volume_bundle_review	manual_review	operator	No pod launch until blocking preflight rows pass.
+MON-VAN-003	VANILLIN-sequence-search-step-s002-aldehyde-forming-or-cleavage-module	sequence_search	sequence-search-plan-ledger.tsv	planned	search_contract_review	manual_review	operator	Wide BLAST/DIAMOND/MMseqs contract before execution.
+MON-VAN-004	VANILLIN-candidate-package-80-graph-and-dossier	candidate_package	candidate-graph-ledger.tsv	planned	candidate_package_not_materialized	manual_review	operator	Graph and package are planned outputs.
+MON-VAN-005	VANILLIN-contract-self-check-99-final-join	self_check	contract_self_check.json	planned	real_execution_not_performed	manual_review	operator	Strict live closeout should fail until real evidence exists.

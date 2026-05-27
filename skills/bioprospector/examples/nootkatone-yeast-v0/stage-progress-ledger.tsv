@@ -1,0 +1,4 @@
+event_id	stage_id	event_status	timestamp	artifact_pointer	heartbeat_age_minutes	fallback_from	fallback_to	degraded_status	notes
+SP001	STG001	completed	2026-04-30T00:00:00Z	preflight_pass_report	0			none	Public demo preflight completed; no biological execution performed.
+SP002	STG002	started	2026-04-30T00:00:00Z	.runtime/runpod-readiness/nootkatone-yeast-v0	0			none	RunPod readiness bundle path is planned/review-only.
+SP003	STG004	skipped	2026-04-30T00:00:00Z	not_run	0			partial	Execution intentionally skipped for public planning demo; strict live closeout must fail.

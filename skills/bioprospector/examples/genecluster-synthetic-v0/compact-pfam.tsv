@@ -1,0 +1,11 @@
+protein_id	pfam_name	confidence	tool_version	license
+protein_alpha	oxidoreductase-like domain	0.77	fixture	summary-fixture
+protein_beta	acyltransferase-like domain	0.73	fixture	summary-fixture
+protein_gamma	terpene synthase-like domain	0.85	fixture	summary-fixture
+protein_delta	cytochrome P450-like domain	0.69	fixture	summary-fixture
+protein_epsilon	PLP-binding-like domain	0.78	fixture	summary-fixture
+protein_zeta	methyltransferase-like domain	0.66	fixture	summary-fixture
+protein_eta	ketosynthase-like domain	0.91	fixture	summary-fixture
+protein_theta	acyl carrier-like domain	0.83	fixture	summary-fixture
+protein_iota	ketoreductase-like domain	0.74	fixture	summary-fixture
+protein_kappa	domain of unknown function	0.31	fixture	summary-fixture

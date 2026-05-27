@@ -1,0 +1,3 @@
+hypothesis_id	parent_step_id	route_id	proposed_gene_or_module	enzyme_class_or_role	hypothesis_type	evidence_for	evidence_against	claim_level	next_discriminating_step	status	notes
+UGH001	S003	R002	valencene_oxidase_candidate_family	P450	single_gene	domain_and_literature_seed	overoxidation_and_side_product_risk	hypothesis	enzyme_family_sweep	open	Preserve noncanonical P450s separately from canonical seeds.
+UGH002	S011	R004	P450_plus_SDR_module	P450_plus_SDR	multi_gene_module	route_inference_support	no_direct_pairing_evidence	hypothesis	assay_handoff_readout	review	Do not collapse two transformations into one candidate row.

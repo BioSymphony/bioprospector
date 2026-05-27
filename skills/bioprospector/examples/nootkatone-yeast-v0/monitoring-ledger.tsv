@@ -1,0 +1,3 @@
+run_id	issue_id	lane	expected_artifact	heartbeat_status	blocker	next_review_at	owner	notes
+MON001	NOOTKATONE-literature-00-evidence-ledger	literature	literature-ledger.tsv	planned	target_contract_review	manual_review	operator	No worker dispatch has started.
+MON002	NOOTKATONE-ambiguity-u001-s003	ambiguity	unknown-gene-hypothesis-ledger.tsv	planned	dark_step_review	manual_review	operator	Use as checkpoint before widening P450 searches.

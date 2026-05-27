@@ -1,0 +1,5 @@
+host	route_id	step_id	burden	precursor_fit	compartment_fit	toxicity	analytics_fit	verdict	notes
+Saccharomyces cerevisiae	R001	S001	medium	fed_substrate_good	cytosol_or_peroxisome_unknown	medium	good	review	Clear validation-handoff route but aldehyde toxicity and side products remain.
+Saccharomyces cerevisiae	R002	S003	medium	fed_substrate_possible	unknown	high	good	risky	Eugenol/isoeugenol route needs toxicity and analytics review.
+Saccharomyces cerevisiae	R003	S004	high	precursor_flux_bottleneck	host_native_flux	high	good	review	De novo route is ambitious and likely burdened.
+Saccharomyces cerevisiae	R004	S006	medium	product_handling_possible	compartment_unknown	medium	good	review	Protected product route may help toxicity but specificity remains open.

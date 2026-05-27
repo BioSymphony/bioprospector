@@ -1,0 +1,3 @@
+hypothesis_id	parent_hypothesis_id	route_id	evidence_sources	inference_method	assumption	counterevidence	claim_level	decision	notes
+PI001		R004	unknown-step-ledger;route-stitching-scorecard	chemistry_decomposition	Valencene oxidation may split into hydroxylation plus dehydrogenation.	Some P450s may perform direct oxidation to nootkatone.	hypothesis	open	Carry both one-enzyme and two-step hypotheses until candidate evidence separates them.
+PI002	PI001	R005	enzyme-draft-board;host-fit-notes	host_fit_reasoning	P450 expression and CPR pairing can dominate route feasibility in yeast.	Host-native or plant CPR partners may rescue some candidates.	hypothesis	needs_evidence	Use host comparison and structure-risk lanes before route promotion.

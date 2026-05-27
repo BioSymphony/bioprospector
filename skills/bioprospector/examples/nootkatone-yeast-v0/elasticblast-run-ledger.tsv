@@ -1,0 +1,9 @@
+run_id	search_id	status	submitted_at	completed_at	cloud_provider	region	result_uri	cleanup_status	estimated_cost_usd	output_summary	notes
+RUN-ELB-S002	ELB-S002	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S002-nr	not_started	0.00		No AWS job has been submitted.
+RUN-ELB-S003	ELB-S003	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S003-nr	not_started	0.00		No AWS job has been submitted.
+RUN-ELB-S004	ELB-S004	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S004-nr	not_started	0.00		No AWS job has been submitted.
+RUN-ELB-S006	ELB-S006	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S006-nr	not_started	0.00		No AWS job has been submitted.
+RUN-ELB-S007	ELB-S007	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S007-nr	not_started	0.00		No AWS job has been submitted.
+RUN-ELB-S008	ELB-S008	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S008-nr	not_started	0.00		No AWS job has been submitted.
+RUN-ELB-S009	ELB-S009	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S009-nr	not_started	0.00		No AWS job has been submitted.
+RUN-ELB-S011	ELB-S011	planned			aws	us-east-1	s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast/results/pathway-big-bang-nootkatone-yeast-v0/S011-nr	not_started	0.00		No AWS job has been submitted.

@@ -1,0 +1,5 @@
+design_id	route_id	candidate_ids	measurable_product	assay_readout	controls_needed	risk	non_protocol_boundary	claim_boundary	notes
+AH-VAN-R001	R001	E-VAN-S001-FA-MODULE;E-VAN-S002-CANONICAL	vanillin	LCMS_or_GCMS_readout	negative_host_control;feedstock_control	side_products	true	non_protocol_planning_only	Planning handoff only; no construct or wet-lab procedure.
+AH-VAN-R002	R002	E-VAN-S003-OXIDATIVE	vanillin_or_precursor	LCMS_or_GCMS_readout	feedstock_toxicity_control;negative_control	toxicity	true	non_protocol_planning_only	Alternative route validation priority after candidate review.
+AH-VAN-R003	R003	E-VAN-S004-HOST-FLUX;E-VAN-S005-DARK	vanillin_precursor	LCMS_or_GCMS_readout	host_background_control;pathway_partial_control	dark_step_uncertainty	true	non_protocol_planning_only	Cheapest discriminating step should resolve dark route before large search.
+AH-VAN-R004	R004	E-VAN-S006-UGT	glucosylated_product	LCMS_or_GCMS_readout	substrate_specificity_control;sugar_donor_control	specificity	true	non_protocol_planning_only	Specificity must be demonstrated elsewhere before stronger claims.

@@ -1,0 +1,4 @@
+design_id	route_id	candidate_ids	measurable_product	assay_readout	controls_needed	risk	non_protocol_boundary	claim_boundary	notes
+AH001	R001	E001;E002	intermediate_presence_or_absence	non_protocol_analytics_readiness	source_and_negative_controls	intermediate_identity_uncertain	true	non_protocol_planning_only	Records expected evidence type only; no conditions, timing, or procedure.
+AH002	R002	E003;E004	candidate_family_effect	evidence_summary_join	decoy_controls_and_empty_claim_review	false_positive_family_hits	true	non_protocol_planning_only	Useful handoff shape for future reviewers.
+AH003	R005	E005	huperzine_A_claim_boundary	claim_audit_review	target_evidence_and_decoy_controls	false_complete_route_claim	true	non_protocol_planning_only	Blocks product claims until evidence is joined.

@@ -1,0 +1,6 @@
+consensus_id	cluster_id	verdict	caller_count	agreeing_callers	disagreeing_callers	disagreement_status	claim_level	caller_versions	caller_licenses
+CONS-GC-FIX-001	GC-FIX-001	supported	2	annotation_direct,cblaster		none	L4_consensus_supported	annotation_direct=biosymphony-fixture;cblaster=fixture	cblaster=summary-fixture;annotation_direct=summary-fixture
+CONS-GC-FIX-002	GC-FIX-002	weak_support	2	annotation_direct,antiSMASH	annotation_direct,antiSMASH	present	L2_coordinate_context_ready	annotation_direct=biosymphony-fixture;antiSMASH=fixture	antiSMASH=summary-fixture;annotation_direct=summary-fixture
+CONS-GC-FIX-003	GC-FIX-003	candidate	1	annotation_direct		insufficient_callers	L3_annotation_neighborhood_ready	annotation_direct=biosymphony-fixture	annotation_direct=summary-fixture
+CONS-GC-FIX-004	GC-FIX-004	supported	3	annotation_direct,cblaster,antiSMASH		none	L5_claim_audited_dossier_ready	annotation_direct=biosymphony-fixture;cblaster=fixture;antiSMASH=fixture	antiSMASH=summary-fixture;cblaster=summary-fixture;annotation_direct=summary-fixture
+CONS-GC-FIX-005	GC-FIX-005	weak_support	1	annotation_direct		insufficient_callers	L2_coordinate_context_ready	annotation_direct=biosymphony-fixture	annotation_direct=summary-fixture

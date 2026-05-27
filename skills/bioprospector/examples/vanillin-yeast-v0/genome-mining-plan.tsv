@@ -1,0 +1,3 @@
+search_id	target_taxa	database_or_source	query_family	anchor_gene	neighborhood_window	budget_usd	approval_status	notes
+GM-VAN-S005-DARK	public aromatic-specialized taxa	selected public genomes after review	dark_step_candidate_families	E-VAN-S005-DARK	25kb	25.00	operator_review_required	Optional genome-context lane if dark-step homolog search is ambiguous.
+GM-VAN-S006-UGT	public plant glycosyltransferase-rich taxa	selected public genomes after review	UGT_like_candidates	E-VAN-S006-UGT	25kb	25.00	operator_review_required	Optional context lane; raw GFF/FASTA stays provider-side.

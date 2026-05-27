@@ -1,0 +1,8 @@
+selection_id	step_id	candidate_id	diversity_axis	cluster_or_clade	novelty_level	host_fit_priority	selection_status	rationale	notes
+DIV-VAN-S002-CAN	S002	E-VAN-S002-CANONICAL	evidence_anchor	canonical_or_characterized_seed	canonical	high	planned	Keeps a conservative evidence anchor for fast validation.	Not a production claim.
+DIV-VAN-S002-DIV	S002	E-VAN-S002-DIVERSE	clade_spread	remote_cluster_after_mmseqs	diverse_homolog	medium	planned	Forces non-obvious spread beyond top similarity hits.	Requires motif and domain support.
+DIV-VAN-S003-OX	S003	E-VAN-S003-OXIDATIVE	route_variant	oxidative_route_seed	close_homolog	medium	planned	Alternative route representative with route-specific risks.	Toxicity and side products remain high risk.
+DIV-VAN-S003-DIV	S003	E-VAN-S003-DIVERSE	clade_spread	remote_oxidoreductase_cluster	remote_homolog	low	planned	Novelty library candidate class.	Preserve separately from canonical hits.
+DIV-VAN-S005-DARK	S005	E-VAN-S005-DARK	unknown_step	chemistry_inferred_dark_cluster	weird_or_novel	medium	planned	Preserves creative unknown-step hypotheses.	May become multi-gene module after search.
+DIV-VAN-S006-UGT	S006	E-VAN-S006-UGT	specificity_anchor	plant_UGT_like_cluster	close_homolog	medium	planned	Specificity route anchor for protected product concept.	Needs substrate evidence.
+DIV-VAN-S006-WEIRD	S006	E-VAN-S006-WEIRD	remote_specificity	remote_glycosyltransferase_cluster	weird_or_novel	low	parked	Novelty spread candidate class.	Do not promote without strong specificity evidence.

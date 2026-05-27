@@ -1,0 +1,7 @@
+framework_id	framework_class	use_case	provider_classes	entrypoint_or_template	provenance_mode	resume_supported	status	notes
+WF001	shell_script	readiness_and_toolcheck	local_lite;runpod_manual_pod;ssh_hpc	setup-runpod-readiness.sh	command_log_and_execution_artifact_ledger	false	approved	Good for smoke checks and operator-readable setup; not enough for full live campaign.
+WF002	python_cli	ledger_validation_and_self_checks	all_providers	skills/bioprospector/scripts/*.py	json_summary_and_tsv_ledgers	false	approved	Core control-plane scripts should work across providers.
+WF003	nextflow	resumable_live_search	runpod_manual_pod;ssh_hpc;cloud_vm;neocloud_vm	workflows/bioprospector/main.nf	nf-prov_or_workflow_run_rocrate	true	planned	Preferred future live-run framework when workflow graph stabilizes.
+WF004	snakemake	resumable_live_search	runpod_manual_pod;ssh_hpc;cloud_vm;neocloud_vm	workflows/bioprospector/Snakefile	snakemake_report_and_execution_artifact_ledger	true	planned	Equivalent acceptable live-run framework if easier for a provider.
+WF005	cwl	portable_workflow_contract	ssh_hpc;managed_workflow	workflows/bioprospector/workflow.cwl	workflow_run_rocrate	true	deferred	Compatible only if wrapper emits BioProspector ledgers and self-check artifacts.
+WF006	wdl	cloud_workflow_contract	cloud_vm;managed_workflow	workflows/bioprospector/workflow.wdl	workflow_run_metadata_and_execution_artifact_ledger	true	deferred	Compatible only after a managed cloud path is approved.

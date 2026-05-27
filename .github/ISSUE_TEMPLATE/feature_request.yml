@@ -1,0 +1,28 @@
+name: Feature request
+description: Suggest a public-safe BioProspector capability.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Good feature requests describe public-safe ledgers, validators, normalizers, docs, examples, or local workflows. Avoid private data and execution credentials.
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: What workflow should become easier or safer?
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_shape
+    attributes:
+      label: Proposed public-safe shape
+      description: Name expected ledgers, commands, docs, or validation gates.
+  - type: checkboxes
+    id: boundary
+    attributes:
+      label: Boundary
+      options:
+        - label: This request can be described without private sequences, raw biological files, credentials, provider IDs, or private paths.
+          required: true

@@ -1,0 +1,4 @@
+lane_id	stage_id	lane_type	evidence_role	step_id	primary_output	status	partial_allowed	blocks_campaign_success	claim_level	notes
+LANE-VAN-001	STG-VAN-004	primary_search	primary_evidence	S002	candidate-funnels.tsv	planned	false	true	hypothesis	Primary sequence-search lane; success cannot be inferred until materialized candidate rows exist.
+LANE-VAN-002	STG-VAN-005	domain_annotation	context_evidence	S002	domain-annotation-ledger.tsv	planned	true	false	hypothesis	Context annotation supports ranking but cannot erase primary evidence status.
+LANE-VAN-003	STG-VAN-006	integration	summary	campaign	run-output-package-ledger.tsv	skipped	true	false	hypothesis	Integration package is intentionally skipped in the planning fixture and needs partial closeout.

@@ -1,0 +1,6 @@
+cluster_id	contig	start	end	core_genes	confidence	source_species	target_species
+GC-FIX-001	synthetic_contig_1	1000	4200	protein_alpha;protein_beta	0.82	synthetic_source_species	synthetic_target_species
+GC-FIX-002	synthetic_contig_1	8000	12500	protein_gamma;protein_delta	0.71	synthetic_source_species	synthetic_target_species
+GC-FIX-003	synthetic_contig_2	200	3800	protein_epsilon;protein_zeta	0.65	synthetic_source_species	synthetic_target_species
+GC-FIX-004	synthetic_contig_3	5000	9200	protein_eta;protein_theta;protein_iota	0.88	synthetic_source_species	synthetic_target_species
+GC-FIX-005	synthetic_contig_4	1000	2200	protein_kappa	0.42	synthetic_source_species	synthetic_target_species

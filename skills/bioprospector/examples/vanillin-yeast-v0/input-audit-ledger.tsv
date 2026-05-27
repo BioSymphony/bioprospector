@@ -1,0 +1,11 @@
+input_id	input_class	declared_in	expected_artifact	materialized_status	location_or_pointer	checksum_or_version	operator_required	missing_operator_item	notes
+IA-VAN-001	manifest	campaign-manifest.json	campaign-manifest.json	materialized	campaign-manifest.json	git_tracked	false	none	Campaign manifest is present and must be read before asking operator questions.
+IA-VAN-002	target_contract	campaign-manifest.json	target-contract.json	materialized	target-contract.json	git_tracked	false	none	Target contract is present.
+IA-VAN-003	query_set	query-set-ledger.tsv	query seed accessions or public pointers	declared	query-set-ledger.tsv	review_before_run	false	none	Query sets are declared but not downloaded in repo.
+IA-VAN-004	resource	resource-ledger.tsv	public search resources and licenses	materialized	resource-ledger.tsv	git_tracked	false	none	Resource ledger is compact and public/open-first.
+IA-VAN-005	result_summary	sequence-search-plan-ledger.tsv	RunPod search contracts	materialized	sequence-search-plan-ledger.tsv	git_tracked	false	none	Search plan exists and remains approval-gated.
+IA-VAN-006	result_summary	candidate-sequence-ledger.tsv	AA sequence pointers and checksums	declared	provider_output_after_run	review_before_run	false	none	Candidate sequence rows are planned pointers only.
+IA-VAN-007	result_summary	candidate-graph-ledger.tsv	conceptual enzyme graph	materialized	candidate-graph-ledger.tsv	git_tracked	false	none	Graph has planned edges and claim boundaries.
+IA-VAN-008	provenance	stage-contract-ledger.tsv;stage-progress-ledger.tsv	long-run stage contract and progress ledgers	materialized	stage-contract-ledger.tsv;stage-progress-ledger.tsv	git_tracked	false	none	Provider RUNNING status alone is not proof.
+IA-VAN-009	operator_intake	operator-intake-ledger.tsv	operator intake confirmations	materialized	operator-intake-ledger.tsv	git_tracked	false	none	Planning assumptions and execution blockers are present.
+IA-VAN-010	provenance	provider-launch-preflight-ledger.tsv	provider launch blockers	materialized	provider-launch-preflight-ledger.tsv	git_tracked	false	none	Image pull registry auth volume payload snapshot and secrets checks are present.

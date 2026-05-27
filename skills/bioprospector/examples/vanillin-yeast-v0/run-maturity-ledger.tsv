@@ -1,0 +1,7 @@
+run_id	maturity_level	level_name	status	evidence_artifact	blocking_gap	reviewer	notes
+VAN-DEMO	L0	plan_exists	pass	campaign-manifest.json	none	operator	Vanillin scaffold has a route and ledger plan.
+VAN-DEMO	L1	tools_ready	planned	runpod-run-manifest.json;provider-launch-preflight-ledger.tsv	image pull tool availability and provider auth not proven	operator	RunPod setup is planned only.
+VAN-DEMO	L2	inputs_materialized	planned	input-audit-ledger.tsv;query-set-ledger.tsv	query sequences and databases not materialized	operator	Inputs are declared as accessions or provider-side pointers.
+VAN-DEMO	L3	execution_performed	not_started	execution-artifact-ledger.tsv	no real search execution	operator	No RunPod AWS BLAST DIAMOND MMseqs HMMER or biological search has run.
+VAN-DEMO	L4	evidence_joined	not_started	target-evidence-ledger.tsv;candidate-graph-ledger.tsv	no joined real evidence package	operator	Reference-only and planned package rows cannot satisfy joined evidence.
+VAN-DEMO	L5	claim_audited_dossier	not_started	claim-ledger.md;contract_self_check.json	no final joined self-check	operator	Claims remain planning intelligence only.

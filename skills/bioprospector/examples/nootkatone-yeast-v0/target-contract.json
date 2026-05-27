@@ -1,0 +1,45 @@
+{
+  "target_molecule": "(+)-nootkatone",
+  "host": "Saccharomyces cerevisiae",
+  "campaign_goal": "Enumerate, compare, and rank route families and candidate enzymes for (+)-nootkatone or nootkatone-precursor formation in yeast, with explicit attention to terpene synthases, P450 oxidation, SDR/dehydrogenase support, CPR pairing, localization, fusions, and host-fit risk.",
+  "allowed_modes": [
+    "fed_substrate",
+    "de_novo",
+    "bioconversion",
+    "alternative_enzyme_family",
+    "host_fit_review"
+  ],
+  "optimization_goals": [
+    "minimal_genes",
+    "highest_evidence",
+    "clearest_validation_handoff",
+    "best_host_fit",
+    "ambitious_de_novo",
+    "diversity_library"
+  ],
+  "hard_boundaries": [
+    "planning_only",
+    "public_open_first",
+    "no_private_sequences",
+    "no_claim_of_target_host_production_without_direct_validation",
+    "no_wet_lab_protocols",
+    "no_aws_or_runpod_execution_without_operator_approval"
+  ],
+  "target_identity": {
+    "common_name": "(+)-nootkatone",
+    "product_class": "sesquiterpenoid ketone",
+    "precursor_focus": "(+)-valencene",
+    "identifier_status": "review_before_execution"
+  },
+  "host_constraints": {
+    "host": "Saccharomyces cerevisiae",
+    "expected_bottlenecks": [
+      "FPP flux and sesquiterpene competition",
+      "P450 membrane expression and CPR pairing",
+      "overoxidation or side products",
+      "SDR/dehydrogenase compatibility",
+      "product toxicity or volatilization"
+    ],
+    "host_claim_boundary": "No nootkatone-in-yeast production claim is made by this scaffold."
+  }
+}

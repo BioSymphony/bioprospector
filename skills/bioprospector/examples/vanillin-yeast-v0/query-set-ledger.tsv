@@ -1,0 +1,9 @@
+query_id	step_id	query_type	query_label	source_organism	source_pointer	materialized_status	checksum_or_version	license_boundary	notes
+Q-VAN-S001-SEED	S001	protein	feruloyl transform seed proteins	mixed public references	public_accessions_review_before_run	declared	review_before_run	accession_summary_only	Materialize provider-side only after execution approval.
+Q-VAN-S002-SEED	S002	protein	aldehyde forming or cleavage seed proteins	mixed public references	public_accessions_review_before_run	declared	review_before_run	accession_summary_only	Use canonical seeds plus related family representatives.
+Q-VAN-S002-DOMAIN	S002	domain_model	aldehyde or cleavage domain models	mixed public references	Pfam_review_before_run	declared	review_before_run	domain_summary_only	Domain model gate for S002.
+Q-VAN-S003-SEED	S003	protein	eugenol isoeugenol route seed proteins	mixed public references	public_accessions_review_before_run	declared	review_before_run	accession_summary_only	Alternative route search query set.
+Q-VAN-S005-DARK	S005	reaction	dark aromatic precursor conversion hypotheses	Rhea and literature	Rhea_OpenAlex_review_before_run	declared	review_before_run	citation_and_reaction_summary_only	May convert to protein or domain queries after Dark Step Resolver.
+Q-VAN-S005-DOMAIN	S005	domain_model	dark-step plausible family models	mixed public references	Pfam_review_before_run	declared	review_before_run	domain_summary_only	Used only after chemistry decomposition.
+Q-VAN-S006-SEED	S006	protein	vanillin or phenylpropanoid glycosyltransferase seeds	plant public references	public_accessions_review_before_run	declared	review_before_run	accession_summary_only	UGT seed set for protected product route.
+Q-VAN-S006-DOMAIN	S006	domain_model	glycosyltransferase domain models	Pfam	Pfam_review_before_run	declared	review_before_run	domain_summary_only	Domain gate for UGT-like hits.

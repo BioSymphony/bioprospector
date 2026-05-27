@@ -1,0 +1,13 @@
+resource	resource_type	version	license_class	use_mode	redistribution_policy	citation_or_url	notes
+UniProt	protein_database	review_before_run	open-data-with-terms	remote_or_local_database	no-bulk-redistribution-without-review	https://www.uniprot.org/	Use accessions and derived summaries.
+NCBI Datasets	genome_protein_accession_tool	review_before_run	open-data-with-terms	local_or_remote_tool	no-bulk-redistribution-without-review	https://www.ncbi.nlm.nih.gov/datasets/	Use for accession-stable public resources.
+Rhea	reaction_database	review_before_run	open-data-with-terms	local_or_remote_database	attribution-required	https://www.rhea-db.org/	Use for reaction normalization.
+MetaNetX	reaction_cross_reference	review_before_run	open-data-with-terms	local_or_remote_database	attribution-required	https://www.metanetx.org/	Use for cross-database reaction mapping.
+Pfam	protein_family_database	review_before_run	open-data-with-terms	local_or_remote_database	attribution-required	https://www.ebi.ac.uk/interpro/	Use via HMMER/InterPro where suitable.
+RunPod	manual_pod_provider	review_before_run	commercial-provider	remote_compute	no-data-redistribution	https://www.runpod.io/	Blessed heavy-search path after preflight; no launch from this repo.
+BLAST+	sequence_search_tool	review_before_run	open-source	remote_tool	no-large-output-copy	https://blast.ncbi.nlm.nih.gov/	Use locally on RunPod against staged public sets; official NCBI-wide scale uses ElasticBLAST.
+DIAMOND	sequence_search_tool	review_before_run	open-source	remote_tool	no-large-output-copy	https://github.com/bbuchfink/diamond	Fast protein scout after approval.
+MMseqs2	sequence_search_tool	review_before_run	open-source	remote_tool	no-large-output-copy	https://github.com/soedinglab/MMseqs2	Search and clustering for large candidate spaces.
+HMMER	protein_domain_tool	review_before_run	open-source	remote_tool	no-large-output-copy	http://hmmer.org/	Domain/family gate before candidate promotion.
+AWS ElasticBLAST	cloud_blast_service	review_before_run	commercial-provider	cloud_escalation	no-credentials-in-repo	https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/	Reviewed escalation only; no AWS calls from fixture.
+OpenAlex	literature_index	review_before_run	open-data-with-terms	metadata_search	citation-summary-only	https://openalex.org/	Latest-literature search summaries only.

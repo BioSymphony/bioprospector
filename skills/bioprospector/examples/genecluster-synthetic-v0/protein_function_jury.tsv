@@ -1,0 +1,11 @@
+protein_id	verdict	claim_level	supporting_tools	contradicting_tools	confidence
+protein_alpha	supported	L4_consensus_supported	Pfam,UniProt		0.79
+protein_beta	candidate	L3_annotation_neighborhood_ready	Pfam		0.73
+protein_gamma	supported	L4_consensus_supported	Pfam,UniProt		0.82
+protein_delta	supported	L5_claim_audited_dossier_ready	Pfam,UniProt,EC_predictor		0.71
+protein_epsilon	ambiguous	L3_annotation_neighborhood_ready	Pfam	UniProt	0.67
+protein_zeta	candidate	L3_annotation_neighborhood_ready	Pfam		0.66
+protein_eta	supported	L5_claim_audited_dossier_ready	Pfam,UniProt,EC_predictor		0.91
+protein_theta	supported	L4_consensus_supported	Pfam,UniProt		0.82
+protein_iota	candidate	L3_annotation_neighborhood_ready	Pfam		0.74
+protein_kappa	rejected	L1_candidate_gene_only	Pfam		0.31

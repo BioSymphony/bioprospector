@@ -1,0 +1,4 @@
+run_id	issue_id	lane	expected_artifact	heartbeat_status	blocker	next_review_at	owner	notes
+MON001	HUPERZINE-literature-00-evidence-map	literature	literature-ledger.tsv	planned	target_contract_review	manual_review	operator	No worker dispatch has started.
+MON002	HUPERZINE-dark-step-00-scaffold-map	ambiguity	unknown-step-ledger.tsv	planned	dark_step_review	manual_review	operator	Use as checkpoint before widening sequence searches.
+MON003	HUPERZINE-red-team-99-claim-audit	claim_audit	claim-ledger.md	planned	no_live_evidence	manual_review	operator	Blocks complete-route claims in the public demo.

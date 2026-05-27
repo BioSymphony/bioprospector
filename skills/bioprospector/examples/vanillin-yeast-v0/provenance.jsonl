@@ -1,0 +1,1 @@
+{"event":"campaign_scaffold","timestamp":"2026-04-30T00:00:00Z","dry_run":true,"mock_tools":true,"note":"Tracked Vanillin fixture declares RunPod/search/package contracts only; no searches, downloads, AWS calls, RunPod launch, or biological validation performed."}

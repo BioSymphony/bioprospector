@@ -1,0 +1,3 @@
+design_id	route_id	candidate_ids	measurable_product	assay_readout	controls_needed	risk	non_protocol_boundary	claim_boundary	notes
+AH001	R001	E002;E003	nootkatol_or_nootkatone	product_presence_and_side_product_profile	feedstock_and_empty_vector_controls	P450_specificity_and_side_products	true	non_protocol_planning_only	Planning handoff only; no procedure, concentrations, timing, or construct details.
+AH002	R004	E004	nootkatone_from_nootkatol	nootkatol_dehydrogenation_readout	nootkatol_substrate_and_no_enzyme_control	SDR_promiscuity	true	non_protocol_planning_only	Only relevant if two-step oxidation remains plausible.

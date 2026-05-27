@@ -1,0 +1,4 @@
+event_id	stage_id	event_status	timestamp	artifact_pointer	heartbeat_age_minutes	fallback_from	fallback_to	degraded_status	notes
+SP001	STG001	completed	2026-05-07T00:00:00Z	preflight_pass_report	0			none	Public demo preflight is expected to run locally; no biological execution performed.
+SP002	STG002	skipped	2026-05-07T00:00:00Z	not_materialized_in_repo	0			partial	RunPod readiness bundle is intentionally not generated or materialized in this public demo.
+SP003	STG004	skipped	2026-05-07T00:00:00Z	not_run	0			partial	Execution intentionally skipped for public planning demo; strict live closeout must fail.

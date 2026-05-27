@@ -1,0 +1,9 @@
+check_id	provider_id	check_type	expected	observed	status	blocking_before_launch	notes
+PLP001	CP001	image_digest_pin	Digest-pinned BioProspector image before live launch	TODO image until build/pick step	review_required	true	Unpinned or placeholder images are readiness-only.
+PLP002	CP001	registry_auth	Public image or provider-side private registry auth verified	unknown; do not assume private GHCR pull works	review_required	true	Fail before pod creation if private registry auth is not verified provider-side.
+PLP003	CP001	image_pull	Provider can pull exact image and start container	not_tested	planned	true	desiredStatus RUNNING is not container progress.
+PLP004	CP001	network_volume	/workspace network volume mounted	not_tested	planned	true	Needed for external heavy data and output retention.
+PLP005	CP001	branch_snapshot	Exact branch or snapshot contains the generated bundle	not_tested	review_required	true	Worker must clone the branch/snapshot containing the bundle it references.
+PLP006	CP001	provider_payload_size	Rendered issue bodies and provider payloads fit provider API limits	not_tested	review_required	true	No launch until orchestration plumbing is checked.
+PLP007	CP001	stage_contract	Stage contract and progress emission exist before long run	stage-contract-ledger.tsv;stage-progress-ledger.tsv	planned	true	Long runs require checkpoint, heartbeat, done marker, resume command, and fail-closed behavior.
+PLP008	CP001	secrets_boundary	No credentials in repo, Linear, chat, or generated bundles	no_secrets_in_repo_or_linear	planned	true	Use provider-side secrets only.

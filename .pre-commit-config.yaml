@@ -1,0 +1,30 @@
+repos:
+  - repo: local
+    hooks:
+      - id: public-audit
+        name: BioProspector public audit
+        entry: python3 scripts/public_audit.py .
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: docs-links
+        name: BioProspector docs link check
+        entry: python3 scripts/check_docs_links.py .
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: docs-index
+        name: BioProspector docs index check
+        entry: python3 scripts/check_docs_index.py .
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: release-metadata
+        name: BioProspector release metadata check
+        entry: python3 scripts/check_release_metadata.py .
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]

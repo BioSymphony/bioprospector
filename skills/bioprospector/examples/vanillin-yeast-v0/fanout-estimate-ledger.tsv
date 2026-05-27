@@ -1,0 +1,5 @@
+estimate_id	stage_id	lane_id	step_id	input_unit	input_count	expansion_factor	estimated_items	estimated_runtime_minutes	estimated_cost_usd	decision	status	notes
+FE-VAN-001	STG-VAN-004	LANE-VAN-001	S002	query_family	2	250	500	45	3.00	operator_review_required	reviewed	Medium route bottleneck; review before widening beyond capped candidate search.
+FE-VAN-002	STG-VAN-004	LANE-VAN-001	S003	query_family	2	350	700	60	4.00	operator_review_required	reviewed	Eugenol/isoeugenol route needs capped scout search before broad expansion.
+FE-VAN-003	STG-VAN-004	LANE-VAN-001	S005	query_family	4	12000	48000	480	25.00	shard	reviewed	Frontier aromatic precursor lane must split by chemistry/family before expensive search.
+FE-VAN-004	STG-VAN-005	LANE-VAN-002	S006	candidate_hit	2000	12	24000	360	18.00	annotate_once_join_many	reviewed	UGT-like domain work should scan candidates once and join maps back to ranked rows.

@@ -1,0 +1,4 @@
+dataset_id	organism_id	dataset_type	dataset_label	source_pointer	materialized_status	checksum_or_version	target_evidence_role	license_boundary	notes
+DS001	ORG002	annotation	yeast host context	target-contract.json	declared	review_before_run	host_context	open_summary_only	Host context is declared but not product evidence.
+DS002	ORG001	accession_set	public nootkatone pathway seed references	literature-ledger.tsv	declared	review_before_run	reference_context	citation_summary_only	Public references are context only until accessions and evidence are joined.
+DS003	ORG003	proteome	selected public reference proteomes	resource-ledger.tsv	declared	review_before_run	reference_context	no_bulk_redistribution	Reference proteome hits cannot be promoted as target organism evidence.

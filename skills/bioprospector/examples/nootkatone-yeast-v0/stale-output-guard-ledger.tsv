@@ -1,0 +1,3 @@
+guard_id	stage_id	artifact_id	input_hash	code_hash	output_hash	done_marker	validation_status	stale_check_status	notes
+SOG-NOOT-001	STG002	EX001	not_required_for_planning	not_required_for_planning	not_materialized	runpod_bundle_done	not_required	not_required	Readiness bundle is planned/dry-run; not live evidence.
+SOG-NOOT-002	STG004	EX002	not_required_for_planning	not_required_for_planning	not_materialized	scout_done	not_required	not_required	ElasticBLAST readiness bundle is planned/dry-run; no AWS job has run.

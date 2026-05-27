@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use BioSymphony BioProspector, please cite this repository."
+title: "BioSymphony BioProspector"
+version: "0.1.0"
+date-released: "2026-05-26"
+authors:
+  - name: "BioSymphony Maintainers"
+license: "MIT"
+repository-code: "https://github.com/BioSymphony/biosymphony-bioprospector"
+abstract: "An agentic harness for discovering biosynthetic pathways to target molecules: enzyme mining, pathway stitching, host-fit review, construct hypotheses, and compute-portable work graphs."

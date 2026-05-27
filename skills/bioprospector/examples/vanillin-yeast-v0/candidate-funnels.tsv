@@ -1,0 +1,7 @@
+step_id	raw_hits	quality_filtered	domain_valid	clustered_representatives	evidence_reviewed	shortlisted	final_picks	funnel_status	notes
+S001	0	0	0	0	0	0	0	not_started	Seed row only.
+S002	0	0	0	0	0	0	0	not_started	Seed row only.
+S003	0	0	0	0	0	0	0	not_started	Seed row only.
+S004	0	0	0	0	0	0	0	not_started	Host-fit step; candidate counts may not apply.
+S005	0	0	0	0	0	0	0	not_started	Unknown-step frontier.
+S006	0	0	0	0	0	0	0	not_started	Broad specificity search expected.

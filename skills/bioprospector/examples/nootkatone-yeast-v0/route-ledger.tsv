@@ -1,0 +1,6 @@
+route_id	route_name	target_product	host	feedstock_mode	route_class	evidence_level	route_status	primary_risk	notes
+R001	fed-valencene-bioconversion	(+)-nootkatone	Saccharomyces cerevisiae	fed_valencene	bioconversion	characterized_elsewhere	seed	P450_efficiency	Clear validation-handoff family: fed valencene context with oxidation/dehydrogenase candidate review.
+R002	de-novo-fpp-to-nootkatone	(+)-nootkatone	Saccharomyces cerevisiae	glucose	de_novo	characterized_elsewhere	seed	flux_and_P450_fit	Full yeast route family from FPP through valencene to nootkatone; requires host flux and P450/CPR review.
+R003	P450-diversity-library	(+)-nootkatone_or_nootkatol	Saccharomyces cerevisiae	valencene_or_de_novo	alternative_enzyme_family	characterized_elsewhere	seed	overoxidation_and_specificity	Wide search route for diverse valencene oxidases and related P450s.
+R004	two-step-oxidase-SDR-route	(+)-nootkatone	Saccharomyces cerevisiae	valencene_or_de_novo	hybrid_route	hypothesis	seed	partner_matching	Explicitly separates hydroxylation to nootkatol from dehydrogenation to nootkatone.
+R005	host-fit-and-product-handling	(+)-nootkatone	Saccharomyces cerevisiae	mixed	host_fit_review	hypothesis	seed	toxicity_localization_and_volatility	Scores ER localization, fusion risk, export, tolerance, and analytical-readiness issues.

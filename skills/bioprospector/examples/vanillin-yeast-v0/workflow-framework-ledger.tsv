@@ -1,0 +1,5 @@
+framework_id	framework_class	use_case	provider_classes	entrypoint_or_template	provenance_mode	resume_supported	status	notes
+WF-VAN-001	python_cli	preflight_issue_generation_and_mock_checks	all_providers	skills/bioprospector/scripts/*.py	json_summary	false	approved	Good for readiness and local smoke only.
+WF-VAN-002	shell_script	runpod_readiness_and_toolcheck	runpod_manual_pod	setup-runpod-readiness.sh	stage_progress_jsonl	false	planned	Manual pod setup script should create directories and tool checks only.
+WF-VAN-003	nextflow	resumable_live_search_future	runpod_manual_pod;ssh_hpc	future/templates/bioprospector-search.nf	nf-prov_or_rocrate	true	planned	Preferred future live-run framework once runner implementation exists.
+WF-VAN-004	snakemake	resumable_live_search_alternative	runpod_manual_pod;ssh_hpc	future/Snakefile	provenance_summary	true	deferred	Alternative framework if Nextflow is not selected.

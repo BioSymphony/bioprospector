@@ -1,0 +1,11 @@
+step_id	raw_hits	quality_filtered	domain_valid	clustered_representatives	evidence_reviewed	shortlisted	final_picks	funnel_status	notes
+S001	0	0	0	0	0	0	0	not_started	Public decarboxylase seed planning only.
+S002	0	0	0	0	0	0	0	not_started	CAO/DAO source-context lane.
+S003	0	0	0	0	0	0	0	not_started	PKS-III or non-enzymatic condensation ambiguity.
+S004	0	0	0	0	0	0	0	not_started	C-N coupling dark-step lane.
+S005	0	0	0	0	0	0	0	not_started	Oxidative cyclization/rearrangement dark-step lane.
+S006	0	0	0	0	0	0	0	not_started	Lycophyte tailoring-family frontier lane.
+S007	0	0	0	0	0	0	0	not_started	Final-tailoring unknown module lane.
+S008	0	0	0	0	0	0	0	not_started	Endophyte comparator lane.
+S009	0	0	0	0	0	0	0	not_started	Host-fit review after evidence.
+S010	0	0	0	0	0	0	0	not_started	Claim audit lane.

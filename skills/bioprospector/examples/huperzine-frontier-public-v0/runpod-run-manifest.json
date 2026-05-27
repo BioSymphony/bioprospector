@@ -1,0 +1,36 @@
+{
+  "run_manifest_id": "runpod-readiness-huperzine-frontier-public-v0",
+  "campaign_id": "pathway-big-bang-huperzine-frontier-public-v0",
+  "provider": "RunPod manual Pod",
+  "status": "planning_only",
+  "launch_allowed": false,
+  "public_demo_boundary": "Readiness contract only; no pod launch, database download, sequence search, or provider artifact is included.",
+  "planned_tools": [
+    "blastp_or_diamond_after_operator_review",
+    "hmmsearch_after_operator_review",
+    "public_literature_index_review"
+  ],
+  "planned_databases": [
+    "reviewed_public_accession_sets",
+    "reviewed_public_domain_models"
+  ],
+  "output_policy": {
+    "repo_outputs_allowed": [
+      "compact ledgers",
+      "accession summaries",
+      "checksums",
+      "citation summaries",
+      "claim audit notes"
+    ],
+    "repo_outputs_blocked": [
+      "raw FASTA",
+      "raw all-hit search output",
+      "database mirrors",
+      "model weights",
+      "provider logs",
+      "private sequence data"
+    ]
+  },
+  "stage_contract": "stage-contract-ledger.tsv",
+  "provider_preflight": "provider-launch-preflight-ledger.tsv"
+}

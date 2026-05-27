@@ -1,0 +1,11 @@
+check_id	provider_id	check_type	expected	observed	status	blocking_before_launch	notes
+PLP-VAN-001	CP001	image_digest_pin	Digest-pinned BioProspector image before live launch	TODO image until build or public image selection	review_required	true	Unpinned or placeholder images are readiness-only.
+PLP-VAN-002	CP001	registry_auth	Public image or provider-side private registry auth verified	unknown; do not assume private GHCR pull works	review_required	true	Fail before pod creation if private registry auth is not verified provider-side.
+PLP-VAN-003	CP001	image_pull	Provider can pull exact image and start container	not_tested	planned	true	desiredStatus RUNNING is not container progress.
+PLP-VAN-004	CP001	network_volume	/workspace network volume mounted	not_tested	planned	true	Needed for BLAST databases and retained candidate package outputs.
+PLP-VAN-005	CP001	workdir	Remote workdir exists and is writable	not_tested	planned	true	Use /workspace/bioprospector/runs/pathway-big-bang-vanillin-yeast-v0.
+PLP-VAN-006	CP001	cost_guardrail	Scout budget under 100 USD	99.00	pass	true	Budget cap does not prove progress; stage progress is still required.
+PLP-VAN-007	CP001	branch_snapshot	Exact branch or snapshot contains the generated bundle	not_tested	review_required	true	Worker must clone the branch/snapshot containing the bundle it references.
+PLP-VAN-008	CP001	stage_contract	Stage contract and progress emission exist before long run	stage-contract-ledger.tsv;stage-progress-ledger.tsv	planned	true	Long runs require checkpoint heartbeat done marker resume command and fail-closed behavior.
+PLP-VAN-009	CP001	secrets_boundary	No credentials in repo Linear chat or generated bundles	no_secrets_in_repo_or_linear	planned	true	Use provider-side secrets only.
+PLP-VAN-010	CP001	data_policy	No private sequences raw BLAST output or database mirrors in repo	public_open_first;provider_storage_for_heavy_data	planned	true	AA sequence pointers and compact summaries only.

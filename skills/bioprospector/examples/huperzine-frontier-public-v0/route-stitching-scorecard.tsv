@@ -1,0 +1,6 @@
+route_id	route_status	intermediate_compatibility	cofactor_fit	host_precursor_fit	toxicity_risk	transport_or_protection_need	missing_steps	integration_verdict	notes
+R001	seed	unknown	unknown	unknown	medium	unknown	S003;S004;S005;S007	blocked	Public literature map is useful but incomplete.
+R002	seed	unknown	unknown	unknown	medium	unknown	S006;S007	not_reviewed	Useful enzyme-family frontier lane after public source review.
+R003	seed	medium	unknown	not_applicable	unknown	unknown	source_context_join	blocked	Comparator evidence cannot complete the lycophyte route.
+R004	seed	unknown	unknown	unknown	medium	unknown	target_evidence_and_host_fit	not_reviewed	Host fit is downstream of evidence joins.
+R005	seed	unknown	unknown	unknown	unknown	unknown	all_open_dark_steps	blocked	Red-team route intentionally blocks complete-route claims.

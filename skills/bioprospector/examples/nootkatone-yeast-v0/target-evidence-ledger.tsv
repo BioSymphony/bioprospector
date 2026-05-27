@@ -1,0 +1,4 @@
+evidence_id	candidate_id	step_id	organism_id	dataset_id	evidence_type	evidence_pointer	join_status	claim_level	notes
+TE001	E001	S002	ORG001	DS002	literature_only	public_seed_reference	reference_only	characterized_elsewhere	Reference seed supports external characterization only.
+TE002	E003	S003	ORG003	DS003	literature_only	public_yeast_report_review_needed	reference_only	characterized_elsewhere	External report needs review; not target-host proof for this campaign.
+TE003	E004	S004	ORG003	DS003	homolog_hit	domain_seed_only	reference_only	domain_supported	Domain/homolog context is not target evidence.

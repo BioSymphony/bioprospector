@@ -1,0 +1,5 @@
+evidence_id	candidate_id	step_id	organism_id	dataset_id	evidence_type	evidence_pointer	join_status	claim_level	notes
+TE001	E001	S001	ORG001	DS001	literature_only	public_reference_seed	reference_only	domain_supported	Reference context only; no target-host evidence.
+TE002	E002	S002	ORG001	DS001	literature_only	public_reference_seed	reference_only	domain_supported	CAO/DAO evidence must retain source organism context; no target-host evidence joined.
+TE003	E006	S008	ORG002	DS002	literature_only	public_comparator_reference	reference_only	hypothesis	Endophyte comparator evidence cannot satisfy lycophyte route claims.
+TE004	E005	S007	ORG003	DS003	literature_only	not_materialized	pending	hypothesis	Expected output shape only; no evidence joined.

@@ -1,0 +1,2 @@
+candidate_id	step_id	candidate_name	source_organism	accession_or_source	rejection_stage	claim_level	rejection_reason	evidence_classes	reviewer	notes
+RC-VAN-001	S006	broad UGT family hit without specificity	mixed public references	not_materialized	preflight	rejected	Broad glycosyltransferase similarity alone is insufficient for vanillin specificity.	sequence_similarity;domain	red_team_seed	Placeholder rejection class to prevent overpromotion.

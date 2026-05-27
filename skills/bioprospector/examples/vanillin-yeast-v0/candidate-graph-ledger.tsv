@@ -1,0 +1,17 @@
+edge_id	source_id	target_id	edge_type	step_id	evidence_class	weight	claim_level	notes
+EDGE-VAN-R001-S001	R001	S001	route_step	S001	route_stitching	1.00	hypothesis	Route R001 depends on ferulic acid module planning.
+EDGE-VAN-R001-S002	R001	S002	route_step	S002	route_stitching	1.00	hypothesis	Route R001 depends on aldehyde/c-cleavage module.
+EDGE-VAN-R002-S003	R002	S003	route_step	S003	route_stitching	1.00	hypothesis	Route R002 depends on eugenol or isoeugenol conversion.
+EDGE-VAN-R003-S004	R003	S004	route_step	S004	host_fit	1.00	hypothesis	Route R003 depends on host precursor flux.
+EDGE-VAN-R003-S005	R003	S005	route_step	S005	route_stitching	1.00	hypothesis	Route R003 depends on dark aromatic conversion step.
+EDGE-VAN-R004-S006	R004	S006	route_step	S006	route_stitching	1.00	hypothesis	Protected product route depends on glycosyltransferase specificity.
+EDGE-VAN-S002-CAN	S002	E-VAN-S002-CANONICAL	step_candidate	S002	sequence_similarity	0.60	hypothesis	Canonical candidate bin planned.
+EDGE-VAN-S002-DIV	S002	E-VAN-S002-DIVERSE	step_candidate	S002	phylogeny	0.35	hypothesis	Diverse candidate bin planned.
+EDGE-VAN-S003-OX	S003	E-VAN-S003-OXIDATIVE	step_candidate	S003	sequence_similarity	0.50	hypothesis	Alternative oxidative route bin planned.
+EDGE-VAN-S005-DARK	S005	E-VAN-S005-DARK	step_candidate	S005	route_stitching	0.25	hypothesis	Dark-step candidate bin planned.
+EDGE-VAN-S006-UGT	S006	E-VAN-S006-UGT	step_candidate	S006	domain	0.50	hypothesis	UGT specificity bin planned.
+EDGE-VAN-CAN-DOM	E-VAN-S002-CANONICAL	DA-VAN-S002-CAN	candidate_domain	S002	domain	0.50	hypothesis	Domain evidence must be materialized after search.
+EDGE-VAN-UGT-DOM	E-VAN-S006-UGT	DA-VAN-S006-UGT	candidate_domain	S006	domain	0.50	hypothesis	Domain edge does not prove substrate specificity.
+EDGE-VAN-S002-LIT	E-VAN-S002-CANONICAL	LS-VAN-S002	candidate_literature	S002	literature	0.50	hypothesis	Literature search edge pending compact citation review.
+EDGE-VAN-S006-DIV	E-VAN-S006-WEIRD	DIV-VAN-S006-WEIRD	candidate_diversity_cluster	S006	phylogeny	0.25	hypothesis	Weird/remote candidates preserved separately.
+EDGE-VAN-PACKAGE	E-VAN-S002-CANONICAL	PKG-VAN-CANDIDATE-DATA	candidate_package	S002	accession	0.50	hypothesis	Candidate data package pointer after live run.

@@ -1,0 +1,4 @@
+lane_id	stage_id	lane_type	evidence_role	step_id	primary_output	status	partial_allowed	blocks_campaign_success	claim_level	notes
+LANE-NOOT-001	STG004	primary_search	primary_evidence	S003	candidate-funnels.tsv	planned	false	true	hypothesis	Primary P450/oxidase scout lane; candidate claims need materialized search evidence.
+LANE-NOOT-002	STG005	context_annotation	context_evidence	S008	domain-and-context-summary.tsv	planned	true	false	hypothesis	Context/domain work supports ranking but does not prove product chemistry.
+LANE-NOOT-003	STG005	control	control	S006	decoy-control-ledger.tsv	planned	false	true	hypothesis	Control/native hits must be labeled separately from discovery evidence.

@@ -1,0 +1,5 @@
+artifact_id	run_id	step_id	command_or_issue	artifact_type	path_or_uri	produced_by	dry_run	mock_tools	status	checksum_or_summary	notes
+EX-VAN-001	VAN-DEMO	ALL	runpod_readiness_bundle	readiness_manifest	.runtime/runpod-readiness/vanillin-yeast-v0/runpod-run-manifest.json	bioprospector_runpod_bundle.py	true	true	planned	not_materialized_in_repo	Readiness-only artifact; cannot prove execution.
+EX-VAN-002	VAN-DEMO	ALL	linear_issue_dry_run	issue_drafts	.runtime/vanillin-linear-issues	bioprospector_issue_dry_run.py	true	true	planned	not_materialized_in_repo	Dry-run issues only; no Linear calls.
+EX-VAN-003	VAN-DEMO	ALL	elasticblast_readiness_bundle	readiness_manifest	.runtime/elasticblast-readiness/vanillin-yeast-v0/elasticblast-run-manifest.json	bioprospector_elasticblast_bundle.py	true	true	planned	not_materialized_in_repo	AWS prep only; no jobs submitted.
+EX-VAN-004	VAN-DEMO	ALL	candidate_package_after_live_run	candidate_data_pack	provider_output_after_run:outputs/candidate-data-pack	live_runner_after_approval	false	false	planned	not_materialized	Expected real output package after future live execution.

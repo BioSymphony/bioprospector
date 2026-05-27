@@ -1,0 +1,4 @@
+control_id	step_id	control_type	query_or_dataset	expected_result	observed_result	status	blocks_promotion	notes
+DC001	S002	unrelated_family	TPS_seed_vs_unrelated_family	low_or_no_hit	not_run	planned	true	Required before promoting wide terpene synthase search results.
+DC002	S003	negative_taxon	P450_seed_vs_negative_taxon	low_or_no_hit	not_run	planned	true	Required before promoting frontier P450 hits.
+DC003	S008	shuffled_sequence	P450_frontier_shuffled_queries	low_or_no_hit	not_run	planned	true	Required before frontier search candidates can be promoted.

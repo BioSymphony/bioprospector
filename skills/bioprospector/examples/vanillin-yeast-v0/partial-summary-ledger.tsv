@@ -1,0 +1,2 @@
+summary_id	run_id	stage_id	lane_id	summary_pointer	written_at	status	completed_items	failed_items	deferred_items	claim_level	resume_pointer	notes
+PS-VAN-001	VAN-DEMO	STG-VAN-006	LANE-VAN-003	summaries/vanillin-planning-partial-summary.json	2026-04-30T00:00:00Z	written	1	0	2	hypothesis	rerun compact package assembler after live provider outputs exist	Planning fixture records skipped execution/package lanes as partial rather than success.

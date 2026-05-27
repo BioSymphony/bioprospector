@@ -1,0 +1,5 @@
+control_id	step_id	control_type	query_or_dataset	expected_result	observed_result	status	blocks_promotion	notes
+DC001	S002	unrelated_family	CAO_DAO_seed_vs_unrelated_oxidases	low_or_no_hit	not_run	planned	true	Required before promoting broad amine oxidase hits.
+DC002	S003	shuffled_sequence	PKSIII_or_condensation_shuffled_queries	low_or_no_hit	not_run	planned	true	Required before treating frontier hits as meaningful.
+DC003	S005	negative_taxon	oxidative_cyclization_family_vs_negative_context	low_or_no_hit	not_run	planned	true	Protects dark-step lane from broad-family inflation.
+DC004	S008	reciprocal_check	endophyte_comparator_vs_lycophyte_target_role	no_direct_target_join	not_run	planned	true	Blocks source-context leakage into target claims.

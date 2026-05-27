@@ -1,0 +1,19 @@
+protein_id	tool	function_label	confidence	evidence_level	tool_version	license
+protein_alpha	Pfam	oxidoreductase-like domain	0.77	L3_annotation_neighborhood_ready	fixture	summary-fixture
+protein_alpha	UniProt	oxidoreductase-like domain	0.81	L3_annotation_neighborhood_ready	fixture	summary-fixture
+protein_beta	Pfam	acyltransferase-like domain	0.73	L3_annotation_neighborhood_ready	fixture	summary-fixture
+protein_gamma	Pfam	terpene synthase-like domain	0.85	L4_consensus_supported	fixture	summary-fixture
+protein_gamma	UniProt	terpene synthase-like domain	0.79	L4_consensus_supported	fixture	summary-fixture
+protein_delta	Pfam	cytochrome P450-like domain	0.69	L4_consensus_supported	fixture	summary-fixture
+protein_delta	UniProt	cytochrome P450-like domain	0.74	L4_consensus_supported	fixture	summary-fixture
+protein_delta	EC_predictor	cytochrome P450-like domain	0.71	L4_consensus_supported	fixture	summary-fixture
+protein_epsilon	Pfam	PLP-binding-like domain	0.78	L3_annotation_neighborhood_ready	fixture	summary-fixture
+protein_epsilon	UniProt	aminotransferase-like domain	0.55	L3_annotation_neighborhood_ready	fixture	summary-fixture
+protein_zeta	Pfam	methyltransferase-like domain	0.66	L3_annotation_neighborhood_ready	fixture	summary-fixture
+protein_eta	Pfam	ketosynthase-like domain	0.91	L5_claim_audited_dossier_ready	fixture	summary-fixture
+protein_eta	UniProt	PKS-like domain	0.88	L5_claim_audited_dossier_ready	fixture	summary-fixture
+protein_eta	EC_predictor	ketosynthase-like domain	0.93	L5_claim_audited_dossier_ready	fixture	summary-fixture
+protein_theta	Pfam	acyl carrier-like domain	0.83	L4_consensus_supported	fixture	summary-fixture
+protein_theta	UniProt	acyl carrier-like domain	0.81	L4_consensus_supported	fixture	summary-fixture
+protein_iota	Pfam	ketoreductase-like domain	0.74	L3_annotation_neighborhood_ready	fixture	summary-fixture
+protein_kappa	Pfam	domain of unknown function	0.31	L1_candidate_gene_only	fixture	summary-fixture

@@ -1,0 +1,6 @@
+route_id	route_status	intermediate_compatibility	cofactor_fit	host_precursor_fit	toxicity_risk	transport_or_protection_need	missing_steps	integration_verdict	notes
+R001	seed	medium	unknown	fed_substrate	medium	unknown	P450_specificity_and_side_products	not_reviewed	Clear validation-handoff route but not a de novo route.
+R002	seed	medium	unknown	medium	medium	unknown	P450_CPR_and_SDR_fit	not_reviewed	Requires flux, terpene synthase, P450, CPR, and possibly SDR stitching.
+R003	seed	unknown	unknown	medium	medium	unknown	candidate_specificity	not_reviewed	Useful for diversity but high overclaim risk from homolog-only P450 hits.
+R004	seed	unknown	unknown	medium	medium	unknown	step_split_evidence	not_reviewed	Needs evidence for nootkatol intermediate and dehydrogenase compatibility.
+R005	seed	unknown	unknown	unknown	medium	likely	host_fit_and_design_risk	not_reviewed	Construct/localization/product-handling review gates downstream recommendations.

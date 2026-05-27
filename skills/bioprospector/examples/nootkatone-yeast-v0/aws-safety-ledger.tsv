@@ -1,0 +1,7 @@
+control_id	control_type	control_name	required_status	verification_mode	verification_command	blocking_before_submit	last_verified	owner	notes
+AWS-001	account	Dedicated AWS sandbox account	required	human	aws sts get-caller-identity	true		operator	Prefer an isolated account before ElasticBLAST execution.
+AWS-002	budget	Monthly budget at or below $25 for first tests	required	aws_cli_or_console	aws budgets describe-budgets --account-id <account-id>	true		operator	Budgets are delayed alerts/actions, not a real-time hard cap.
+AWS-003	cost_anomaly	Cost Anomaly Detection alert	required	aws_cli_or_console	aws ce get-anomaly-monitors	true		operator	Use a low alert threshold for first BioProspector ElasticBLAST tests.
+AWS-004	service_quota	Low EC2 vCPU quota in us-east-1	required	aws_cli_or_console	aws service-quotas list-service-quotas --service-code ec2	true		operator	Keep first run at one node; do not request large quota increases before smoke tests.
+AWS-005	s3	Private encrypted S3 bucket with lifecycle cleanup	required	aws_cli_or_console	aws s3api get-public-access-block --bucket <bucket>	true		operator	Block public access and expire scratch prefixes after review.
+AWS-006	elasticblast	ElasticBLAST janitor role or explicit cleanup procedure	required	aws_cli_or_console	aws-describe-elastic-blast-janitor-role.sh	true		operator	Use elastic-blast==1.5.0 or newer and verify cleanup after every run.

@@ -1,0 +1,57 @@
+{
+  "target_molecule": "huperzine A",
+  "target_molecule_synonyms": [
+    "HupA"
+  ],
+  "host": "host_to_be_selected",
+  "campaign_goal": "Demonstrate how BioProspector handles a hard public bioprospecting target with unresolved pathway steps, evidence-source ambiguity, and strict claim ceilings. The demo maps expected ledgers and next evidence lanes without storing sequences, private artifacts, or execution outputs.",
+  "allowed_modes": [
+    "public_literature_map",
+    "dark_step_resolver",
+    "enzyme_frontier",
+    "endophyte_comparator",
+    "host_fit_review",
+    "claim_audit"
+  ],
+  "optimization_goals": [
+    "highest_evidence",
+    "fastest_discriminating_review",
+    "best_host_fit_after_evidence",
+    "minimal_unknowns",
+    "diversity_library",
+    "counterevidence_preservation"
+  ],
+  "hard_boundaries": [
+    "planning_only",
+    "public_open_first",
+    "no_private_sequences",
+    "no_raw_fasta_or_blast_output",
+    "no_claim_of_huperzine_A_production",
+    "no_claim_of_complete_pathway",
+    "no_wet_lab_protocols",
+    "no_construct_design",
+    "no_aws_or_runpod_execution_without_operator_approval"
+  ],
+  "target_identity": {
+    "common_name": "huperzine A",
+    "product_class": "lycopodium alkaloid",
+    "identifier_status": "public_identity_review_before_execution",
+    "public_demo_role": "dark_step_and_claim_boundary_stress_case"
+  },
+  "host_constraints": {
+    "host": "host_to_be_selected",
+    "candidate_hosts_for_future_review": [
+      "Saccharomyces cerevisiae",
+      "Nicotiana benthamiana",
+      "cell-free or in vitro enzyme review context"
+    ],
+    "expected_bottlenecks": [
+      "unresolved pathway order",
+      "single-gene versus multi-gene dark steps",
+      "lycophyte versus endophyte evidence separation",
+      "candidate-family inflation from broad homolog hits",
+      "host toxicity and analytics readiness"
+    ],
+    "host_claim_boundary": "No target-host production, expression, assay, or construct claim is made by this public scaffold."
+  }
+}

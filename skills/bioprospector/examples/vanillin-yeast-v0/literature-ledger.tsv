@@ -1,0 +1,4 @@
+citation_id	source_type	identifier_or_url	claim_supported	evidence_class	license_boundary	used_in_claim_ids	notes
+LIT-VAN-001	literature	review_before_run:vanillin-route-literature	vanillin route families require citation review	literature	citation_summary_only	PI-VAN-001;PI-VAN-002	No full text stored.
+LIT-VAN-002	database	https://www.rhea-db.org/	reaction normalization source for route inference	literature	attribution_required	PI-VAN-003	Use identifiers and summaries only.
+LIT-VAN-003	database	https://www.uniprot.org/	seed accessions and reviewed protein context	literature	accession_summary_only	SS-VAN-S001-BLASTP;SS-VAN-S002-DIAMOND	No bulk redistribution.

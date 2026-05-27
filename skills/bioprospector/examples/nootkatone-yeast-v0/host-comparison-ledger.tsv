@@ -1,0 +1,3 @@
+host	route_id	step_id	burden	precursor_fit	compartment_fit	toxicity	analytics_fit	verdict	notes
+Saccharomyces_cerevisiae	R002	S003	medium	medium	ER_P450_fit_required	medium	good	review	Default host; score P450/CPR burden before route promotion.
+Nicotiana_benthamiana	R003	S008	medium	unknown	plant_P450_fit_better	unknown	good	acceptable	Alternative expression context for ambiguous P450 discovery, not a public demo execution path.

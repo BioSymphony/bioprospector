@@ -1,0 +1,5 @@
+organism_id	taxon_name	strain_or_accession	sample_id	role	evidence_type	data_status	source_pointer	license_boundary	notes
+ORG-VAN-HOST	Saccharomyces cerevisiae	unspecified_yeast_host	HOST-PLANNING	target_host	host_context	declared	target-contract.json	host_context_only	Host is planning context; no strain/private data.
+ORG-VAN-REF-MIX	mixed public reference organisms	public_reference_sets	REF-MIX	source_organism	sequence_reference	reference_only	UniProt;RefSeq;UniRef	accession_summary_only	Public reference organism pool for candidate discovery.
+ORG-VAN-PLANT	mixed plant public references	public_reference_sets	REF-PLANT	source_organism	literature_and_sequence_reference	reference_only	UniProt;PubMed;OpenAlex	accession_summary_only	Useful for UGT and phenylpropanoid enzyme seeds.
+ORG-VAN-DECOY	unrelated public control taxa	public_reference_sets	DECOY	negative_control	sequence_control	declared	provider_side_decoy_after_review	accession_summary_only	Decoy control rows required before promotion from wide/frontier search.

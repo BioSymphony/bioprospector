@@ -1,0 +1,5 @@
+event_id	stage_id	event_status	timestamp	artifact_pointer	heartbeat_age_minutes	fallback_from	fallback_to	degraded_status	notes
+SP-VAN-001	STG-VAN-001	completed	2026-04-30T00:00:00Z	preflight_pass_report	0			none	Control-plane preflight stage is represented; no biological execution performed.
+SP-VAN-002	STG-VAN-002	started	2026-04-30T00:00:00Z	.runtime/runpod-readiness/vanillin-yeast-v0	0			none	RunPod readiness bundle path is planned/review-only.
+SP-VAN-003	STG-VAN-004	skipped	2026-04-30T00:00:00Z	not_run	0			partial	Execution intentionally skipped in tracked fixture; strict live closeout must fail.
+SP-VAN-004	STG-VAN-006	skipped	2026-04-30T00:00:00Z	not_run	0			partial	Candidate graph package is planned, not materialized.

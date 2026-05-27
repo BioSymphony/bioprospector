@@ -1,0 +1,3 @@
+family_id	step_id	seed_accessions	family_scope	domain_model	motifs_required	raw_hits	clusters	representatives	known_activity_refs	risk	next_lane	notes
+FAM001	S003	public_literature_seed_review_before_run	plant_valencene_oxidase_P450s	P450_domain	heme_binding_and_ERR_triads	0	0	0	LIT001;LIT002	overoxidation_and_ER_expression	evidence_lane	Planning row only; live search has not run.
+FAM002	S004	public_literature_seed_review_before_run	SDR_or_ADH_dehydrogenases	SDR_domain	TGxxxGxG_and_catalytic_YxxxK	0	0	0	LIT002	substrate_promiscuity	structure_risk	Planning row only; avoid claiming nootkatol activity from family membership.

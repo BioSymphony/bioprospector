@@ -1,0 +1,5 @@
+dataset_id	organism_id	dataset_type	dataset_label	source_pointer	materialized_status	checksum_or_version	target_evidence_role	license_boundary	notes
+DS-VAN-HOST	ORG-VAN-HOST	annotation	yeast host context target-contract	target-contract.json	materialized	git_tracked	host_context	host_context_only	Host context only, not target evidence for candidate activity.
+DS-VAN-REF	ORG-VAN-REF-MIX	accession_set	public reference accession seeds	query-set-ledger.tsv	declared	review_before_run	reference_context	accession_summary_only	Reference seeds do not count as target evidence.
+DS-VAN-SEARCH	ORG-VAN-REF-MIX	reference_only	provider-side selected protein databases	provider_output_after_run:db/selected-public-sets	declared	review_before_run	reference_context	no_bulk_redistribution	Search databases live provider-side only.
+DS-VAN-DECOY	ORG-VAN-DECOY	reference_only	provider-side decoy sets	provider_output_after_run:controls/decoy-sets	declared	review_before_run	negative_control	accession_summary_only	Decoy results must be summarized before promotion.

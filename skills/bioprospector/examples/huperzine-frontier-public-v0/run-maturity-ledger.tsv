@@ -1,0 +1,7 @@
+run_id	maturity_level	level_name	status	evidence_artifact	blocking_gap	reviewer	notes
+HUPPUB-DEMO	L0	plan_exists	pass	campaign-manifest.json	none	operator	Public scaffold has a validated plan and ledgers.
+HUPPUB-DEMO	L1	tools_ready	planned	runpod-readiness bundle;provider-launch-preflight-ledger.tsv	image pull and provider launch checks not passed	operator	Tool/provider readiness is planned, not proven by this repo.
+HUPPUB-DEMO	L2	inputs_materialized	planned	input-audit-ledger.tsv;operator-intake-ledger.tsv	target evidence summaries not materialized	operator	Public demo has declared inputs and intake assumptions; real target datasets are external/provider-side.
+HUPPUB-DEMO	L3	execution_performed	not_started	execution-artifact-ledger.tsv	no real execution	operator	No RunPod, AWS, BLAST, or biological search has run.
+HUPPUB-DEMO	L4	evidence_joined	not_started	target-evidence-ledger.tsv	no joined target evidence	operator	Reference-only evidence cannot satisfy target-host claims.
+HUPPUB-DEMO	L5	claim_audited_dossier	not_started	claim-ledger.md	no final joined self-check	operator	Claims remain planning/demo claims.

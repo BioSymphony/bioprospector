@@ -1,0 +1,62 @@
+{
+  "run_manifest_id": "runpod-readiness-vanillin-yeast-v0",
+  "campaign_id": "pathway-big-bang-vanillin-yeast-v0",
+  "status": "planning_only",
+  "provider_class": "runpod_manual_pod",
+  "launch_allowed": false,
+  "runpod_api_calls": false,
+  "network_volume_mount": "/workspace",
+  "remote_workdir": "/workspace/bioprospector/runs/pathway-big-bang-vanillin-yeast-v0",
+  "scout_budget_usd": 25,
+  "image_pull_contract": {
+    "image": "TODO:digest-pinned-bioprospector-image",
+    "digest_pinned": false,
+    "image_access": "unknown",
+    "registry_auth_verified": false,
+    "launch_blockers": [
+      "image_not_digest_pinned",
+      "image_access_unknown"
+    ]
+  },
+  "provider_launch_preflight": "provider-launch-preflight-ledger.tsv",
+  "stage_contracts": "stage-contract-ledger.tsv",
+  "stage_progress": "stage-progress-ledger.tsv",
+  "data_policy": {
+    "public_open_first": true,
+    "private_sequences_allowed": false,
+    "large_database_downloads_allowed": false,
+    "copy_back_policy": "compact_ledgers_graphs_aa_sequence_pointers_only"
+  },
+  "planned_lanes": [
+    "RunPod-local BLAST+ spot checks",
+    "DIAMOND and MMseqs2 protein search against selected public sets",
+    "HMMER or pyhmmer domain mapping against Pfam-A",
+    "candidate diversity clustering and graph packaging",
+    "latest literature search summaries with citations only",
+    "AWS ElasticBLAST escalation only after operator approval"
+  ],
+  "candidate_package_contract": {
+    "graph_artifacts": [
+      "candidate_graph.tsv",
+      "candidate_graph.json",
+      "candidate_graph.graphml"
+    ],
+    "sequence_policy": "protein_aa_only_or_provider_pointer",
+    "domain_policy": "compact_domain_spans_motifs_confidence_only",
+    "literature_policy": "citation_ids_and_claim_summaries_only",
+    "ranking_views": [
+      "minimal_genes",
+      "highest_evidence",
+      "best_host_fit",
+      "clearest_validation_handoff",
+      "ambitious_de_novo",
+      "diversity_library"
+    ]
+  },
+  "external_paths": {
+    "db_cache": "/workspace/bioprospector/db",
+    "work": "/workspace/bioprospector/runs/pathway-big-bang-vanillin-yeast-v0/work",
+    "outputs": "/workspace/bioprospector/runs/pathway-big-bang-vanillin-yeast-v0/outputs"
+  },
+  "claim_boundary": "No RunPod execution, downloads, searches, candidate validation, or biological production claims were performed when creating this manifest."
+}

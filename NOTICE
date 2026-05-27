@@ -1,0 +1,14 @@
+BioSymphony BioProspector
+
+This public repository is a control-plane and planning toolkit. It does not
+include raw biological datasets, private structures, unpublished sequences,
+large search databases, provider work directories, model weights, credentials,
+or execution logs.
+
+Third-party bioinformatics tools referenced by the docs and ledgers are not
+vendored here. Users are responsible for reviewing and complying with each
+tool, dataset, database, and cloud provider license or terms before execution.
+
+The included examples are compact public-safe planning examples. They are not
+evidence of biological production, host validation, assay success, or clinical
+utility.
