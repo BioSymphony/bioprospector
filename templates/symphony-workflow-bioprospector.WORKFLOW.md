@@ -28,7 +28,7 @@ workspace:
 hooks:
   after_create: |
     # Portable sidecar setup:
-    #   export BIOPROSPECTOR_REPO_URL=git@github.com:your-org/biosymphony-bioprospector.git
+    #   export BIOPROSPECTOR_REPO_URL=git@github.com:your-org/bioprospector.git
     #   export BIOPROSPECTOR_BRANCH=main
     #
     # The clone pattern mirrors the shared Symphony template but keeps closeout

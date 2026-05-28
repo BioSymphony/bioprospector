@@ -163,8 +163,8 @@ placeholders, run the equivalent repo preflight from that stack:
 
 ```bash
 ${SYMPHONY_HOME}/bin/repo-preflight \
-  /path/to/biosymphony-bioprospector \
-  biosymphony-bioprospector
+  /path/to/bioprospector \
+  bioprospector
 ```
 
 ## Use The Workflow Draft
@@ -174,7 +174,7 @@ portable placeholders:
 
 ```bash
 cp templates/symphony-workflow-bioprospector.WORKFLOW.md \
-  ${SYMPHONY_HOME}/workflows/biosymphony-bioprospector.WORKFLOW.md
+  ${SYMPHONY_HOME}/workflows/bioprospector.WORKFLOW.md
 ```
 
 Required operator edits:

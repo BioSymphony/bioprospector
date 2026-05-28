@@ -120,7 +120,7 @@ If you invoke console scripts from outside the checkout, point them back to this
 repo:
 
 ```bash
-BIOPROSPECTOR_REPO_ROOT=/path/to/biosymphony-bioprospector-public \
+BIOPROSPECTOR_REPO_ROOT=/path/to/bioprospector \
   bioprospector doctor --json
 ```
 

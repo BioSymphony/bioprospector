@@ -57,7 +57,7 @@ review first.
 
 Repo:
 
-`biosymphony-bioprospector`
+`bioprospector`
 
 Product:
 

@@ -68,4 +68,4 @@ construct hypotheses, and compute-portable work graphs.
   chemrxiv, field-specific servers) for fast-moving biosynthesis targets and
   record the preprint server, deposit date, and version.
 
-[0.1.0]: https://github.com/BioSymphony/biosymphony-bioprospector/releases/tag/v0.1.0
+[0.1.0]: https://github.com/BioSymphony/bioprospector/releases/tag/v0.1.0

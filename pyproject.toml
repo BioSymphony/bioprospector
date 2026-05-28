@@ -31,10 +31,10 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Homepage = "https://github.com/BioSymphony/biosymphony-bioprospector"
-Repository = "https://github.com/BioSymphony/biosymphony-bioprospector"
-Documentation = "https://github.com/BioSymphony/biosymphony-bioprospector/tree/main/docs"
-Issues = "https://github.com/BioSymphony/biosymphony-bioprospector/issues"
+Homepage = "https://github.com/BioSymphony/bioprospector"
+Repository = "https://github.com/BioSymphony/bioprospector"
+Documentation = "https://github.com/BioSymphony/bioprospector/tree/main/docs"
+Issues = "https://github.com/BioSymphony/bioprospector/issues"
 
 [project.optional-dependencies]
 dev = [
