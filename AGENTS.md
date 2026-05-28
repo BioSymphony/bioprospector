@@ -1,4 +1,4 @@
-# BioSymphony BioProspector Public Repo Agent Guide
+# BioSymphony BioProspector Agent Guide
 
 Guide for agents and operators working in this repo.
 
