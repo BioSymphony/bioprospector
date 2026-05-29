@@ -42,7 +42,7 @@ the skill.
 
 Prerequisites:
 
-- Python 3.10 or newer.
+- Python 3.11 or newer.
 - `make` and a POSIX shell for the bundled local command targets.
 - `git` for tracked-file hygiene checks.
 - Run commands from the repository root unless a command says otherwise.

@@ -157,9 +157,9 @@ def doctor(root: Path, include_runtime: bool) -> dict[str, Any]:
     root = root.resolve()
     checks = {
         "python": {
-            "ok": sys.version_info >= (3, 10),
+            "ok": sys.version_info >= (3, 11),
             "version": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
-            "minimum": "3.10",
+            "minimum": "3.11",
         },
         "schema": check_schema(root),
         "scripts": check_scripts(root),
