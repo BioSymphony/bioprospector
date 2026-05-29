@@ -1,6 +1,6 @@
 # Optional Tools
 
-BioProspector itself depends only on Python 3.10+ and a POSIX shell. The
+BioProspector itself depends only on Python 3.11+ and a POSIX shell. The
 local doctor reports the availability of several optional tools that the
 skill can use when present. None of them are required for the planning path
 or release checks; they unlock more lanes when an operator decides to run

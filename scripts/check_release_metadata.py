@@ -47,8 +47,8 @@ def issues(root: Path) -> list[str]:
             out.append(f"missing optional dependency group: {key}")
     if "biosymphony-bioprospector" != project.get("name"):
         out.append("unexpected project name")
-    if project.get("requires-python") != ">=3.10":
-        out.append("requires-python should stay >=3.10 unless CI/docs are updated")
+    if project.get("requires-python") != ">=3.11":
+        out.append("requires-python should stay >=3.11 unless CI/docs are updated")
     return out
 
 

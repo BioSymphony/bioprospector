@@ -4,6 +4,20 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Require Python 3.11+. `check_release_metadata.py` uses `tomllib`, which is in
+  the standard library only on Python 3.11 and newer. The CI matrix now covers
+  Python 3.11 through 3.13.
+
+### Fixed
+
+- CI installs the package and dev extras before `make release-check`, so the
+  release gate runs. Previously the workflow had no install step and stopped on
+  a missing `pytest`.
+
 ## [0.1.0] - 2026-05-26
 
 Initial public release. Agentic harness for discovering biosynthetic pathways

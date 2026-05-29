@@ -52,7 +52,7 @@ or `goal` for different orchestrator conventions.
 Any agent that can read repository files works the same way. Point it at
 the checkout, ask it to read `skills/bioprospector/SKILL.md`, `README.md`,
 and the docs index, then have it write outputs under `.runtime/`. The
-skill's CLIs run with stock Python 3.10+ and no third-party dependencies.
+skill's CLIs run with stock Python 3.11+ and no third-party dependencies.
 
 ## Quick Sanity Check
 
