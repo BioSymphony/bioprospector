@@ -98,7 +98,7 @@ python3 skills/bioprospector/scripts/bioprospector_new_campaign.py \
   --campaign-id example-target-v0
 ```
 
-The scaffold is compact and reviewable. Promote only reviewed, sanitized
+The scaffold is compact and reviewable. Promote only reviewed compact
 summaries into tracked examples.
 
 ## 4. Validate Before Asking Questions

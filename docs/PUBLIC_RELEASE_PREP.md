@@ -54,11 +54,11 @@ gitleaks dir . --no-banner --redact --verbose
 the binary is unavailable, record that exception in the release notes and keep
 manual review mandatory.
 
-## Scrub Rules
+## Repository Boundary Rules
 
 Do not publish:
 
-- private workstation paths or private repo history
+- private workstation paths or non-public local history
 - `.env`, credentials, tokens, signed URLs, registry auth, or SSH keys
 - private Linear issue text, internal run logs, cost records, raw pod logs, pod IDs, or network volume IDs
 - unpublished biological data, private sequences, raw reads, large database snapshots, raw BLAST outputs, model weights, or restricted datasets

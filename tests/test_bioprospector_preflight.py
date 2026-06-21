@@ -675,7 +675,7 @@ class BioProspectorPreflightTests(unittest.TestCase):
     def test_invalid_decoy_control_status_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             bad_row = list(OPTIONAL_ROWS["decoy_control_ledger"])
-            bad_row[6] = "magically_passed"
+            bad_row[6] = "unsupported_status"
             campaign = self.write_campaign(Path(tmp), optional={"decoy_control_ledger": bad_row})
             checks = self.run_checks(campaign)
             self.assertTrue(any(not check.ok and "decoy_control_ledger statuses" in check.message for check in checks))

@@ -93,6 +93,35 @@ class GeneClusterAtlasContractTests(unittest.TestCase):
         data = json.loads(result.stdout)
         self.assertIn("collapses caller disagreement", "\n".join(data["errors"]))
 
+    def test_provider_handoff_accepts_symphony_neocloud_bridge(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "provider_handoff_manifest.json"
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "schema_version": "genecluster_provider_handoff.v1",
+                        "provider": {"adapter": "symphony-neocloud-bridge", "class": "neocloud_vm"},
+                        "workload": {"mode": "review_only"},
+                        "artifact_egress": {
+                            "summary_only": True,
+                            "hash_algorithm": "sha256",
+                            "expected_artifacts": ["summary.json"],
+                        },
+                        "safety": {"launches_provider": False},
+                        "cleanup": {"verify_artifacts_fetched": True},
+                    },
+                    indent=2,
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = run("--provider-handoff-manifest", str(manifest), "--json")
+
+        data = json.loads(result.stdout)
+        self.assertTrue(data["ok"], data)
+
 
 if __name__ == "__main__":
     unittest.main()

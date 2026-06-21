@@ -157,7 +157,7 @@ Check README, quickstart, agent playbooks, CLI help, generated prompts, handoff 
 - the repo-facing return should be compact ledgers, pointers, checksums, summaries, rankings, dossiers, citations/accessions, and validation logs;
 - generated planning/readiness artifacts do not launch providers, mutate trackers, download databases, or prove execution;
 - mock, dry-run, planned, or readiness rows are not evidence;
-- a public repo checkout is reusable control-plane code for the user's own campaign, not a destination for private data or a push target for the original publisher.
+- a public checkout is reusable control-plane code for the user's own campaign, with private data kept outside repo, tracker, chat, and publishable artifacts.
 
 After edits, add or update tests so generated agent prompts and handoff packets include both halves of the boundary: "do not write raw/private data into repo/tracker/chat/publishable artifacts" and "return results through user-approved external locations plus compact ledgers/pointers/hashes/summaries/dossiers." Run the repo's local release or docs checks and report exactly what changed.
 ```

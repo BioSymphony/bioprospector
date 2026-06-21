@@ -182,6 +182,17 @@ class PublicAuditTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("forbidden text", result.stdout)
 
+    def test_public_process_cleanup_terms_are_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            leaked = root / "release.md"
+            leaked.write_text("## " + "Scr" + "ub Rules\n", encoding="utf-8")
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("forbidden text", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

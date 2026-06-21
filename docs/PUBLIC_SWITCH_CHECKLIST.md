@@ -44,9 +44,9 @@ substitute for manual review.
 
 Review every public release for:
 
-- private workstation paths, private repo names, private issue text, or internal run logs
+- private workstation paths, non-public repo names, private issue text, or internal run logs
 - API keys, tokens, signed URLs, SSH keys, registry auth, provider IDs, pod IDs, volume IDs, account IDs, or billing records
-- raw or heavy biological files, search databases, model weights, provider workdirs, or rendered private reports
+- raw or heavy biological files, search databases, model weights, provider workdirs, or rendered restricted reports
 - source-specific campaign aliases that present a private run as a public default
 - claim language that implies biological validation, route completion, production, assay success, or clinical utility
 

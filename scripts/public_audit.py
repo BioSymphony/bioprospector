@@ -116,6 +116,13 @@ FORBIDDEN_TEXT = [
     "huper" + "zine-heavy-artifacts",
 ]
 
+FORBIDDEN_TEXT_CASE_INSENSITIVE = [
+    "s" + "crub",
+    "s" + "anitiz",
+    "clean" + "-room",
+    "clean" + " room",
+]
+
 SECRET_PATTERNS = [
     re.compile(r"-----BEGIN (?:RSA |OPENSSH |EC |DSA )?PRIVATE KEY-----"),
     re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
@@ -244,6 +251,10 @@ def scan_file_content(root: Path, path: Path) -> list[str]:
         return issues
     for token in FORBIDDEN_TEXT:
         if token in text:
+            issues.append(f"forbidden text {token!r}: {rel}")
+    lower_text = text.lower()
+    for token in FORBIDDEN_TEXT_CASE_INSENSITIVE:
+        if token.lower() in lower_text:
             issues.append(f"forbidden text {token!r}: {rel}")
     for pattern in SECRET_PATTERNS:
         if pattern.search(text):

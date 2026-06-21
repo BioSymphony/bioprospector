@@ -10,11 +10,20 @@ venv/
 .env.*
 .runtime/
 .bioprospector-memory/
+dry-run/
+runs/
+data/
+databases/
+local-examples/
+internal/
+private/
+logs/
 dist/
 build/
 *.egg-info/
 *.log
 *.tmp
+.claude/*.lock
 
 # Never store raw/heavy biological data in this public planning repo.
 *.fastq

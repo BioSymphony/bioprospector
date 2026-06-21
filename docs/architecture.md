@@ -85,7 +85,7 @@ The repo is the control plane. Heavy work belongs in configured local workdirs, 
 Provider roles:
 
 - RunPod manual Pod: recommended optional provider path for controlled public/open data search, candidate compression, scoring, and route assembly.
-- AWS ElasticBLAST: reviewed and optionally blessed wide-search escalation against official NCBI BLAST databases.
+- AWS ElasticBLAST: reviewed optional wide-search escalation against official NCBI BLAST databases.
 - Local, cloud VM, neocloud VM, SSH/HPC, and managed workflow services: compatible provider-neutral lanes only when they preserve the same ledgers, artifact handoff, stage progress, and self-check gates.
 
 Framework roles:

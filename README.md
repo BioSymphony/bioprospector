@@ -2,11 +2,11 @@
 
 ![BioProspector agentic biosynthetic pathway discovery banner](docs/assets/bioprospector-banner-woodblock-2to1.jpg)
 
-**Give an agent a target molecule and a host. It comes back with a biosynthetic discovery campaign: route families, enzyme-mining lanes, dark-step hypotheses, stitched pathways, construct ideas, and a compute-ready plan.**
+**A portable skill repo for biosynthetic pathway campaigns: route families, enzyme and gene search lanes, pathway options, construct-oriented work lanes, and compute-ready plans.**
 
-BioProspector is a local-first, agent-operated skill for discovering biosynthetic pathways. You describe the target in plain language, and the agent expands the route space, mines enzyme and gene candidates, reasons through the steps nobody has solved yet, checks whether the route fits your host, and hands back review-ready options your team can act on.
+BioProspector helps agents and agentic harnesses tackle long-horizon bioprospecting work. You describe the target molecule, host, constraints, and available compute. The skill gives the agent a campaign contract, ledgers, validators, issue templates, and review artifacts it can use to plan the work and keep later workers aligned.
 
-It runs on the compute you already have. Everything works from a laptop, and a single search lane escalates to RunPod, HPC, a cloud VM, or AWS ElasticBLAST only when that lane earns it. It also drops into whatever agent harness you run: Claude Code, Codex, Symphony + Linear, or your own tracker. One campaign drives them all, so the harness stays a deployment choice.
+The repo works from a laptop and can prepare heavier search lanes for RunPod, HPC, a cloud VM, or AWS ElasticBLAST when the campaign calls for it. It fits Claude Code, Codex, Symphony with Linear, and tracker-neutral queues. One campaign contract gives each agent the same target, boundaries, work lanes, and artifact expectations.
 
 Three public example campaigns ship ready to run: **vanillin**, **nootkatone**, and **Huperzine A**. All are target-swappable for your own molecule.
 
@@ -25,15 +25,15 @@ flowchart LR
   D --> F
 ```
 
-## What It Does
+## What Agents Get
 
-A campaign does the hard parts:
+A campaign gives an agent concrete work products:
 
 - **Expands the route space:** natural, engineered, fed-substrate, analog, reverse-catabolism, dark-step, and de novo families, so the agent weighs real alternatives early.
 - **Reasons about the unknown:** missing chemistry, unknown genes, and hidden multi-gene steps become explicit, testable hypotheses with the counterevidence attached.
 - **Mines every reaction step:** shortlist the genes, summarize the domains, keep the source pointers, and record what was rejected so the next agent skips known dead ends.
 - **Returns several routes:** the minimal-gene option, the strongest-evidence option, the best host-fit, and an ambitious one, each with its trade-offs.
-- **Keeps claims honest:** planning, execution, evidence, and validation stay separate, so the agent never reports a pathway as built or validated before the evidence exists.
+- **Keeps result boundaries explicit:** planning, execution, search output, controls, and claim records stay separate, so downstream workers know what is ready and what still needs review.
 
 ```mermaid
 %%{init:{'theme':'base','flowchart':{'htmlLabels':false,'padding':16,'subGraphTitleMargin':{'top':10,'bottom':18}},'themeVariables':{'fontFamily':'Menlo, Consolas, monospace','lineColor':'#7a7a7a','clusterBkg':'#0c0c0c','clusterBorder':'#3a3a3a','titleColor':'#dcdcdc'}}}%%
@@ -183,9 +183,9 @@ unknown chemistry into single-gene and multi-gene hypotheses with counterevidenc
 then tell me the cheapest next experiment that would tell them apart.
 ```
 
-## What It Doesn't Claim
+## Result Boundaries
 
-BioProspector plans and reasons. It does not validate biology, and it never claims a route is *produced*, *validated in host*, *assay-proven*, or *production-ready* on its own. Those need real execution, joined evidence, controls, and expert review. See [`NON_CLAIMS.md`](NON_CLAIMS.md) for the boundary and [`docs/no-false-success-gates.md`](docs/no-false-success-gates.md) for how the gates work.
+BioProspector returns planning artifacts, search contracts, rankings, and review packages. Production, host performance, assay results, and deployment readiness require separate execution records, controls, and expert review. See [`NON_CLAIMS.md`](NON_CLAIMS.md) and [`docs/no-false-success-gates.md`](docs/no-false-success-gates.md).
 
 ## Go Deeper
 

@@ -31,7 +31,7 @@ The repo ships:
 Do not add:
 
 - API keys, provider credentials, signed URLs, SSH keys, or registry auth
-- private workstation paths or private repository history
+- private workstation paths or non-public local history
 - pod IDs, network volume IDs, account IDs, or private project identifiers
 - private Linear issue text, internal run logs, cost records, or raw pod output
 - unpublished biological data, private sequences, raw reads, database mirrors, model weights, or restricted datasets
@@ -62,7 +62,7 @@ provider identifiers are tracked.
 Use [`skills/bioprospector/SKILL.md`](skills/bioprospector/SKILL.md). Summary:
 target contract -> input audit -> minimal operator intake -> route universe ->
 reaction steps -> candidate mining lanes -> target evidence and controls ->
-route stitching -> claim audit -> dossier-ready ledgers.
+route stitching -> claim audit -> review-package ledgers.
 
 ## Claim Boundaries
 

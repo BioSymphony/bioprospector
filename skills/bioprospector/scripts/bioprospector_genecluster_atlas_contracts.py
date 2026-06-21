@@ -44,6 +44,13 @@ BGC_VERDICTS = {"supported", "candidate", "weak_support", "conflict", "rejected"
 DISAGREEMENT_STATUSES = {"none", "present", "insufficient_callers"}
 JURY_VERDICTS = {"supported", "candidate", "ambiguous", "contradictory", "unknown", "rejected", "deferred"}
 REVIEW_STATUSES = {"accepted", "rejected", "needs-human-review", "publication-candidate"}
+PROVIDER_ADAPTERS = {
+    "review_only",
+    "runpod_bridge",
+    "runpod-bridge",
+    "symphony_neocloud_bridge",
+    "symphony-neocloud-bridge",
+}
 
 RAW_HEAVY_SUFFIXES = (
     ".fastq",
@@ -492,8 +499,9 @@ def validate_provider_handoff_manifest(path: Path) -> dict[str, Any]:
     if data.get("schema_version") != "genecluster_provider_handoff.v1":
         errors.append("provider_handoff_manifest.json schema_version must be genecluster_provider_handoff.v1")
     provider = data.get("provider", {})
-    if isinstance(provider, dict) and provider.get("adapter") not in {"runpod_bridge", "runpod-bridge", "review_only"}:
-        errors.append("provider_handoff_manifest.json provider.adapter must be runpod_bridge or review_only")
+    if isinstance(provider, dict) and provider.get("adapter") not in PROVIDER_ADAPTERS:
+        allowed = ", ".join(sorted(PROVIDER_ADAPTERS))
+        errors.append(f"provider_handoff_manifest.json provider.adapter must be one of: {allowed}")
     artifact_egress = data.get("artifact_egress", {})
     if isinstance(artifact_egress, dict):
         if artifact_egress.get("summary_only") is not True:
