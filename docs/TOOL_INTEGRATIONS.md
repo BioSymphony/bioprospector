@@ -14,7 +14,7 @@ For install hints, see [`OPTIONAL_TOOLS.md`](OPTIONAL_TOOLS.md).
 | --- | --- | --- |
 | NCBI BLAST+ (`blastp`, `blastn`) | `-outfmt 6` 12-column TSV | `bioprospector_evidence_ingest.py --format blast6` |
 | DIAMOND | 12-column TSV in BLAST6 layout | `--format diamond` |
-| MMseqs2 | 12-column TSV in BLAST6 layout | `--format mmseqs` |
+| MMseqs2 / MMseqs2-GPU | 12-column TSV in BLAST6 layout | `--format mmseqs` |
 
 The ingest produces `candidate-funnels.tsv`, `enzyme-draft-board.tsv`,
 `candidate-sequence-ledger.tsv`, `candidate-graph-ledger.tsv`,
@@ -27,6 +27,8 @@ The ingest produces `candidate-funnels.tsv`, `enzyme-draft-board.tsv`,
 | --- | --- | --- |
 | HMMER `hmmscan` / `hmmsearch` | `--domtblout` (Pfam-style) | `--format hmmer-domtbl` |
 | Domain summary tables | normalized TSV | `--format domain-tsv` |
+| nf-core/proteinfamilies / HH-suite-style family workflows | compact family, HMM, and membership summaries | Normalize to `domain-annotation-ledger.tsv`, `candidate-diversity-ledger.tsv`, and `candidate-graph-ledger.tsv` |
+| PLMSearch / PLMAlign-style remote homology | hit tables, embedding-neighbor summaries, and alignment pointers | Normalize to candidate graph and diversity ledgers; keep model caches outside the repo |
 
 The ingest produces `domain-annotation-ledger.tsv` and
 `evidence-event-ledger.tsv`.
@@ -36,6 +38,7 @@ The ingest produces `domain-annotation-ledger.tsv` and
 | Tool | Role | Integration |
 | --- | --- | --- |
 | Foldseek | Structure neighbor searches | Optional; doctor reports availability. Outputs join through `candidate-graph-ledger.tsv` and `structure-risk-ledger.tsv` when an operator wires them in. |
+| EasIFA / TopEC / ProtDETR-style function or active-site predictors | Enzyme-function and active-site evidence | Record compact function votes in `protein_function_votes.tsv`, `candidate-intelligence-ledger.tsv`, and `structure-risk-ledger.tsv`; treat predictions as ranking evidence only. |
 
 See [`host-structure-risk.md`](host-structure-risk.md) for the
 structure-risk evidence path.
@@ -45,6 +48,9 @@ structure-risk evidence path.
 | Surface | Where it lives in BioProspector |
 | --- | --- |
 | antiSMASH / plantiSMASH cluster calls | `cluster_calls.tsv`, validated by `bioprospector_genecluster_atlas_contracts.py` |
+| antiSMASH DB / MIBiG curated BGC references | `bgc-context-ledger.tsv`, `compound-source-ledger.tsv`, and citation/accession rows |
+| GATOR-GC targeted cluster windows | `cluster_calls.tsv`, `bgc_consensus.tsv`, and compact neighborhood summaries |
+| BGCFlow / lsaBGC / BiG-SCAPE / BiG-SLiCE summaries | `bgc-context-ledger.tsv`, `candidate-graph-ledger.tsv`, and cluster-family summaries |
 | cblaster / clinker neighborhood evidence | `cluster_calls.tsv`, `bgc_consensus.tsv` |
 | Pfam / UniProt / EC predictor function votes | `protein_function_votes.tsv`, `protein_function_jury.tsv` |
 | Metagenome and MAG context | `metagenome-context-ledger.tsv`, `mag-quality-ledger.tsv` |
@@ -64,6 +70,11 @@ citation evidence: search terms, sources, recency windows, result caps,
 and citation pointers. The skill stays publisher-neutral; an agent can
 populate these from PubMed, EuropePMC, Crossref, or another source under
 operator-approved access rules.
+
+PubTator 3.0, SciSpaCy, GROBID, and PaperQA2-style summarizers are useful
+adjacent tools when they return identifiers, citations, extracted entities, and
+short source-linked findings. They should not copy full-text articles, publisher
+PDFs, or unrestricted literature dumps into the repo.
 
 ## Cloud Search Providers
 

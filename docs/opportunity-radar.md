@@ -1,6 +1,6 @@
 # BioProspector Opportunity Radar
 
-Refresh date: 2026-05-23.
+Refresh date: 2026-06-21.
 
 This is the public expansion backlog for BioProspector. Items here are not
 default campaign dependencies. Promote one only after it has a ledger contract,
@@ -34,6 +34,13 @@ output story.
 - Remote homology and diversity: HH-suite, PLMSearch/PLMAlign,
   ProteinCartography, EFI tools, MGnify, OrthoFinder, OMA, PROSITE, NCBI CDD,
   CATH-Gene3D, and M-CSA.
+- Recent sequence and family candidates: MMseqs2-GPU for approved GPU search,
+  nf-core/proteinfamilies for reproducible family/HMM workflows, and
+  PLMSearch/PLMAlign for remote-homology ranking. Keep model caches and raw
+  sequence stores outside the repo.
+- Enzyme-function and kinetics candidates: CatPred, CataPro, ProKcat, ProtDETR,
+  TopEC, EasIFA, CLEAN, and CLEAN-Contact. Treat outputs as votes for ranking
+  and review, not target evidence by themselves.
 - Relevant ledgers: `sequence-search-plan-ledger.tsv`,
   `candidate-sequence-ledger.tsv`, `domain-annotation-ledger.tsv`,
   `candidate-diversity-ledger.tsv`, `candidate-graph-ledger.tsv`,
@@ -45,7 +52,8 @@ output story.
 ## Route, Reaction, And Host Fit
 
 - Route expansion and enzyme ranking: RetroRules, RetroBioCat, SelenzymeRF,
-  Pickaxe, novoStoic, and ECREACT-style comparators.
+  Pickaxe, novoStoic, ChemEnzyRetroPlanner, BioNavi, EnzRetro, and
+  ECREACT-style comparators.
 - Feasibility and host context: eQuilibrator, component-contribution, gapseq,
   COBRApy, StrainDesign, ModelSEEDpy, and KBase-style hosted summaries.
 - Fallback review: ASKCOS or manual chemoenzymatic rescue ideas for blocked
@@ -68,7 +76,8 @@ output story.
 
 ## Genome, BGC, Metagenome, And Metabolomics Context
 
-- BGC and genome context: plantiSMASH, GECCO, BiG-SLiCE/BiG-FAM, BGCFlow,
+- BGC and genome context: antiSMASH 8, antiSMASH DB, plantiSMASH 2, GECCO,
+  BiG-SCAPE/BiG-SLiCE/BiG-FAM, MIBiG 4, GATOR-GC, BGCFlow, lsaBGC, FunBGCeX,
   cblaster, clinker, and related cluster/neighborhood summaries.
 - Metagenome context: MAG quality, contig pointers, taxonomy summaries, and
   decoy-control joins without raw reads or MAG archives.
@@ -80,6 +89,19 @@ output story.
   `metagenome-context-ledger.tsv`, `mag-quality-ledger.tsv`,
   `metabolomics-evidence-ledger.tsv`, `compound-source-ledger.tsv`, and
   `eukaryotic-annotation-ledger.tsv`.
+
+## Literature And Evidence Extraction
+
+- Candidate tools: PubTator 3.0 for biomedical entity/relation extraction,
+  SciSpaCy and GROBID for local extraction, Semantic Scholar / Europe PMC /
+  Crossref for citation metadata, and PaperQA2-style citation-grounded
+  summarization when source access is operator-approved.
+- Relevant ledgers: `literature-search-ledger.tsv`,
+  `literature-ledger.tsv`, `candidate-intelligence-ledger.tsv`,
+  `evidence-event-ledger.tsv`, and `claim-ledger.md`.
+- Boundary: store identifiers, citations, extracted entities, short findings,
+  and source pointers only. Do not store publisher PDFs, full-text dumps, or
+  generated answer text without source-linked evidence rows.
 
 ## Promotion Rule
 
