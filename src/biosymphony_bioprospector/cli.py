@@ -40,11 +40,12 @@ SCRIPT_ALIASES = {
     "runpod-bundle": "bioprospector_runpod_bundle.py",
     "self-learning": "bioprospector_self_learning.py",
     "stage-contract": "bioprospector_stage_contract.py",
+    "workspace-status": "bioprospector_workspace_status.py",
 }
 
 
 COMMAND_GROUPS = {
-    "Health and release": ["doctor"],
+    "Health and release": ["doctor", "workspace-status"],
     "Campaign control plane": [
         "new-campaign",
         "preflight",
@@ -297,6 +298,10 @@ def self_learning() -> int:
 
 def stage_contract() -> int:
     return run_script("bioprospector_stage_contract.py")
+
+
+def workspace_status() -> int:
+    return run_script("bioprospector_workspace_status.py")
 
 
 if __name__ == "__main__":

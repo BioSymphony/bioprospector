@@ -39,6 +39,7 @@ class BioProspectorCliTests(unittest.TestCase):
         self.assertIn("genecluster-atlas-plan", result.stdout)
         self.assertIn("preflight", result.stdout)
         self.assertIn("stage-contract", result.stdout)
+        self.assertIn("workspace-status", result.stdout)
 
     def test_multiplexer_passes_help_to_script(self) -> None:
         result = run_cli("genecluster-atlas-plan", "--help")
@@ -51,6 +52,7 @@ class BioProspectorCliTests(unittest.TestCase):
         self.assertIn('"command": "campaign-handoff"', result.stdout)
         self.assertIn('"command": "campaign-status"', result.stdout)
         self.assertIn('"command": "stage-contract"', result.stdout)
+        self.assertIn('"command": "workspace-status"', result.stdout)
 
     def test_quickstart_uses_public_make_target(self) -> None:
         result = run_cli("quickstart")

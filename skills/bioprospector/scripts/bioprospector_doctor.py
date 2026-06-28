@@ -30,6 +30,7 @@ CORE_SCRIPTS = [
     "bioprospector_genecluster_atlas_plan.py",
     "bioprospector_genecluster_atlas_normalizers.py",
     "bioprospector_genecluster_atlas_contracts.py",
+    "bioprospector_workspace_status.py",
 ]
 
 EXAMPLES = [

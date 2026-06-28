@@ -27,6 +27,7 @@ script-backed commands fail closed instead of guessing a checkout.
 | Command | Purpose |
 | --- | --- |
 | `bioprospector doctor --include-runtime` | Check schema, examples, optional tools, public audit, and forbidden tracked paths. |
+| `bioprospector workspace-status` | Summarize git state, runtime sidecar counts, key files, and suggested commands with local paths hidden by default. |
 | `bioprospector commands --json` | Print a machine-readable command index for wrappers, docs, and agents. |
 | `bioprospector quickstart` | Print the local-only first-run path. |
 | `bioprospector --version` | Print the package version without checkout discovery. |

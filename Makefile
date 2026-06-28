@@ -1,9 +1,10 @@
-.PHONY: help first-look release-check switch-check test build package-smoke wheel-smoke doctor docs-check metadata-check version-check examples capabilities local-demo capability-demo demo-artifacts campaign-status-demo handoff-demo agent-brief-demo retrospective-demo provider-demo audit runtime-audit clean-runtime
+.PHONY: help first-look release-check switch-check test build package-smoke wheel-smoke doctor workspace-status docs-check metadata-check version-check examples capabilities local-demo capability-demo demo-artifacts campaign-status-demo handoff-demo agent-brief-demo retrospective-demo provider-demo audit runtime-audit clean-runtime
 
 help:
 	@echo "BioProspector local commands"
 	@echo "  make first-look            Run doctor, local demo, and point at the resulting dossier"
 	@echo "  make doctor                Check checkout, schema, optional tools, and public audit"
+	@echo "  make workspace-status      Summarize checkout status with local paths hidden"
 	@echo "  make local-demo            Generate local-only demo artifacts under .runtime/"
 	@echo "  make campaign-status-demo  Write compact campaign status snapshots"
 	@echo "  make handoff-demo          Write review-only worker/reviewer handoff packets"
@@ -48,6 +49,7 @@ wheel-smoke: build
 	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli genecluster-atlas-plan --help >/dev/null
 	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli stage-contract --help >/dev/null
 	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli retrospective --help >/dev/null
+	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli workspace-status --help >/dev/null
 	rm -rf /tmp/bioprospector-wheel-no-checkout-install
 	python3 -m pip install --no-index --find-links .runtime/package-smoke/dist --target /tmp/bioprospector-wheel-no-checkout-install biosymphony-bioprospector >/dev/null
 	cd /tmp && PYTHONPATH=/tmp/bioprospector-wheel-no-checkout-install python3 -m biosymphony_bioprospector.cli --version >/dev/null
@@ -55,6 +57,9 @@ wheel-smoke: build
 
 doctor:
 	python3 skills/bioprospector/scripts/bioprospector_doctor.py --include-runtime
+
+workspace-status:
+	python3 skills/bioprospector/scripts/bioprospector_workspace_status.py
 
 docs-check:
 	python3 scripts/check_docs_links.py .

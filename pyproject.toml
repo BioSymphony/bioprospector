@@ -73,6 +73,7 @@ bioprospector-retrospective = "biosymphony_bioprospector.cli:retrospective"
 bioprospector-runpod-bundle = "biosymphony_bioprospector.cli:runpod_bundle"
 bioprospector-self-learning = "biosymphony_bioprospector.cli:self_learning"
 bioprospector-stage-contract = "biosymphony_bioprospector.cli:stage_contract"
+bioprospector-workspace-status = "biosymphony_bioprospector.cli:workspace_status"
 
 [tool.setuptools.packages.find]
 where = ["src"]
