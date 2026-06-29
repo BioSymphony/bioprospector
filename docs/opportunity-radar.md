@@ -1,6 +1,6 @@
 # BioProspector Opportunity Radar
 
-Refresh date: 2026-06-21.
+Refresh date: 2026-06-28.
 
 This is the public expansion backlog for BioProspector. Items here are not
 default campaign dependencies. Promote one only after it has a ledger contract,
@@ -27,7 +27,25 @@ output story.
 - Executable proof: exact commands, versions, database/model versions, and dry
   invocation evidence before paid compute.
 - Review surface: candidate graph exports plus Quarto, marimo, Evidence.dev, or
-  Streamlit dossiers driven by ledgers.
+  Streamlit reports driven by ledgers.
+
+## Hosted Design And Tool Backends
+
+- Proto / Evo Design: `proto-tools` standardizes Input / Config / Output
+  schemas for structure prediction, inverse folding, PLM scoring, alignment,
+  annotation, retrieval, and sequence scoring. `proto-language` models design
+  work as sequences, segments, constructs, generators, constraints, optimizers,
+  and programs. `proto-client` and Proto Bio MCP provide a hosted tool and
+  optimization interface.
+- BioProspector fit: map Proto tool schemas, runs, metrics, assets, and exports
+  into `tool-execution-proof-ledger.tsv`,
+  `candidate-intelligence-ledger.tsv`, `structure-risk-ledger.tsv`,
+  `sequence-search-plan-ledger.tsv`, and `run-output-package-ledger.tsv`.
+- Primary sources: [Proto about](https://proto.evodesign.org/about),
+  [proto-tools](https://github.com/evo-design/proto-tools),
+  [proto-language](https://github.com/evo-design/proto-language),
+  [proto-client](https://github.com/evo-design/proto-client), and
+  [Proto Bio MCP](https://proto.evodesign.org/docs/mcp/introduction).
 
 ## Candidate Expansion And Compression
 
