@@ -13,8 +13,8 @@ packages.
 ## Default Agent Flow
 
 1. Read every Markdown note under `.bioprospector-memory/` if the folder exists. These are durable lessons captured by past agents on this user's machine. Treat them as agent-process guidance for this campaign, not as biology evidence or claim closeout.
-2. Read `README.md`, `docs/QUICKSTART.md`, and `docs/AGENT_PLAYBOOK.md`.
-3. Run `python3 skills/bioprospector/scripts/bioprospector_doctor.py`.
+2. Read `references/README.md`, `references/docs/QUICKSTART.md`, and `references/docs/AGENT_PLAYBOOK.md`.
+3. Run `python3 scripts/bioprospector_doctor.py`.
 4. Choose a public example or scaffold a new campaign under `.runtime/`.
 5. Run preflight and input audit before asking operator questions.
 6. Generate local issue drafts with `--include-profile full-frontier` when a broad review graph is useful.
@@ -50,21 +50,21 @@ Use BioProspector as a local-first skill kit:
 Before accepting a campaign prep artifact, run:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_doctor.py
+python3 scripts/bioprospector_doctor.py
 
-python3 skills/bioprospector/scripts/bioprospector_preflight.py \
-  --campaign skills/bioprospector/examples/vanillin-yeast-v0/campaign-manifest.json
+python3 scripts/bioprospector_preflight.py \
+  --campaign examples/vanillin-yeast-v0/campaign-manifest.json
 
-python3 skills/bioprospector/scripts/bioprospector_stage_contract.py \
-  --campaign skills/bioprospector/examples/nootkatone-yeast-v0/campaign-manifest.json
+python3 scripts/bioprospector_stage_contract.py \
+  --campaign examples/nootkatone-yeast-v0/campaign-manifest.json
 ```
 
 To prepare local issue-style planning drafts without dispatching workers or
 touching an issue tracker:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_issue_dry_run.py \
-  --campaign skills/bioprospector/examples/vanillin-yeast-v0/campaign-manifest.json \
+python3 scripts/bioprospector_issue_dry_run.py \
+  --campaign examples/vanillin-yeast-v0/campaign-manifest.json \
   --prefix VANILLIN \
   --out .runtime/vanillin-linear-issues
 ```
@@ -72,8 +72,8 @@ python3 skills/bioprospector/scripts/bioprospector_issue_dry_run.py \
 To include wide/frontier evidence-lane children, RunPod prep drafts, and AWS ElasticBLAST prep drafts:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_issue_dry_run.py \
-  --campaign skills/bioprospector/examples/nootkatone-yeast-v0/campaign-manifest.json \
+python3 scripts/bioprospector_issue_dry_run.py \
+  --campaign examples/nootkatone-yeast-v0/campaign-manifest.json \
   --prefix NOOTKATONE \
   --out .runtime/nootkatone-linear-issues \
   --include-evidence-lanes \
@@ -107,20 +107,20 @@ python3 skills/bioprospector/scripts/bioprospector_issue_dry_run.py \
 To validate the public Huperzine A dark-step/source-context frontier demo:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_preflight.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_preflight.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --repo-root . \
   --scan-local-artifacts
 
-python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json
+python3 scripts/bioprospector_contract_self_check.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json
 ```
 
 To create a new compact reviewed campaign scaffold:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_new_campaign.py \
-  --target-contract templates/target-contract.example.json \
+python3 scripts/bioprospector_new_campaign.py \
+  --target-contract references/templates/target-contract.example.json \
   --out .runtime/scaffolds/example-target-v0 \
   --campaign-id example-target-v0
 ```
@@ -128,8 +128,8 @@ python3 skills/bioprospector/scripts/bioprospector_new_campaign.py \
 To export a compact dossier:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_dossier_export.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_dossier_export.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --out .runtime/dossiers/huperzine-frontier-public-v0.md
 ```
 
@@ -137,54 +137,54 @@ To compile the campaign graph, package candidate indexes, run Pareto ranking,
 and export a sidecar-aware dossier:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_campaign_status.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_campaign_status.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --out .runtime/campaign-status/huperzine-frontier-public-v0.md \
   --format markdown
 
-python3 skills/bioprospector/scripts/bioprospector_handoff_packet.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_handoff_packet.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --out .runtime/handoffs/huperzine-frontier-public-v0 \
   --prefix HUPERZINE \
   --profile public-demo
 
-python3 skills/bioprospector/scripts/bioprospector_agent_brief.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_agent_brief.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --out .runtime/agent-briefs/huperzine-frontier-public-v0 \
   --prefix HUPERZINE \
   --profile public-demo \
   --mode goal \
   --agent codex
 
-python3 skills/bioprospector/scripts/bioprospector_campaign_graph.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_campaign_graph.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --out .runtime/campaign-graphs/huperzine-frontier-public-v0.json
 
-python3 skills/bioprospector/scripts/bioprospector_candidate_package.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_candidate_package.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --out .runtime/candidate-packages/huperzine-frontier-public-v0
 
-python3 skills/bioprospector/scripts/bioprospector_genecluster_atlas_plan.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_genecluster_atlas_plan.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --out .runtime/genecluster-atlas/huperzine-frontier-public-v0
 
-python3 skills/bioprospector/scripts/bioprospector_genecluster_atlas_normalizers.py all \
-  --annotation-direct skills/bioprospector/examples/genecluster-synthetic-v0/compact-clusters.tsv \
-  --pfam skills/bioprospector/examples/genecluster-synthetic-v0/compact-pfam.tsv \
+python3 scripts/bioprospector_genecluster_atlas_normalizers.py all \
+  --annotation-direct examples/genecluster-synthetic-v0/compact-clusters.tsv \
+  --pfam examples/genecluster-synthetic-v0/compact-pfam.tsv \
   --out-dir .runtime/genecluster-atlas/synthetic-contracts
 
-python3 skills/bioprospector/scripts/bioprospector_genecluster_atlas_contracts.py \
+python3 scripts/bioprospector_genecluster_atlas_contracts.py \
   --cluster-calls .runtime/genecluster-atlas/synthetic-contracts/cluster_calls.tsv \
   --bgc-consensus .runtime/genecluster-atlas/synthetic-contracts/bgc_consensus.tsv \
   --protein-function-votes .runtime/genecluster-atlas/synthetic-contracts/protein_function_votes.tsv \
   --protein-function-jury .runtime/genecluster-atlas/synthetic-contracts/protein_function_jury.tsv
 
-python3 skills/bioprospector/scripts/bioprospector_pareto_rank.py \
-  --campaign skills/bioprospector/examples/nootkatone-yeast-v0/campaign-manifest.json \
+python3 scripts/bioprospector_pareto_rank.py \
+  --campaign examples/nootkatone-yeast-v0/campaign-manifest.json \
   --out .runtime/rankings/nootkatone-yeast-v0
 
-python3 skills/bioprospector/scripts/bioprospector_dossier_export.py \
-  --campaign skills/bioprospector/examples/huperzine-frontier-public-v0/campaign-manifest.json \
+python3 scripts/bioprospector_dossier_export.py \
+  --campaign examples/huperzine-frontier-public-v0/campaign-manifest.json \
   --sidecar-dir .runtime/candidate-packages/huperzine-frontier-public-v0 \
   --out .runtime/dossiers/huperzine-frontier-public-v0.md
 ```
@@ -192,8 +192,8 @@ python3 skills/bioprospector/scripts/bioprospector_dossier_export.py \
 To smoke-test public sidecars without launching anything:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_public_demo_smoke.py \
-  --campaign skills/bioprospector/examples/nootkatone-yeast-v0/campaign-manifest.json \
+python3 scripts/bioprospector_public_demo_smoke.py \
+  --campaign examples/nootkatone-yeast-v0/campaign-manifest.json \
   --prefix NOOTKATONE \
   --out .runtime/public-demo-smoke/nootkatone \
   --skip-provider-bundles
@@ -203,7 +203,7 @@ After an operator-owned run has copied compact after-run artifacts into an
 ignored local runtime folder, build a redacted retrospective ledger:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_retrospective.py \
+python3 scripts/bioprospector_retrospective.py \
   --root .runtime \
   --out .runtime/retrospective-ledger.tsv
 ```
@@ -211,8 +211,8 @@ python3 skills/bioprospector/scripts/bioprospector_retrospective.py \
 Before worker questions, audit declared inputs:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_input_audit.py \
-  --campaign skills/bioprospector/examples/nootkatone-yeast-v0/campaign-manifest.json
+python3 scripts/bioprospector_input_audit.py \
+  --campaign examples/nootkatone-yeast-v0/campaign-manifest.json
 ```
 
 Then ask only the minimum necessary operator questions. If the operator says
@@ -223,7 +223,7 @@ live execution or final claim closeout.
 Before declaring any live campaign successful, run the joined contract self-check:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py \
+python3 scripts/bioprospector_contract_self_check.py \
   --campaign path/to/live/campaign-manifest.json \
   --require-real-execution \
   --require-target-evidence \
@@ -234,16 +234,16 @@ python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py \
 To prepare a review-only RunPod readiness bundle without launching compute:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_runpod_bundle.py \
-  --campaign skills/bioprospector/examples/nootkatone-yeast-v0/campaign-manifest.json \
+python3 scripts/bioprospector_runpod_bundle.py \
+  --campaign examples/nootkatone-yeast-v0/campaign-manifest.json \
   --out .runtime/runpod-readiness/nootkatone-yeast-v0
 ```
 
 To prepare a review-only AWS ElasticBLAST wide-search bundle without touching AWS:
 
 ```bash
-python3 skills/bioprospector/scripts/bioprospector_elasticblast_bundle.py \
-  --campaign skills/bioprospector/examples/nootkatone-yeast-v0/campaign-manifest.json \
+python3 scripts/bioprospector_elasticblast_bundle.py \
+  --campaign examples/nootkatone-yeast-v0/campaign-manifest.json \
   --out .runtime/elasticblast-readiness/nootkatone-yeast-v0 \
   --bucket-uri s3://REPLACE_ME_OPERATOR_APPROVED_BUCKET/biosymphony-elasticblast \
   --database nr \
@@ -252,45 +252,45 @@ python3 skills/bioprospector/scripts/bioprospector_elasticblast_bundle.py \
 
 Optional Symphony sidecar reference:
 
-- `../../docs/symphony-linear-sidecar.md`
-- `../../templates/symphony-workflow-bioprospector.WORKFLOW.md`
+- `references/docs/symphony-linear-sidecar.md`
+- `references/templates/symphony-workflow-bioprospector.WORKFLOW.md`
 
 ## Reference Map
 
-- Product foundation: `../../docs/product-foundation.md`
-- Architecture: `../../docs/architecture.md`
-- Quickstart: `../../docs/QUICKSTART.md`
-- Workflow guide: `../../docs/WORKFLOWS.md`
-- CLI reference: `../../docs/CLI_REFERENCE.md`
-- Privacy and security model: `../../docs/PRIVACY_SECURITY_MODEL.md`
-- Modes: `../../docs/MODES.md`
-- Agent install: `../../docs/AGENT_INSTALL.md`
-- First campaign: `../../docs/FIRST_CAMPAIGN.md`
-- Capability map: `../../docs/capability-map.md`
-- Dossier schema: `../../docs/dossier-schema.md`
-- RunPod stack: `../../docs/runpod-stack.md`
-- AWS ElasticBLAST stack: `../../docs/aws-elasticblast-stack.md`
-- Compute provider strategy: `../../docs/compute-provider-strategy.md`
-- Ambiguity workflows: `../../docs/ambiguity-workflows.md`
-- Enzyme family search: `../../docs/enzyme-family-search.md`
-- Genome-context mining: `../../docs/genome-context-mining.md`
-- GeneCluster atlas public lane: `../../docs/genecluster-atlas-public-lane.md`
-- Host and structure risk: `../../docs/host-structure-risk.md`
-- Monitoring and provenance: `../../docs/monitoring-provenance.md`
-- Stage progress and provider preflight: `../../docs/stage-progress-and-provider-preflight.md`
-- Operator intake: `../../docs/operator-intake.md`
-- No-false-success gates: `../../docs/no-false-success-gates.md`
-- Dossier header contracts: `../../docs/dossier-schema.md`
-- Tool stack: `../../docs/tool-stack.md`
-- Opportunity radar: `../../docs/opportunity-radar.md`
+- Product foundation: `references/docs/product-foundation.md`
+- Architecture: `references/docs/architecture.md`
+- Quickstart: `references/docs/QUICKSTART.md`
+- Workflow guide: `references/docs/WORKFLOWS.md`
+- CLI reference: `references/docs/CLI_REFERENCE.md`
+- Privacy and security model: `references/docs/PRIVACY_SECURITY_MODEL.md`
+- Modes: `references/docs/MODES.md`
+- Agent install: `references/docs/AGENT_INSTALL.md`
+- First campaign: `references/docs/FIRST_CAMPAIGN.md`
+- Capability map: `references/docs/capability-map.md`
+- Dossier schema: `references/docs/dossier-schema.md`
+- RunPod stack: `references/docs/runpod-stack.md`
+- AWS ElasticBLAST stack: `references/docs/aws-elasticblast-stack.md`
+- Compute provider strategy: `references/docs/compute-provider-strategy.md`
+- Ambiguity workflows: `references/docs/ambiguity-workflows.md`
+- Enzyme family search: `references/docs/enzyme-family-search.md`
+- Genome-context mining: `references/docs/genome-context-mining.md`
+- GeneCluster atlas public lane: `references/docs/genecluster-atlas-public-lane.md`
+- Host and structure risk: `references/docs/host-structure-risk.md`
+- Monitoring and provenance: `references/docs/monitoring-provenance.md`
+- Stage progress and provider preflight: `references/docs/stage-progress-and-provider-preflight.md`
+- Operator intake: `references/docs/operator-intake.md`
+- No-false-success gates: `references/docs/no-false-success-gates.md`
+- Dossier header contracts: `references/docs/dossier-schema.md`
+- Tool stack: `references/docs/tool-stack.md`
+- Opportunity radar: `references/docs/opportunity-radar.md`
 - Opportunity lane runbooks: `references/opportunity-lane-runbooks.md`
-- Future campaign references: `../../docs/future-campaigns.md`
+- Future campaign references: `references/docs/future-campaigns.md`
 - RunPod readiness: `references/runpod-readiness.md`
-- RunPod BLAST and candidate package: `../../docs/runpod-blast-candidate-package.md`
-- Target modularity: `../../docs/target-modularity.md`
-- Self-learning skill runbook: `../../docs/self-learning-skill-runbook.md`
-- Shared ledger schema: `../../schemas/bioprospector-ledgers.json`
-- Linear issue template: `../../templates/linear-issue.md`
+- RunPod BLAST and candidate package: `references/docs/runpod-blast-candidate-package.md`
+- Target modularity: `references/docs/target-modularity.md`
+- Self-learning skill runbook: `references/docs/self-learning-skill-runbook.md`
+- Shared ledger schema: `references/schemas/bioprospector-ledgers.json`
+- Linear issue template: `references/templates/linear-issue.md`
 - Full frontier readiness: `references/campaigns/full-frontier-readiness.md`
 - Campaign: `references/campaigns/pathway-big-bang.md`
 - Campaign: `references/campaigns/enzyme-frontier.md`
@@ -371,7 +371,7 @@ compact summaries.
 
 When a BioProspector run stalls, falls back, fails a gate, burns unexpected
 budget, produces ambiguous rankings, or reveals a repeated workflow gap, use
-`../../docs/self-learning-skill-runbook.md`. Capture the hiccup as a falsifiable
+`references/docs/self-learning-skill-runbook.md`. Capture the hiccup as a falsifiable
 process hypothesis in `self-learning-skill-ledger.tsv`: observation, probe,
 baseline/control, expected signal, stop-loss, result, and decision. Promote
 reusable lessons into runbooks, this skill, templates, validators, or issue

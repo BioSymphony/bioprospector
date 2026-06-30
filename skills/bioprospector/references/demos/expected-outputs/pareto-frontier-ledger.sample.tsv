@@ -1,0 +1,3 @@
+frontier_id	route_id	lens	rank	score	rationale	candidate_ids	blocking_gaps	claim_level	package_id	notes
+PF-SAMPLE-001	R-DEMO-001	highest_evidence	1	0.78	Example route remains useful because its candidates have compact evidence summaries.	CAND-DEMO-001;CAND-DEMO-002	requires_target_evidence_join	hypothesis	PKG-DEMO-001	Snapshot row only; regenerate real local demo under .runtime/.
+PF-SAMPLE-002	R-DEMO-002	diversity_library	2	0.61	Alternative route preserves enzyme-family diversity for later review.	CAND-DEMO-003	missing_decoy_control	hypothesis	PKG-DEMO-001	Snapshot row only; not biological validation.

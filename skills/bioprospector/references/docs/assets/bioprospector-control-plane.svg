@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="620" viewBox="0 0 1180 620" role="img" aria-labelledby="title desc">
+  <title id="title">BioProspector local control plane</title>
+  <desc id="desc">A workflow diagram showing a local agent turning a target molecule and host into route hypotheses, issue drafts, candidate packages, rankings, and dossiers.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 14; }
+      .primary { fill: #0f766e; }
+      .secondary { fill: #4338ca; }
+      .accent { fill: #b45309; }
+      .safe { fill: #166534; }
+      .muted { fill: #475569; }
+      .text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .small { font-size: 20px; }
+      .label { font-size: 24px; font-weight: 700; }
+      .tiny { font-size: 16px; fill: #475569; }
+      .white { fill: #ffffff; }
+      .line { stroke: #64748b; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1180" height="620" rx="24"/>
+  <text class="text" x="54" y="64" font-size="34" font-weight="800">BioProspector turns a target molecule into a route and enzyme frontier</text>
+  <text class="text tiny" x="56" y="99">Route atlas, work graph, candidate package, Pareto shortlist, cloud handoff, and dossier.</text>
+
+  <rect class="panel" x="54" y="150" width="210" height="126"/>
+  <circle class="primary" cx="88" cy="187" r="16"/>
+  <text class="text label" x="116" y="194">Agent</text>
+  <text class="text tiny" x="78" y="229">Reads the skill, runs doctor,</text>
+  <text class="text tiny" x="78" y="252">asks only needed questions</text>
+
+  <rect class="panel" x="54" y="344" width="210" height="126"/>
+  <circle class="secondary" cx="88" cy="381" r="16"/>
+  <text class="text label" x="116" y="388">Target</text>
+  <text class="text tiny" x="78" y="423">Molecule, host, boundaries,</text>
+  <text class="text tiny" x="78" y="446">optimization goals</text>
+
+  <rect class="panel" x="342" y="150" width="250" height="320"/>
+  <text class="text label" x="378" y="195">Local Control Plane</text>
+  <text class="text tiny" x="378" y="232">campaign manifest</text>
+  <text class="text tiny" x="378" y="262">ledger schema</text>
+  <text class="text tiny" x="378" y="292">input audit</text>
+  <text class="text tiny" x="378" y="322">stage contracts</text>
+  <text class="text tiny" x="378" y="352">evidence adapters</text>
+  <text class="text tiny" x="378" y="382">candidate packaging</text>
+  <rect class="safe" x="378" y="410" width="178" height="34" rx="17"/>
+  <text class="text white" x="398" y="433" font-size="17" font-weight="700">target-swappable</text>
+
+  <rect class="panel" x="668" y="134" width="204" height="98"/>
+  <text class="text label" x="704" y="176">Validators</text>
+  <text class="text tiny" x="704" y="205">preflight + audit gates</text>
+
+  <rect class="panel" x="668" y="262" width="204" height="98"/>
+  <text class="text label" x="704" y="304">Issue Drafts</text>
+  <text class="text tiny" x="704" y="333">local review surfaces</text>
+
+  <rect class="panel" x="668" y="390" width="204" height="98"/>
+  <text class="text label" x="704" y="432">Packages</text>
+  <text class="text tiny" x="704" y="461">graphs, ranks, dossiers</text>
+
+  <rect class="panel" x="948" y="134" width="178" height="98"/>
+  <text class="text label" x="984" y="176">Doctor</text>
+  <text class="text tiny" x="984" y="205">checkout health</text>
+
+  <rect class="panel" x="948" y="262" width="178" height="98"/>
+  <text class="text label" x="984" y="304">Demo</text>
+  <text class="text tiny" x="984" y="333">.runtime outputs</text>
+
+  <rect class="panel" x="948" y="390" width="178" height="98"/>
+  <text class="text label" x="984" y="432">Dossier</text>
+  <text class="text tiny" x="984" y="461">claim-bounded</text>
+
+  <path class="line" d="M264 213 H342"/>
+  <path class="line" d="M264 407 H342"/>
+  <path class="line" d="M592 210 C630 210 636 183 668 183"/>
+  <path class="line" d="M592 310 H668"/>
+  <path class="line" d="M592 410 C630 410 636 439 668 439"/>
+  <path class="line" d="M872 183 H948"/>
+  <path class="line" d="M872 311 H948"/>
+  <path class="line" d="M872 439 H948"/>
+
+  <text class="text tiny" x="54" y="552">Use it as a skill repo, CLI toolkit, schema contract, work-graph generator, and dossier engine.</text>
+</svg>

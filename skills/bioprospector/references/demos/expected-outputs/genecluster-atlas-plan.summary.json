@@ -1,0 +1,15 @@
+{
+  "schema_version": "bioprospector_genecluster_atlas_plan.v1",
+  "campaign_id": "pathway-big-bang-huperzine-frontier-public-v0",
+  "representative_outputs": [
+    "genecluster-source-scout-ledger.tsv",
+    "genecluster-route-decision-ledger.tsv",
+    "genecluster-atlas-contract-ledger.tsv",
+    "genecluster-atlas-plan.json"
+  ],
+  "route_summary": {
+    "selected_route": "next_experiment_design",
+    "selected_claim_ceiling": "L0_plan_only"
+  },
+  "boundary": "metadata-only; no sequence download, provider launch, or raw artifact pullback"
+}

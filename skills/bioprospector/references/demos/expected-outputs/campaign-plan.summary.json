@@ -1,0 +1,15 @@
+{
+  "campaign_id": "pathway-big-bang-huperzine-frontier-public-v0",
+  "host": "host_to_be_selected",
+  "profile": "full-frontier",
+  "public_data_policy": "compact_ledgers_pointers_checksums_only",
+  "representative_nodes": [
+    "input_audit",
+    "route_universe",
+    "evidence_join",
+    "pareto_frontier",
+    "final_dossier"
+  ],
+  "what_this_proves": "The campaign compiles into a dependency graph of reviewable local contracts.",
+  "what_this_does_not_prove": "No biological validation, provider execution, or target-host production is implied."
+}
