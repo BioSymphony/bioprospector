@@ -1,0 +1,22 @@
+{
+  "name": "biosymphony-bioprospector",
+  "owner": {
+    "name": "BioSymphony"
+  },
+  "metadata": {
+    "version": "0.1.0",
+    "description": "Public-safe BioProspector skills for biosynthetic pathway discovery."
+  },
+  "plugins": [
+    {
+      "name": "bioprospector",
+      "displayName": "BioSymphony BioProspector",
+      "source": "./",
+      "description": "Plan public-safe biosynthetic pathway discovery campaigns.",
+      "category": "life-sciences",
+      "tags": ["biosynthesis", "bioprospecting", "agents"],
+      "strict": false,
+      "skills": ["./skills/bioprospector"]
+    }
+  ]
+}

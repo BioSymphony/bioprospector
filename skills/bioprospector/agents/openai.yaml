@@ -1,0 +1,4 @@
+interface:
+  display_name: "BioSymphony BioProspector"
+  short_description: "Biosynthetic pathway discovery"
+  default_prompt: "Use $bioprospector to plan a public-safe pathway discovery campaign."

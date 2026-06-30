@@ -1,0 +1,23 @@
+{
+  "name": "bioprospector",
+  "version": "0.1.0",
+  "description": "BioSymphony BioProspector campaign skills for public-safe biosynthetic pathway discovery.",
+  "author": {
+    "name": "BioSymphony",
+    "url": "https://github.com/BioSymphony"
+  },
+  "homepage": "https://github.com/BioSymphony/bioprospector",
+  "repository": "https://github.com/BioSymphony/bioprospector",
+  "license": "MIT",
+  "keywords": ["biosynthesis", "bioprospecting", "agents"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "BioSymphony BioProspector",
+    "shortDescription": "Biosynthetic pathway discovery",
+    "longDescription": "Public-safe BioProspector skills for biosynthetic pathway discovery, route scouting, candidate mining, and evidence-led campaign planning.",
+    "developerName": "BioSymphony",
+    "category": "Research",
+    "capabilities": ["Skills"],
+    "defaultPrompt": ["Use $bioprospector to plan a public-safe pathway discovery campaign."]
+  }
+}

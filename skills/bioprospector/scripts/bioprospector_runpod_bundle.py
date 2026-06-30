@@ -918,7 +918,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--image",
-        default="TODO:digest-pinned-bioprospector-image",
+        default="operator-provided-digest-pinned-bioprospector-image",
         help="RunPod image reference to record. Use a digest-pinned image before live execution.",
     )
     parser.add_argument(

@@ -9,7 +9,7 @@
   "remote_workdir": "/workspace/bioprospector/runs/pathway-big-bang-nootkatone-yeast-v0",
   "scout_budget_usd": 25,
   "image_pull_contract": {
-    "image": "TODO:digest-pinned-bioprospector-image",
+    "image": "operator-provided-digest-pinned-bioprospector-image",
     "digest_pinned": false,
     "image_access": "unknown",
     "registry_auth_verified": false,
