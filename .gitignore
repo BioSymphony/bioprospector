@@ -8,6 +8,11 @@ __pycache__/
 venv/
 .env
 .env.*
+.envrc
+.netrc
+.pypirc
+.npmrc
+.git-credentials
 .runtime/
 .bioprospector-memory/
 dry-run/

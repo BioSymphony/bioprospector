@@ -78,6 +78,22 @@ class StageContractTests(unittest.TestCase):
         report = json.loads(result.stdout)
         self.assertTrue(any("heartbeat_age_minutes" in error for error in report["errors"]))
 
+    def test_campaign_ledger_paths_cannot_escape_campaign_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            manifest = json.loads(CAMPAIGN.read_text(encoding="utf-8"))
+            manifest["ledgers"]["stage_contract_ledger"] = "../stage-contract-ledger.tsv"
+            manifest["ledgers"]["stage_progress_ledger"] = "/outside/stage-progress-ledger.tsv"
+            campaign = root / "campaign-manifest.json"
+            campaign.write_text(json.dumps(manifest), encoding="utf-8")
+
+            result = run_stage_contract("--campaign", str(campaign), "--json")
+
+        self.assertNotEqual(result.returncode, 0)
+        report = json.loads(result.stdout)
+        self.assertTrue(any("inside the campaign directory" in error for error in report["errors"]))
+        self.assertNotIn("/outside/", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

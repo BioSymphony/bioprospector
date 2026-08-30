@@ -1,4 +1,4 @@
-# Host Fit And Structure Risk
+# Host fit and structure risk
 
 Host and structure lanes keep BioProspector from recommending routes that look
 good only as isolated enzyme lists.

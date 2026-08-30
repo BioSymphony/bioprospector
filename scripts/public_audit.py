@@ -49,6 +49,12 @@ FORBIDDEN_TRACKED_DIR_NAMES = FORBIDDEN_DIR_NAMES | {
 }
 
 FORBIDDEN_TRACKED_NAME_PATTERNS = [
+    re.compile(r"(?i)(?:^|/)\.env(?:$|[._-])"),
+    re.compile(r"(?i)(?:^|/)(?:\.envrc|\.netrc|\.pypirc|\.npmrc|\.git-credentials)$"),
+    re.compile(r"(?i)(?:^|/)(?:id_(?:rsa|dsa|ecdsa|ed25519)|[^/]+\.(?:pem|key|p12|pfx|jks|keystore))$"),
+    re.compile(
+        r"(?i)(?:^|/)(?:credentials?|service[-_]?account|auth[-_]?export)[^/]*\.(?:json|ya?ml|ini|toml)$"
+    ),
     re.compile(r"(?i)(?:^|[-_.])pod[-_]?id(?:[-_.]|$)"),
     re.compile(r"(?i)(?:create|pod|runpod).*response"),
     re.compile(r"(?i)(?:signed|presigned)[-_]?url"),
@@ -93,27 +99,13 @@ HEAVY_SUFFIXES = {
 }
 
 FORBIDDEN_TEXT = [
-    "/" + "Users" + "/",
-    "github" + "_2",
-    "jacob" + "vogan",
-    "j" + "vogan",
     "local" + "-notes",
     "demo" + "-runs",
     "pod" + "-id",
     "network volume " + "id",
     "volume " + "id:",
     "elastic" + "-blast.log",
-    "stricto" + "sidine",
-    "Mitra" + "gyna",
-    "symphony" + "-claude",
-    "jacob" + "-cli",
-    "vogan" + "linear",
-    "linear" + ".app",
-    "VO" + "G-",
     "proxy" + ".runpod.net",
-    "s3" + "://jacob" + "vogan",
-    "quarantined" + "_local_pointer_only",
-    "huper" + "zine-heavy-artifacts",
 ]
 
 FORBIDDEN_TEXT_CASE_INSENSITIVE = [
@@ -121,6 +113,17 @@ FORBIDDEN_TEXT_CASE_INSENSITIVE = [
     "s" + "anitiz",
     "clean" + "-room",
     "clean" + " room",
+]
+
+PRIVATE_PATH_PATTERNS = [
+    (
+        "absolute POSIX user-home path",
+        re.compile(r"(?<![A-Za-z0-9])/(?:Users|home)/[^/\s\"'<>]+(?:/|(?=$|[\s\"'<>),.;:]))"),
+    ),
+    (
+        "absolute Windows user-home path",
+        re.compile(r"(?i)\b[A-Z]:\\Users\\[^\\\s\"'<>]+\\"),
+    ),
 ]
 
 SECRET_PATTERNS = [
@@ -219,6 +222,9 @@ def git_tracked_files(root: Path) -> list[Path]:
 def scan_path_name(root: Path, path: Path, *, tracked: bool) -> list[str]:
     issues: list[str] = []
     rel = relpath(root, path)
+    if path.is_symlink():
+        issues.append(f"symbolic link is not allowed in public artifacts: {rel}")
+        return issues
     lower_name = path.name.lower()
     if any(lower_name.endswith(suffix) for suffix in HEAVY_SUFFIXES):
         issues.append(f"heavy/raw biological file extension: {rel}")
@@ -256,6 +262,9 @@ def scan_file_content(root: Path, path: Path) -> list[str]:
     for token in FORBIDDEN_TEXT_CASE_INSENSITIVE:
         if token.lower() in lower_text:
             issues.append(f"forbidden text {token!r}: {rel}")
+    for label, pattern in PRIVATE_PATH_PATTERNS:
+        if pattern.search(text):
+            issues.append(f"possible private path ({label}): {rel}")
     for pattern in SECRET_PATTERNS:
         if pattern.search(text):
             issues.append(f"possible secret pattern {pattern.pattern!r}: {rel}")
@@ -273,32 +282,43 @@ def scan(root: Path) -> list[str]:
     issues: list[str] = []
 
     for dirpath, dirnames, _filenames in os.walk(root):
-        dirnames[:] = sorted(d for d in dirnames if d not in SKIP_DIRS)
         current = Path(dirpath)
-        for name in dirnames:
+        all_dirnames = sorted(dirnames)
+        for name in all_dirnames:
             part = current / name
+            issues.extend(scan_path_name(root, part, tracked=False))
             if name in FORBIDDEN_DIR_NAMES:
                 issues.append(f"forbidden directory: {part.relative_to(root)}")
+        dirnames[:] = [
+            name for name in all_dirnames if name not in SKIP_DIRS and not (current / name).is_symlink()
+        ]
 
     for path in iter_files(root):
         issues.extend(scan_path_name(root, path, tracked=False))
-        issues.extend(scan_file_content(root, path))
+        if not path.is_symlink():
+            issues.extend(scan_file_content(root, path))
 
     for path in git_tracked_files(root):
         issues.extend(scan_path_name(root, path, tracked=True))
-        if path.exists():
+        if path.exists() and not path.is_symlink():
             issues.extend(scan_file_content(root, path))
 
     return sorted(set(issues))
 
 
 def main(argv: list[str]) -> int:
-    root = Path(argv[1] if len(argv) > 1 else ".").resolve()
+    root_arg = Path(argv[1] if len(argv) > 1 else ".")
+    if root_arg.is_symlink():
+        print("FAIL public audit")
+        print("- audit root is a symbolic link; pass a real directory")
+        return 1
+    root = root_arg.resolve()
     issues = scan(root)
     if issues:
         print("FAIL public audit")
         for issue in issues:
             print(f"- {issue}")
+        print("Remove or replace every listed item, then rerun the audit.")
         return 1
     print("PASS public audit")
     return 0

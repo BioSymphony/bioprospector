@@ -1,4 +1,4 @@
-# RunPod BLAST And Candidate Package
+# RunPod BLAST and candidate package
 
 This is one supported shape for a real BioProspector heavy-search run: an
 operator-managed RunPod workspace can do local BLAST/DIAMOND/MMseqs2/HMMER
@@ -8,7 +8,7 @@ package indexes.
 No pod is launched by the tracked examples. No database, FASTA, GFF, BLAST
 output, model weight, private sequence, or full-text literature is stored here.
 
-## RunPod Search Plane
+## RunPod search plane
 
 RunPod is a reviewed optional heavy-search path when an operator wants
 controlled remote compute without burning the laptop. The first live run should
@@ -39,7 +39,7 @@ Before live launch, every blocking provider preflight row must pass. A pod in
 `RUNNING` or desired status is not proof that the image pulled or that the
 workflow progressed.
 
-## BLAST/Search Contract
+## BLAST and search contract
 
 Each planned search is a row in `sequence-search-plan-ledger.tsv`.
 
@@ -70,7 +70,7 @@ RunPod-local lanes should prefer staged public/open resources first:
 AWS ElasticBLAST remains a separate reviewed escalation when official NCBI BLAST
 database scale is needed.
 
-## Candidate Package
+## Candidate package
 
 The high-detail output package should be intricate but compact.
 
@@ -91,7 +91,7 @@ Expected tracked indexes:
   variant, signal/transit peptide, transmembrane, PTM, localization, cofactor,
   oligomer, motif, expression-context, and close-canonical-match inferences.
 - `candidate-diversity-ledger.tsv`: canonical, close homolog, diverse homolog,
-  remote homolog, and weird/novel selections.
+  remote homolog, and unusual selections.
 - `candidate-graph-ledger.tsv`: route -> step -> candidate -> domain ->
   literature -> package edges.
 - `run-output-package-ledger.tsv`: package index, graph artifact pointer,
@@ -100,7 +100,8 @@ Expected tracked indexes:
   `evidence-event-ledger.tsv`, and `tool-execution-proof-ledger.tsv`: adapter
   registry, normalized compact events, and tool proof rows for the run.
 - `candidate-ranking-ledger.tsv` and `pareto-frontier-ledger.tsv`: per-step
-  candidate ranks and route-level Pareto winners across multiple useful lenses.
+  candidate ranks and route-level rankings by gene count, evidence, host fit,
+  ambition, and diversity.
 
 Sequence policy: protein AA only or provider-side pointer. Do not copy
 nucleotide constructs, raw all-hit dumps, unrestricted FASTA bundles, or private
@@ -118,14 +119,14 @@ It does not run BLAST, download databases, copy FASTA, or launch RunPod. Live
 closeout remains blocked until provider-side artifacts are fetched, checksummed,
 joined to the ledgers, and strict self-check passes.
 
-## Candidate Intelligence Lane
+## Candidate intelligence lane
 
-This lane is for useful interpretation from the sequences and public evidence,
-not for a heavier modeling campaign. Candidate-intelligence planning is
+This lane adds sequence and public-evidence context without starting a heavier
+modeling campaign. Candidate-intelligence planning is
 default-on because these questions are easy for agents to forget and often
 materially change ranking. It should answer questions like:
 
-- which publicly reported enzymes are useful reference anchors
+- which publicly reported enzymes can serve as reference anchors
 - whether public variant annotations affect ranking context
 - whether a candidate has signal peptide, transit peptide, transmembrane,
   localization, PTM/glycosylation, cofactor, oligomer, motif, or expression
@@ -149,14 +150,14 @@ extraction. Before launch, add provider preflight rows for
 applicable. Return tool versions, citation/accession identifiers, compact
 summaries, and `candidate-intelligence-ledger.tsv` rows only.
 
-## Literature Lane
+## Literature lane
 
-Latest-literature work is represented through `literature-search-ledger.tsv`.
+Time-bounded literature work is represented through `literature-search-ledger.tsv`.
 Rows capture source list, query terms, recency window, result cap, status, and
 output contract. The output is compact citation identifiers, claim summaries,
 and license boundaries, not article bodies or large supplements.
 
-## Ranking Views
+## Ranking views
 
 The final package should support several Pareto views:
 
@@ -166,7 +167,7 @@ The final package should support several Pareto views:
 - best yeast host fit
 - ambitious de novo route
 - diversity library
-- weird/novel candidates parked separately from ordinary homolog hits
+- unusual candidates parked separately from standard homolog hits
 
 Similarity hits alone must not become activity or production claims. Promotion
 requires domain/motif support, literature or accession provenance, controls,

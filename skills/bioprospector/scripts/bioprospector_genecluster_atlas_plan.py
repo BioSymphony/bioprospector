@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parents[2]
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
@@ -90,6 +91,28 @@ def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def declared_path(base: Path, value: object) -> Path | None:
+    text = clean(value)
+    rel = Path(text)
+    if not text or rel.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
+
+
 def read_tsv(path: Path) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8", newline="") as handle:
         reader = csv.DictReader(handle, delimiter="\t")
@@ -100,8 +123,8 @@ def read_optional_ledger(base: Path, ledgers: dict[str, str], key: str) -> list[
     rel = ledgers.get(key)
     if not rel:
         return []
-    path = base / rel
-    if not path.exists():
+    path = declared_path(base, rel)
+    if path is None or not path.exists():
         return []
     return read_tsv(path)
 
@@ -236,7 +259,8 @@ def find_raw_pointer_errors(rows_by_name: dict[str, list[dict[str, str]]]) -> li
         for index, row in enumerate(rows, start=2):
             for field in pointer_fields:
                 if pointer_has_raw_heavy_artifact(row.get(field, "")):
-                    errors.append(f"{ledger_name} line {index} local raw/heavy pointer in {field}: {row[field]}")
+                    errors.append(f"{ledger_name} line {index} local raw/heavy pointer in {field}")
+                    row[field] = "REPLACE_ME_EXTERNAL_PATH"
     return errors
 
 
@@ -269,7 +293,8 @@ def build_source_rows(
             source_pointer = ";".join(clean(row.get("source_pointer", "")) for row in org_datasets if clean(row.get("source_pointer", "")))
 
         if pointer_has_raw_heavy_artifact(source_pointer):
-            errors.append(f"organism {organism_id} uses local raw/heavy source pointer: {source_pointer}")
+            errors.append(f"organism {organism_id} uses a local raw/heavy source pointer")
+            source_pointer = "REPLACE_ME_EXTERNAL_PATH"
 
         rows.append(
             {
@@ -347,8 +372,8 @@ def build_route_rows(
 
 
 def build_contract_rows(campaign_path: Path, manifest: dict[str, Any], out_dir: Path) -> list[dict[str, str]]:
-    campaign_arg = campaign_path.as_posix()
-    plan_arg = out_dir.as_posix()
+    campaign_arg = display_path(campaign_path)
+    plan_arg = display_path(out_dir)
     claim_boundary = clean(manifest.get("claim_boundary", "planning only"))
     validation = (
         "python3 skills/bioprospector/scripts/bioprospector_genecluster_atlas_plan.py "
@@ -463,7 +488,7 @@ def build_plan(campaign_path: Path, out_dir: Path) -> dict[str, Any]:
             "route_rows": len(route_rows),
             "contract_rows": len(contract_rows),
         },
-        "outputs": {key: str(path) for key, path in paths.items()},
+        "outputs": {key: display_path(path) for key, path in paths.items()},
     }
     paths["plan_json"].write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
     return plan
@@ -480,7 +505,7 @@ def main() -> int:
     if args.json:
         print(json.dumps(plan, indent=2))
     else:
-        print(f"Wrote GeneCluster atlas plan to {args.out}")
+        print(f"Wrote GeneCluster atlas plan to {display_path(args.out)}")
     return 0 if plan["ok"] else 1
 
 

@@ -84,6 +84,10 @@ class BioProspectorWorkspaceStatusTests(unittest.TestCase):
             self.assertEqual("local_checkout_status", status["scope"])
             self.assertFalse(status["redaction_defaults"]["branch_name"])
             self.assertIsNone(status["repo"]["git"]["branch"])
+            self.assertFalse(status["redaction_defaults"]["head_hash"])
+            self.assertIsNone(status["repo"]["git"]["head_hash"])
+            self.assertFalse(status["redaction_defaults"]["commit_history"])
+            self.assertEqual([], status["repo"]["git"]["recent_commits"])
             self.assertFalse(status["redaction_defaults"]["dirty_file_names"])
             self.assertFalse(status["redaction_defaults"]["runtime_dir_names"])
             self.assertEqual(1, status["repo"]["git"]["dirty_count"])
@@ -104,6 +108,8 @@ class BioProspectorWorkspaceStatusTests(unittest.TestCase):
 
             status = workspace_status.compile_workspace_status(
                 root=root,
+                max_commits=3,
+                include_head_hash=True,
                 include_branch=True,
                 include_dirty_files=True,
                 include_runtime_dirs=True,
@@ -112,6 +118,7 @@ class BioProspectorWorkspaceStatusTests(unittest.TestCase):
             rendered = workspace_status.render_markdown(status)
 
             self.assertEqual("main", status["repo"]["git"]["branch"])
+            self.assertIsNotNone(status["repo"]["git"]["head_hash"])
             self.assertIn("?? scratch.txt", status["repo"]["git"]["dirty_files"])
             self.assertEqual(".runtime/local-demo", status["repo"]["runtime"]["latest_dirs"][0]["path"])
             self.assertIn("Initial public-safe repo", rendered)
@@ -145,6 +152,8 @@ class BioProspectorWorkspaceStatusTests(unittest.TestCase):
             self.assertEqual("none", data["remote_network_actions"])
             self.assertFalse(data["redaction_defaults"]["absolute_paths"])
             self.assertFalse(data["redaction_defaults"]["branch_name"])
+            self.assertFalse(data["redaction_defaults"]["head_hash"])
+            self.assertFalse(data["redaction_defaults"]["commit_history"])
 
 
 if __name__ == "__main__":

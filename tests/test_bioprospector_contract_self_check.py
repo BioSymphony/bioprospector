@@ -411,6 +411,23 @@ class BioProspectorContractSelfCheckTests(unittest.TestCase):
             self.assertEqual("blocked", audit["audit_status"])
             self.assertTrue(any(item["item"] == "target_contract" for item in audit["missing_operator_items"]))
 
+    def test_input_audit_rejects_paths_outside_campaign(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            campaign = self.write_campaign(root)
+            manifest = json.loads(campaign.read_text(encoding="utf-8"))
+            manifest["target_contract"] = "../operator-input.json"
+            manifest["ledgers"]["route_ledger"] = "/outside/route-ledger.tsv"
+            campaign.write_text(json.dumps(manifest), encoding="utf-8")
+
+            audit = input_audit.audit_campaign(campaign)
+            rendered = json.dumps(audit)
+
+            self.assertEqual("blocked", audit["audit_status"])
+            self.assertNotIn(str(root.parent), rendered)
+            self.assertNotIn("/outside/", rendered)
+            self.assertGreaterEqual(rendered.count("blocked_invalid_path"), 2)
+
 
 if __name__ == "__main__":
     unittest.main()

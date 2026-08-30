@@ -67,6 +67,7 @@ def git_info(
     root: Path,
     *,
     max_commits: int,
+    include_head_hash: bool,
     include_branch: bool,
     include_dirty_files: bool,
     include_commit_subjects: bool,
@@ -89,9 +90,9 @@ def git_info(
         info["warnings"].append("repo root does not exist")
         return info
 
-    code, stdout, stderr = run_git(root, ["rev-parse", "--is-inside-work-tree"])
+    code, stdout, _ = run_git(root, ["rev-parse", "--is-inside-work-tree"])
     if code != 0 or stdout.strip() != "true":
-        info["warnings"].append(stderr.strip() or "not a git work tree")
+        info["warnings"].append("not a git work tree")
         return info
     info["is_git_repo"] = True
 
@@ -99,9 +100,10 @@ def git_info(
     if code == 0 and include_branch:
         info["branch"] = stdout.strip()
 
-    code, stdout, _ = run_git(root, ["rev-parse", "--short", "HEAD"])
-    if code == 0:
-        info["head_hash"] = stdout.strip()
+    if include_head_hash:
+        code, stdout, _ = run_git(root, ["rev-parse", "--short", "HEAD"])
+        if code == 0:
+            info["head_hash"] = stdout.strip()
 
     code, stdout, _ = run_git(root, ["status", "--porcelain"])
     if code == 0:
@@ -190,8 +192,9 @@ def recommended_commands() -> list[dict[str, str]]:
 def compile_workspace_status(
     *,
     root: Path,
-    max_commits: int = 3,
+    max_commits: int = 0,
     max_runtime_dirs: int = 5,
+    include_head_hash: bool = False,
     include_branch: bool = False,
     include_dirty_files: bool = False,
     include_runtime_dirs: bool = False,
@@ -208,6 +211,8 @@ def compile_workspace_status(
             "branch_name": include_branch,
             "dirty_file_names": include_dirty_files,
             "runtime_dir_names": include_runtime_dirs,
+            "head_hash": include_head_hash,
+            "commit_history": max_commits > 0,
             "commit_subjects": include_commit_subjects,
         },
         "repo": {
@@ -215,6 +220,7 @@ def compile_workspace_status(
             "git": git_info(
                 root,
                 max_commits=max_commits,
+                include_head_hash=include_head_hash,
                 include_branch=include_branch,
                 include_dirty_files=include_dirty_files,
                 include_commit_subjects=include_commit_subjects,
@@ -241,6 +247,8 @@ def render_markdown(status: dict[str, Any]) -> str:
         f"- Branch name shown: `{redaction['branch_name']}`",
         f"- Dirty file names shown: `{redaction['dirty_file_names']}`",
         f"- Runtime directory names shown: `{redaction['runtime_dir_names']}`",
+        f"- HEAD hash shown: `{redaction['head_hash']}`",
+        f"- Commit history shown: `{redaction['commit_history']}`",
         f"- Commit subjects shown: `{redaction['commit_subjects']}`",
         "",
         "## Repository",
@@ -303,9 +311,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--repo-root", type=Path, default=REPO_ROOT, help="BioProspector checkout root")
     parser.add_argument("--format", choices=["json", "markdown"], default="markdown")
     parser.add_argument("--out", type=Path, help="Optional output path; stdout is used when omitted")
-    parser.add_argument("--max-commits", type=int, default=3)
+    parser.add_argument(
+        "--max-commits",
+        type=int,
+        default=0,
+        help="Include up to N recent commit hashes and dates; default: 0",
+    )
     parser.add_argument("--max-runtime-dirs", type=int, default=5)
     parser.add_argument("--show-branch", action="store_true", help="Include the current git branch name")
+    parser.add_argument("--show-head-hash", action="store_true", help="Include the current git HEAD hash")
     parser.add_argument("--show-dirty-files", action="store_true", help="Include git status filenames")
     parser.add_argument("--show-runtime-dirs", action="store_true", help="Include latest .runtime directory names")
     parser.add_argument("--show-commit-subjects", action="store_true", help="Include recent commit subjects")
@@ -319,6 +333,7 @@ def main(argv: list[str] | None = None) -> int:
         root=args.repo_root,
         max_commits=args.max_commits,
         max_runtime_dirs=args.max_runtime_dirs,
+        include_head_hash=args.show_head_hash,
         include_branch=args.show_branch,
         include_dirty_files=args.show_dirty_files,
         include_runtime_dirs=args.show_runtime_dirs,

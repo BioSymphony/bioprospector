@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "biosymphony-bioprospector"
 version = "0.1.0"
-description = "An agentic harness for discovering biosynthetic pathways to target molecules: enzyme mining, pathway stitching, host-fit review, construct hypotheses, and compute-portable work graphs."
+description = "Planning toolkit for biosynthetic-pathway campaigns, enzyme-mining plans, pathway stitching, host-fit review, and portable work graphs."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { file = "LICENSE" }
@@ -25,6 +25,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Scientific/Engineering :: Bio-Informatics",
 ]
 dependencies = []

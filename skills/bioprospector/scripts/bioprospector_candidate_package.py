@@ -21,12 +21,24 @@ from bioprospector_schema import ledger_headers
 
 def display_path(path: Path) -> str:
     resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return path.as_posix()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def declared_path(base: Path, value: object) -> Path | None:
+    text = str(value or "").strip()
+    rel = Path(text)
+    if not text or rel.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
 
 
 CLAIM_SCORE = {
@@ -63,7 +75,8 @@ def write_tsv(path: Path, headers: list[str], rows: list[dict[str, str]]) -> Non
 
 def rows_for(base: Path, manifest: dict[str, Any], key: str) -> list[dict[str, str]]:
     rel = manifest.get("ledgers", {}).get(key)
-    return read_tsv(base / rel) if rel else []
+    path = declared_path(base, rel)
+    return read_tsv(path) if path else []
 
 
 def safe_token(value: str) -> str:

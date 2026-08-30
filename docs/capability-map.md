@@ -1,10 +1,10 @@
-# BioProspector Capability Map
+# BioProspector capability map
 
-## Core Claim
+## Core claim
 
 BioSymphony BioProspector helps agents build a claim-bounded research graph for a molecule, plan public/provider-approved enzyme and route searches, and audit candidate-compression workflows into ranked planning outputs.
 
-## Capabilities At A Glance
+## Capabilities at a glance
 
 | Capability | Why it matters | Primary outputs |
 | --- | --- | --- |
@@ -12,14 +12,14 @@ BioSymphony BioProspector helps agents build a claim-bounded research graph for 
 | Enzyme frontier | Turns each step into a ranked candidate-mining problem instead of a one-off literature guess. | `candidate-funnels.tsv`, `enzyme-draft-board.tsv`, `candidate-sequence-ledger.tsv` |
 | Dark-step resolver | Keeps unknown chemistry, missing genes, multi-gene modules, and counterevidence visible. | `unknown-step-ledger.tsv`, `unknown-gene-hypothesis-ledger.tsv`, `pathway-inference-ledger.tsv` |
 | Candidate package engine | Converts noisy search output into a portable package an agent can review, rank, and cite. | `run-output-package-ledger.tsv`, `candidate-graph-ledger.tsv`, `domain-annotation-ledger.tsv` |
-| Pathway stitcher | Scores whether individually promising enzymes can actually form a coherent route. | `route-stitching-scorecard.tsv`, `candidate-ranking-ledger.tsv` |
-| Pareto frontier | Returns several useful winners instead of pretending one route is the answer. | `pareto-frontier-ledger.tsv` |
+| Pathway stitcher | Scores whether individually promising enzymes form a coherent route. | `route-stitching-scorecard.tsv`, `candidate-ranking-ledger.tsv` |
+| Pareto frontier | Ranks routes by minimal gene count, evidence level, host fit, ambition, and diversity. | `pareto-frontier-ledger.tsv` |
 | Agent work graph | Splits broad campaigns into bounded lanes with budgets, dependencies, kill criteria, and closeouts. | Linear-style Markdown drafts under `.runtime/` |
 | Agent kickoff brief | Gives Codex, Claude Code, Symphony/Linear, or `/goal` workflows a campaign-specific starting prompt and command set. | `agent-brief.md`, `agent-goal-prompt.txt`, `agent-brief.json` |
 | Cloud handoff | Converts a future heavy search into stage contracts, expected outputs, returned ledgers, and proof rows. | RunPod/HPC/cloud/ElasticBLAST readiness bundles |
 | Dossier export | Gives humans a compact review package with claims, blockers, evidence summaries, and next lanes. | `dossier.md`, `claim-ledger.md`, `red-team-report.md` |
 
-## 1. Pathway Big Bang
+## 1. Pathway expansion
 
 Start with one target and host. Expand into:
 
@@ -40,9 +40,9 @@ Future review surface:
 
 - `route-atlas.html`
 
-## 2. Enzyme Frontier
+## 2. Enzyme frontier
 
-Every reaction step gets its own candidate universe. Wide steps can plan reviewed searches over large candidate sets; narrow steps can go deeper on active-site and literature review.
+Every reaction step gets its own candidate universe. Wide steps can plan reviewed searches over large candidate sets; narrow steps can receive more active-site and literature review.
 
 Output:
 
@@ -53,7 +53,7 @@ Output:
 - `candidate-graph-ledger.tsv`
 - `rejected-candidates.tsv`
 
-## 3. Dark Step Resolver
+## 3. Dark-step resolver
 
 Missing chemistry becomes a first-class frontier:
 
@@ -74,7 +74,7 @@ Output:
 - `unknown-gene-hypothesis-ledger.tsv`
 - `assay-handoff-ledger.tsv`
 
-## 4. Pathway Stitcher
+## 4. Pathway stitcher
 
 Routes only survive if their selected enzymes connect chemically and fit the host.
 
@@ -98,9 +98,9 @@ Future review surface:
 
 - `bottleneck-map.md`
 
-## 5. Pareto Route Frontier
+## 5. Route ranking
 
-Always return multiple winners:
+Return route rankings for these criteria:
 
 - minimal-gene route
 - highest-evidence route
@@ -117,10 +117,10 @@ Future review surface:
 
 - `minimal-designs.md`
 
-## 5A. Candidate Package Engine
+## 5A. Candidate package engine
 
-The final useful output is a package index that carries the campaign's
-structured evidence. A campaign should return genes, candidate proteins,
+The package index contains the campaign's structured evidence. A campaign must
+return genes, candidate proteins,
 accession and source, claim level, evidence class, sequence pointers,
 cluster membership, domain maps, graph edges, rankings, rejected rows, and
 package provenance.
@@ -135,9 +135,10 @@ Output:
 - provider-side approved protein AA sequence package
 - final dossier that indexes the package
 
-## 6. Negative Knowledge Memory
+## 6. Rejected-candidate record
 
-Rejected candidates matter. The system should preserve why a gene, route, or claim failed so future agents do not rediscover the same weak options.
+Record why each gene, route, or claim failed so reviewers can avoid repeating
+rejected options.
 
 Output:
 
@@ -148,7 +149,7 @@ Future review surface:
 
 - `route-kill-list.md`
 
-## 7. NCBI Wide Search Escalation
+## 7. NCBI wide-search escalation
 
 Use AWS ElasticBLAST only when cheaper RunPod lanes cannot resolve a wide or
 frontier step. The output is not raw BLAST archives; it is compressed evidence
@@ -160,7 +161,7 @@ Output:
 - `elasticblast-run-ledger.tsv`
 - `aws-safety-ledger.tsv`
 
-## 8. Genome And Structure Context
+## 8. Genome and structure context
 
 Use genome neighborhoods, BGC tools, structure-risk triage, and host comparison
 only after they change candidate ranking or uncertainty. These lanes create
@@ -174,7 +175,7 @@ Output:
 - `structure-risk-ledger.tsv`
 - `host-comparison-ledger.tsv`
 
-## 8A. GeneCluster Atlas Control Plane
+## 8A. GeneCluster Atlas control plane
 
 When a campaign needs source-species to target-species genome context, the
 public release now has a metadata-only GeneCluster lane. It chooses a route
@@ -193,10 +194,10 @@ Output:
 - `protein_function_jury.tsv`
 - `genecluster-atlas-plan.json`
 
-## 8B. Opportunity Lane Radar
+## 8B. Opportunity-lane radar
 
-The public release can draft contract lanes for capabilities that are powerful
-but not safe as defaults: route-rule expansion, thermodynamics, host modeling,
+The public release can draft contract lanes for optional capabilities that
+need separate approval: route-rule expansion, thermodynamics, host modeling,
 host-fit model hypotheses, chemoenzymatic fallback, active-site risk, BGC and
 metagenome context, metabolomics handoff, compound/source priors, supply-chain
 preflight, and review surfaces.

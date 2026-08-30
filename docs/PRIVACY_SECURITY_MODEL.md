@@ -1,18 +1,16 @@
-# Privacy And Security Model
+# Privacy and security model
 
-BioProspector is designed as a public-safe control plane. The public repo should
-contain schemas, validators, templates, compact examples, issue drafts, and
-summary indexes. It should not contain sensitive data or heavy biological
-artifacts.
+The BioProspector public repository contains schemas, validators, templates,
+compact examples, issue drafts, and summary indexes. Sensitive data and heavy
+biological artifacts stay outside the repository.
 
-This boundary should not block a user's agent from producing useful results.
-For real user-owned runs, raw/heavy outputs may live in operator-approved local
-workdirs, external volumes, HPC paths, RunPod volumes, or cloud buckets. The
-repo-facing return should be compact ledgers, pointers, checksums, summaries,
-rankings, and dossiers that tell the user where the full outputs live without
-copying private or heavy data into public/repo/tracker/chat surfaces.
+For user-owned runs, raw and heavy outputs can live in operator-approved working
+directories, external volumes, HPC storage, RunPod volumes, or cloud buckets.
+Keep exact locations in ignored operator state. Repository, tracker, and chat
+outputs can contain only public accessions, placeholders, checksums, and
+reviewed summaries.
 
-## Data Classes
+## Data classes
 
 | Class | Public Repo Policy | Examples |
 | --- | --- | --- |
@@ -23,7 +21,7 @@ copying private or heavy data into public/repo/tracker/chat surfaces.
 | Sensitive operator data | Never commit | credentials, account IDs, pod IDs, volume IDs, signed URLs, private paths, billing records |
 | Restricted biological data | Never commit | unpublished sequences, private raw reads, FASTA dumps, BLAST databases, model weights, private spectra |
 
-## Threat Model
+## Threat model
 
 Primary risks:
 
@@ -49,11 +47,11 @@ Primary risks:
   forbidden tracked directories, and optional tool availability.
 - `make release-check` runs tests, doctor checks, docs checks, examples, demo
   generation, root audit, and runtime audit.
-- `gitleaks` is recommended before a public switch for current tree and history
-  scanning.
+- When `gitleaks` is installed, run it against the working tree and history
+  before each public release.
 - `.runtime/` is ignored and must stay reproducible from tracked inputs.
 
-## Claim Boundary
+## Claim boundary
 
 Public outputs are design intelligence and prioritization. They are not:
 
@@ -69,12 +67,12 @@ Use `run-maturity-ledger.tsv` and
 [`no-false-success-gates.md`](no-false-success-gates.md) to separate planning
 from execution, joined evidence, and claim-audited closeout.
 
-## Public Switch Checklist
+## Public release checklist
 
-Before changing visibility or pushing a public remote:
+Before each public release:
 
 ```bash
-make switch-check
+make release-check
 python3 scripts/public_audit.py .
 python3 scripts/public_audit.py .runtime
 git ls-files .runtime logs internal private
@@ -84,4 +82,4 @@ gitleaks detect --source . --no-banner --redact --verbose
 
 If any sensitive content ever reaches public history, do not repair it with a
 normal follow-up commit. Re-create public history from a clean export and rotate
-affected credentials outside the repo.
+affected credentials outside the repository.

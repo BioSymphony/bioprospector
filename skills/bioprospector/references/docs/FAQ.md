@@ -121,7 +121,7 @@ The maturity ladder is:
 Public examples intentionally stay at planning/review levels unless they carry
 real, joined execution artifacts and claim review.
 
-## How do I prepare for a future public switch?
+## How do I review a public release?
 
 Run:
 
@@ -131,5 +131,5 @@ gitleaks dir . --no-banner --redact --verbose
 gitleaks detect --source . --no-banner --redact --verbose
 ```
 
-Then follow [`PUBLIC_SWITCH_CHECKLIST.md`](PUBLIC_SWITCH_CHECKLIST.md). Staying
-local is the default; no command in the quickstart publishes the repo.
+Then follow the [`public release checklist`](PUBLIC_SWITCH_CHECKLIST.md). No
+command in the quickstart publishes the repository.

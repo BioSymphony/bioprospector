@@ -12,10 +12,77 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parents[2]
+SMOKE_MARKER = ".bioprospector-demo-smoke"
+SMOKE_MARKER_CONTENT = "generated public demo sidecar\n"
+
+
+def reject_symlink_components(path: Path) -> None:
+    candidate = path.expanduser()
+    if not candidate.is_absolute():
+        candidate = Path.cwd().resolve() / candidate
+    current = Path(candidate.anchor)
+    for name in candidate.parts[1:]:
+        current = current / name
+        if not current.is_symlink():
+            continue
+        if current.parent == Path("/") and current.name in {"tmp", "var"}:
+            current = current.resolve()
+            continue
+        raise ValueError("output path contains a symlink; choose a path without symlinks")
+
+
+def safe_replace_target(path: Path) -> Path:
+    reject_symlink_components(path)
+    resolved = path.resolve()
+    runtime_root = (REPO_ROOT / ".runtime").resolve()
+    forbidden = {
+        Path("/").resolve(),
+        Path.home().resolve(),
+        Path.cwd().resolve(),
+        REPO_ROOT.resolve(),
+        REPO_ROOT.resolve().parent,
+        runtime_root,
+    }
+    if resolved in forbidden or len(resolved.parts) < 3:
+        raise ValueError("output directory is too broad; choose a dedicated demo directory")
+    return resolved
+
+
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def prepare_output(path: Path) -> Path:
+    resolved = safe_replace_target(path)
+    if resolved.exists():
+        marker = resolved / SMOKE_MARKER
+        try:
+            marker_valid = (
+                not marker.is_symlink()
+                and marker.is_file()
+                and marker.read_text(encoding="utf-8") == SMOKE_MARKER_CONTENT
+            )
+        except OSError:
+            marker_valid = False
+        if not marker_valid:
+            raise ValueError(
+                "output directory lacks the generated marker; choose a new directory or remove it manually after review"
+            )
+        shutil.rmtree(resolved)
+    resolved.mkdir(parents=True)
+    (resolved / SMOKE_MARKER).write_text(SMOKE_MARKER_CONTENT, encoding="utf-8")
+    return resolved
 
 
 def run(command: list[str]) -> None:
-    subprocess.run(command, cwd=REPO_ROOT, check=True)
+    try:
+        subprocess.run(command, cwd=REPO_ROOT, check=True)
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f"subcommand failed with exit code {exc.returncode}") from None
 
 
 def count_files(path: Path, suffix: str | None = None) -> int:
@@ -28,9 +95,7 @@ def count_files(path: Path, suffix: str | None = None) -> int:
 
 
 def smoke(campaign: Path, prefix: str, out: Path, include_provider_bundles: bool) -> None:
-    if out.exists():
-        shutil.rmtree(out)
-    out.mkdir(parents=True)
+    out = prepare_output(out)
 
     issue_out = out / "issues"
     run(
@@ -115,10 +180,10 @@ def main() -> int:
             args.out,
             include_provider_bundles=not args.skip_provider_bundles,
         )
-    except (RuntimeError, subprocess.CalledProcessError) as exc:
+    except (RuntimeError, ValueError) as exc:
         print(f"FAIL public demo smoke: {exc}")
         return 1
-    print(f"PASS public demo smoke: {args.out}")
+    print(f"PASS public demo smoke: {display_path(args.out)}")
     return 0
 
 

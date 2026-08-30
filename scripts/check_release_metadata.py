@@ -48,7 +48,7 @@ def issues(root: Path) -> list[str]:
     if "biosymphony-bioprospector" != project.get("name"):
         out.append("unexpected project name")
     if project.get("requires-python") != ">=3.11":
-        out.append("requires-python should stay >=3.11 unless CI/docs are updated")
+        out.append("project.requires-python must equal >=3.11; update this check, CI, and documentation together if the baseline changes")
     return out
 
 

@@ -11,10 +11,19 @@ from datetime import date
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parents[2]
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
 from bioprospector_schema import enum_values, ledger_headers
+
+
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
 
 
 def load_json(path: Path) -> dict:
@@ -32,7 +41,17 @@ def resolve_ledger(campaign: Path | None, ledger: Path | None) -> tuple[str, Pat
     if not campaign:
         raise ValueError("provide --campaign or --ledger")
     rel = manifest.get("ledgers", {}).get("self_learning_skill_ledger", "self-learning-skill-ledger.tsv")
-    return campaign_id, campaign.parent / rel
+    text = str(rel or "").strip()
+    candidate = Path(text)
+    if not text or candidate.is_absolute():
+        raise ValueError("self-learning ledger path must stay inside the campaign directory")
+    base = campaign.parent.resolve()
+    resolved = (base / candidate).resolve()
+    try:
+        resolved.relative_to(base)
+    except ValueError as exc:
+        raise ValueError("self-learning ledger path must stay inside the campaign directory") from exc
+    return campaign_id, resolved
 
 
 def append_row(path: Path, row: dict[str, str]) -> None:
@@ -107,7 +126,7 @@ def main() -> int:
         "notes": args.notes,
     }
     append_row(ledger_path.resolve(), row)
-    print(f"Appended self-learning row {learning_id} to {ledger_path.resolve()}")
+    print(f"Appended self-learning row {learning_id} to {display_path(ledger_path)}")
     return 0
 
 

@@ -14,7 +14,6 @@ import argparse
 import csv
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -45,14 +44,10 @@ COLUMNS = [
 ]
 
 
-def repo_relative(path: Path) -> str:
-    resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return resolved.as_posix()
+def recorded_number(value: Any) -> str:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return ""
+    return "recorded"
 
 
 def normalize_status(value: Any) -> str:
@@ -61,7 +56,18 @@ def normalize_status(value: Any) -> str:
         return "succeeded"
     if status in {"fail", "failed", "error"}:
         return "failed"
-    return status
+    if status in {"pending", "queued", "running", "stuck_submitting", "unknown"}:
+        return status
+    return "unknown" if status else ""
+
+
+def normalize_cleanup_status(value: Any) -> str:
+    status = str(value or "").strip().lower()
+    if status in {"success", "succeeded", "complete", "completed", "done", "deleted", "removed"}:
+        return "completed"
+    if status in {"fail", "failed", "error"}:
+        return "failed"
+    return "recorded" if status else ""
 
 
 def load_json(path: Path) -> Any | None:
@@ -72,18 +78,9 @@ def load_json(path: Path) -> Any | None:
         return None
 
 
-def parse_iso(value: str | None) -> datetime | None:
-    if not value:
-        return None
-    try:
-        return datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError:
-        return None
-
-
 def blank_row(run_dir: Path, provider: str) -> dict[str, Any]:
     row: dict[str, Any] = {column: "" for column in COLUMNS}
-    row["run_dir"] = repo_relative(run_dir)
+    row["run_dir"] = "recorded"
     row["provider"] = provider
     row["provider_resource_seen"] = "no"
     return row
@@ -105,34 +102,31 @@ def parse_provider_after_run(run_dir: Path) -> dict[str, Any]:
     egress = (plan.get("execution") or {}).get("artifact_egress") or {}
     matches = (resource_record.get("duplicate_check") or {}).get("active_matches") or []
 
-    row["run_id"] = contract.get("run_id", row["run_id"])
-    row["profile"] = compute.get("profile", row["profile"])
+    raw_run_id = contract.get("run_id")
+    if raw_run_id:
+        row["run_id"] = "recorded"
+    if compute.get("profile"):
+        row["profile"] = "recorded"
     if compute.get("max_estimated_cost_usd") is not None:
-        row["max_cost_usd"] = compute["max_estimated_cost_usd"]
+        row["max_cost_usd"] = recorded_number(compute["max_estimated_cost_usd"])
     if compute.get("max_runtime_minutes") is not None:
-        row["max_minutes"] = compute["max_runtime_minutes"]
+        row["max_minutes"] = recorded_number(compute["max_runtime_minutes"])
     mark_provider_resource(row, bool(matches and matches[0].get("id")))
 
     summary = load_json(run_dir / "trusted_after_run_summary.json") or {}
-    row["issue"] = summary.get("issue_identifier", row["issue"])
-    row["run_id"] = row["run_id"] or summary.get("run_id", "")
+    if summary.get("issue_identifier"):
+        row["issue"] = "recorded"
+    if not row["run_id"] and summary.get("run_id"):
+        row["run_id"] = "recorded"
     row["final_status"] = normalize_status(summary.get("final_status", row["final_status"]))
-    row["error"] = summary.get("error", row["error"])
+    if summary.get("error"):
+        row["error"] = "present"
 
     steps = summary.get("steps") or []
     row["steps_total"] = len(steps) if steps else ""
     failed = [step for step in steps if step.get("returncode") not in (0, None)]
     row["steps_failed"] = len(failed) if steps else ""
-    starts = [parse_iso(step.get("started_at")) for step in steps]
-    ends = [parse_iso(step.get("ended_at")) for step in steps]
-    starts = [value for value in starts if value]
-    ends = [value for value in ends if value]
-    if starts:
-        row["start_iso"] = min(starts).isoformat()
-    if ends:
-        row["end_iso"] = max(ends).isoformat()
-    if starts and ends:
-        row["duration_min"] = round((max(ends) - min(starts)).total_seconds() / 60.0, 2)
+    timing_recorded = any(step.get("started_at") or step.get("ended_at") for step in steps)
 
     create_response = (
         load_json(run_dir / "create_pod_response.json")
@@ -149,18 +143,13 @@ def parse_provider_after_run(run_dir: Path) -> dict[str, Any]:
             with probe.open("r", encoding="utf-8") as handle:
                 lines = [json.loads(line) for line in handle if line.strip()]
             if lines:
-                row["start_iso"] = lines[0].get("ts", "")
-                row["end_iso"] = lines[-1].get("ts", "")
-                start = parse_iso(row["start_iso"])
-                end = parse_iso(row["end_iso"])
-                if start and end:
-                    row["duration_min"] = round((end - start).total_seconds() / 60.0, 2)
+                timing_recorded = True
         except (OSError, json.JSONDecodeError):
             pass
 
     cleanup = load_json(run_dir / "cleanup_response.json") or load_json(run_dir / "runpod_cleanup_record.json") or {}
     if cleanup:
-        row["cleanup_status"] = cleanup.get("status") or cleanup.get("action") or "recorded"
+        row["cleanup_status"] = normalize_cleanup_status(cleanup.get("status") or cleanup.get("action"))
 
     artifact_dir = run_dir / "runpod-execution"
     artifact_archive = run_dir / "runpod-execution.tar.gz"
@@ -178,7 +167,9 @@ def parse_provider_after_run(run_dir: Path) -> dict[str, Any]:
 
     notes: list[str] = []
     if egress.get("mode"):
-        notes.append(f"egress={egress['mode']}")
+        notes.append("egress_mode_recorded")
+    if timing_recorded:
+        notes.append("timing_recorded")
     if row["provider_resource_seen"] == "yes":
         notes.append("provider_resource_identifier_redacted")
     if row["provider_resource_seen"] == "yes" and not cleanup:
@@ -189,7 +180,7 @@ def parse_provider_after_run(run_dir: Path) -> dict[str, Any]:
 
 def parse_elasticblast(run_dir: Path) -> dict[str, Any]:
     row = blank_row(run_dir, "elasticblast")
-    row["run_id"] = run_dir.name
+    row["run_id"] = "recorded"
 
     state = ""
     for log_name in ("status.log", "submit.log"):
@@ -215,13 +206,9 @@ def parse_elasticblast(run_dir: Path) -> dict[str, Any]:
     else:
         row["final_status"] = "unknown"
 
-    mtime = max((item.stat().st_mtime for item in run_dir.iterdir() if item.is_file()), default=0)
-    if mtime:
-        row["end_iso"] = datetime.fromtimestamp(mtime, tz=timezone.utc).isoformat()
-
     results = list(run_dir.glob("**/*.tsv")) + list(run_dir.glob("**/*.xml")) + list(run_dir.glob("**/results*"))
     row["artifacts_present"] = "yes" if results else "no"
-    row["notes"] = f"state={state[:80]}" if state else ""
+    row["notes"] = "status_log_read" if state else ""
     return row
 
 
@@ -262,18 +249,23 @@ def main() -> int:
     root = args.root.resolve()
     out_path = args.out.resolve()
     if not root.exists():
-        print(f"error: root not found: {root}", file=sys.stderr)
+        print("error: runtime root not found; run make local-demo or pass --root <directory>", file=sys.stderr)
         return 2
 
     rows: list[dict[str, Any]] = []
-    for run_dir in discover_runs(root):
+    for ordinal, run_dir in enumerate(discover_runs(root), start=1):
         try:
             if run_dir.name.startswith("elasticblast") or (run_dir / "status.log").exists() or (run_dir / "submit.log").exists():
-                rows.append(parse_elasticblast(run_dir))
+                row = parse_elasticblast(run_dir)
             else:
-                rows.append(parse_provider_after_run(run_dir))
+                row = parse_provider_after_run(run_dir)
+            public_run_ref = f"run-{ordinal:03d}"
+            row["run_dir"] = public_run_ref
+            if row["run_id"]:
+                row["run_id"] = public_run_ref
+            rows.append(row)
         except (OSError, ValueError) as exc:
-            print(f"warn: {repo_relative(run_dir)}: {exc}", file=sys.stderr)
+            print(f"warn: skipped one run ({type(exc).__name__})", file=sys.stderr)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w", encoding="utf-8", newline="") as handle:
@@ -297,17 +289,15 @@ def main() -> int:
             file=sys.stderr,
         )
         print(f"  provider resources redacted: {provider_resources}", file=sys.stderr)
-        print(f"wrote: {repo_relative(out_path)}", file=sys.stderr)
+        print("retrospective ledger written", file=sys.stderr)
 
         if args.manifest:
             expected = manifest_expected_artifacts(args.manifest)
             if expected:
-                print(f"\nexpected_artifacts from {args.manifest.name}:", file=sys.stderr)
-                for path in expected:
-                    print(f"  - {path}", file=sys.stderr)
-                print("(cross-reference manually against artifact dirs of succeeded runs)", file=sys.stderr)
+                print(f"\nexpected artifacts declared: {len(expected)}", file=sys.stderr)
+                print("cross-reference them in approved external storage", file=sys.stderr)
             else:
-                print(f"\n{args.manifest.name}: no execution.expected_artifacts declared", file=sys.stderr)
+                print("\nno execution.expected_artifacts declared", file=sys.stderr)
 
     return 0
 

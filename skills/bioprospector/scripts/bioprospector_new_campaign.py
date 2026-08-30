@@ -12,7 +12,65 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+
 SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parents[2]
+
+
+def reject_symlink_components(path: Path) -> None:
+    candidate = path.expanduser()
+    if not candidate.is_absolute():
+        candidate = Path.cwd().resolve() / candidate
+    current = Path(candidate.anchor)
+    for name in candidate.parts[1:]:
+        current = current / name
+        if not current.is_symlink():
+            continue
+        if current.parent == Path("/") and current.name in {"tmp", "var"}:
+            current = current.resolve()
+            continue
+        raise ValueError("output path contains a symlink; choose a path without symlinks")
+
+
+def safe_replace_target(path: Path) -> Path:
+    reject_symlink_components(path)
+    resolved = path.resolve()
+    forbidden = {
+        Path("/").resolve(),
+        Path.home().resolve(),
+        Path.cwd().resolve(),
+        REPO_ROOT.resolve(),
+        REPO_ROOT.resolve().parent,
+    }
+    if resolved in forbidden or len(resolved.parts) < 3:
+        raise ValueError("output directory is too broad; choose a dedicated campaign directory")
+    return resolved
+
+
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def remove_existing_campaign(path: Path) -> None:
+    resolved = safe_replace_target(path)
+    manifest_path = resolved / "campaign-manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(
+            "output directory is not a generated campaign; choose a new directory or remove it manually after review"
+        ) from exc
+    required = {"campaign_id", "target_contract", "ledgers", "scope"}
+    if not required.issubset(manifest) or manifest.get("scope") != "planning_only":
+        raise ValueError(
+            "output directory is not a generated campaign; choose a new directory or remove it manually after review"
+        )
+    shutil.rmtree(resolved)
+
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
@@ -175,6 +233,7 @@ def write_target_contract(path: Path, contract: dict[str, Any]) -> None:
 
 
 def scaffold_campaign(target_contract: Path, out: Path, campaign_id: str | None = None) -> Path:
+    out = safe_replace_target(out)
     schema = load_schema()
     headers = ledger_headers(schema)
     contract = load_json(target_contract)
@@ -252,17 +311,28 @@ def main() -> int:
     parser.add_argument("--force", action="store_true", help="Replace an existing output directory.")
     args = parser.parse_args()
 
-    if args.out.exists():
-        if not args.force:
-            print(f"FAIL output already exists: {args.out}")
-            return 1
-        shutil.rmtree(args.out)
+    try:
+        out = safe_replace_target(args.out)
+    except ValueError as exc:
+        print(f"FAIL {exc}")
+        return 1
 
-    manifest = scaffold_campaign(args.target_contract.resolve(), args.out.resolve(), args.campaign_id)
-    print(f"Wrote campaign scaffold: {manifest}")
+    if out.exists():
+        if not args.force:
+            print(f"FAIL output already exists: {display_path(out)}")
+            return 1
+        try:
+            remove_existing_campaign(out)
+        except ValueError as exc:
+            print(f"FAIL {exc}")
+            return 1
+
+    manifest = scaffold_campaign(args.target_contract.resolve(), out, args.campaign_id)
+    shown_manifest = display_path(manifest)
+    print(f"Wrote campaign scaffold: {shown_manifest}")
     print("Next commands:")
-    print(f"  python3 skills/bioprospector/scripts/bioprospector_preflight.py --campaign {manifest}")
-    print(f"  python3 skills/bioprospector/scripts/bioprospector_input_audit.py --campaign {manifest}")
+    print(f"  python3 skills/bioprospector/scripts/bioprospector_preflight.py --campaign {shown_manifest}")
+    print(f"  python3 skills/bioprospector/scripts/bioprospector_input_audit.py --campaign {shown_manifest}")
     return 0
 
 

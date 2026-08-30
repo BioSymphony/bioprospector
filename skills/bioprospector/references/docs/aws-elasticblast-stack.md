@@ -1,4 +1,6 @@
-# AWS ElasticBLAST Stack
+# AWS ElasticBLAST stack
+
+Reviewed: 2026-08-30.
 
 ## Purpose
 
@@ -9,7 +11,7 @@ RunPod is one supported optional execution pattern for controlled local
 datasets, Swiss-Prot, UniRef, Pfam, DIAMOND, MMseqs2, HMMER, scoring, and
 pathway stitching. Do not stage full `nr` on RunPod by default.
 
-## Decision Rule
+## Decision rule
 
 Use RunPod first when the search can be answered by:
 
@@ -22,14 +24,14 @@ Use RunPod first when the search can be answered by:
 Use ElasticBLAST only when a wide/frontier step needs official NCBI BLAST
 database coverage after cheaper lanes are insufficient.
 
-## Current Caveat
+## Database availability
 
 ElasticBLAST supports NCBI cloud-hosted BLAST databases by database name, but
 do not assume every NCBI Web BLAST database is available as an ElasticBLAST DB.
-Treat ClusteredNR as a separate reviewed lane unless the current cloud database
-listing proves an accepted database name.
+Treat ClusteredNR as a separate reviewed lane unless the operator confirms its
+accepted database name against the current NCBI cloud listing.
 
-## Readiness Bundle
+## Readiness bundle
 
 Generate a prep bundle from a campaign manifest:
 
@@ -56,18 +58,18 @@ The bundle is written under `.runtime/`, which is git-ignored. It contains:
 The generator does not authenticate to AWS, create buckets, upload query files,
 submit jobs, or download results.
 
-## AWS Setup Boundary
+## AWS setup boundary
 
 Do not paste AWS access keys, secret keys, session tokens, root credentials, MFA
 codes, or SSO verification codes into chat, Linear, repo files, or `.env` files.
 
-Preferred first smoke test:
+For a first smoke test:
 
 1. Sign into AWS Console with MFA.
 2. Open AWS CloudShell in the selected region.
 3. Run setup and smoke commands there.
 
-Preferred repeat path:
+For later runs, use an operator-managed profile or secret store:
 
 ```bash
 aws configure sso --profile bioprospector
@@ -78,18 +80,19 @@ aws sts get-caller-identity --profile bioprospector
 Codex may inspect non-secret command output and write local config templates,
 but should not handle long-lived AWS secrets.
 
-## Mandatory Safety Controls
+## Required safety controls
 
 Before any `elastic-blast submit`:
 
 - dedicated AWS sandbox account or reviewed project account
-- AWS Budget for the sandbox, initially `$25` or lower
+- an operator-approved budget; the generated example uses `$25`
 - alerts at actual/forecasted thresholds
 - Cost Anomaly Detection with a low threshold
 - low EC2 vCPU quotas retained for smoke runs
 - private S3 bucket with block-public-access and lifecycle cleanup
 - ElasticBLAST janitor role or explicit cleanup procedure
-- `elastic-blast==1.5.0` or newer
+- the current NCBI-supported version; the documentation reviewed on
+  2026-08-30 specifies [`elastic-blast==1.5.0`](https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/)
 - one-node first run
 - preemptible/spot enabled for scout runs
 - public or separately approved query FASTA only
@@ -97,7 +100,7 @@ Before any `elastic-blast submit`:
 Budgets and anomaly alerts are delayed. They reduce risk but are not hard
 real-time spending caps.
 
-## Operator-Owned Live-Run Boundary
+## Operator-owned live-run boundary
 
 Generated configs are templates. A live ElasticBLAST run is an operator-owned
 activity outside this public repo: activate the operator-managed environment,
@@ -107,7 +110,7 @@ delete the job from the same secure shell after cleanup review.
 After deletion, verify EC2, AWS Batch, and CloudFormation resources by tag and
 region. Record cleanup status in `elasticblast-run-ledger.tsv`.
 
-## Output Contract
+## Output contract
 
 Raw ElasticBLAST outputs stay in S3 until parsed and reviewed. BioProspector
 copies back only compact artifacts:
@@ -115,15 +118,15 @@ copies back only compact artifacts:
 - candidate-funnel count updates
 - candidate hit summaries
 - rejected-candidate rows
-- provenance records with config, database, region, and result URI
+- provenance records with config, database, region, and an opaque result pointer
 - final shortlist rows
-- cleanup and cost summaries
+- cleanup status and aggregate budget status
 
 Do not copy full BLAST result archives or uploaded query FASTAs into this repo.
 
-## One-Day Campaign Role
+## Bounded campaign role
 
-For a one-day campaign, ElasticBLAST should be used sparingly:
+For a bounded campaign, use ElasticBLAST only for unresolved wide-search steps:
 
 1. RunPod Swiss-Prot/Pfam/UniRef lanes first.
 2. Compress candidate families.

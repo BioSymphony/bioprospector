@@ -1,4 +1,4 @@
-# Monitoring And Provenance
+# Monitoring and provenance
 
 BioProspector monitoring is ledger- and Linear-first. Do not add a daemon,
 dashboard, queue runner, or background service for this phase.

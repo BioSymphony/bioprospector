@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -76,6 +78,35 @@ class IssueProfileTests(unittest.TestCase):
         self.assertIn("lane:claude", issues["NOOTKATONE-99-red-team.md"])
         self.assertIn("lane:claude", issues["NOOTKATONE-decoy-control-00-negative-gate.md"])
         self.assertIn("lane:claude", issues["NOOTKATONE-contract-self-check-99-final-join.md"])
+
+    def test_required_ledger_paths_cannot_escape_campaign_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            campaign = root / "campaign-manifest.json"
+            campaign.write_text(
+                json.dumps(
+                    {
+                        "campaign_id": "path-test",
+                        "target_molecule": "public-target",
+                        "host": "public-host",
+                        "claim_boundary": "planning only",
+                        "target_contract": "target-contract.json",
+                        "ledgers": {
+                            "route_ledger": "../route-ledger.tsv",
+                            "reaction_step_ledger": "/outside/reaction-step-ledger.tsv",
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "inside the campaign directory"):
+                issue_dry_run.build_issues(campaign, "PATH")
+
+    def test_external_path_uses_public_placeholder(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            external = Path(tmpdir) / "campaign-manifest.json"
+            self.assertEqual("REPLACE_ME_EXTERNAL_PATH", issue_dry_run.display_path(external))
 
 
 if __name__ == "__main__":

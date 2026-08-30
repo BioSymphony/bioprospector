@@ -2,6 +2,7 @@
 date: 2026-05-26
 slug: example-doctor-warnings-vs-failures
 applies-to: any-campaign
+public_safe: REVIEW_REQUIRED
 ---
 
 # Example: doctor WARN rows are not blockers
@@ -40,4 +41,4 @@ unneeded installs.
 
 This is an agent-process lesson. It does not validate biology, does not
 change the heavy-data policy, and is not a substitute for provider
-preflight when a lane is actually approved for live execution.
+preflight when an operator approves a lane for live execution.

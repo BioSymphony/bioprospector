@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import importlib.util
 import json
 import subprocess
 import sys
@@ -15,6 +16,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = REPO_ROOT / "skills/bioprospector/scripts/bioprospector_genecluster_atlas_contracts.py"
 FIXTURE = REPO_ROOT / "skills/bioprospector/examples/genecluster-synthetic-v0"
+
+spec = importlib.util.spec_from_file_location("genecluster_contracts_tests", SCRIPT)
+assert spec and spec.loader
+contracts = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(contracts)
 
 
 def run(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -60,7 +66,8 @@ class GeneClusterAtlasContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "cluster_calls.tsv"
             fixture_rows = rows(FIXTURE / "cluster_calls.tsv")
-            fixture_rows[0]["contig"] = "local_contigs.fasta"
+            private_pointer = str(Path(tmp) / "local_contigs.fasta")
+            fixture_rows[0]["contig"] = private_pointer
             write_rows(path, fixture_rows)
 
             result = run("--cluster-calls", str(path), "--json", check=False)
@@ -69,6 +76,7 @@ class GeneClusterAtlasContractTests(unittest.TestCase):
         data = json.loads(result.stdout)
         self.assertFalse(data["ok"])
         self.assertIn("raw/heavy", "\n".join(data["errors"]))
+        self.assertNotIn(private_pointer, result.stdout)
 
     def test_consensus_cannot_hide_caller_disagreement(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -92,6 +100,17 @@ class GeneClusterAtlasContractTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         data = json.loads(result.stdout)
         self.assertIn("collapses caller disagreement", "\n".join(data["errors"]))
+
+    def test_secret_manager_uri_is_rejected_without_echoing_value(self) -> None:
+        private_reference = "secret://private-project/provider-token"
+        errors = contracts.find_raw_or_secret_values(
+            {"api_key": private_reference},
+            "provider manifest",
+        )
+
+        rendered = "\n".join(errors)
+        self.assertIn("must be an env name", rendered)
+        self.assertNotIn(private_reference, rendered)
 
     def test_provider_handoff_accepts_symphony_neocloud_bridge(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

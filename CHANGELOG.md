@@ -9,32 +9,41 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Require Python 3.11+. `check_release_metadata.py` uses `tomllib`, which is in
-  the standard library only on Python 3.11 and newer. The CI matrix now covers
-  Python 3.11 through 3.13.
+  the standard library only on Python 3.11 and newer.
+- Test Python 3.11 through 3.14 in CI. Pin `actions/checkout` 7.0.1 and
+  `actions/setup-python` 7.0.0 to reviewed immutable revisions.
+- Refresh the external-tool index with MMseqs2, DIAMOND,
+  nf-core/proteinfamilies, runpodctl, cblaster, BiG-SLiCE, and Folddisco
+  information reviewed on August 30, 2026. The BiG-SLiCE entry records its
+  August 2025 release date. Tool pages distinguish discovery from compatibility.
+- Rewrite the README and supporting prose for a clearer reader path, explicit
+  planning-fixture boundaries, and compact public-artifact guidance.
+- Add durable design principles, a public roadmap, and a release checklist.
+- Require process notes to declare `public_safe: true` before agents read them.
 
 ### Fixed
 
 - CI installs the package and dev extras before `make release-check`, so the
   release gate runs. Previously the workflow had no install step and stopped on
   a missing `pytest`.
+- Public audits reject common credential and private-key filenames as well as
+  generic user-home paths without embedding local identities in the source.
+- Workspace and retrospective summaries hide local history, exact run paths,
+  identifiers, cost records, and timing records by default.
 
 ## [0.1.0] - 2026-05-26
 
-Initial public release. Agentic harness for discovering biosynthetic pathways
-to target molecules: enzyme mining, pathway stitching, host-fit review,
-construct hypotheses, and compute-portable work graphs.
+Initial public release. Planning toolkit for biosynthetic-pathway campaigns,
+enzyme-mining plans, pathway stitching, host-fit review, and portable work graphs.
 
 ### Added
 
 - Agent skill packaging under `skills/bioprospector/SKILL.md` and install
   pointers for Claude Code, Codex, and Symphony workers
   (`docs/AGENT_INSTALL.md`).
-- Local-memory pattern under `.bioprospector-memory/` (gitignored): the
-  agent reads durable Markdown notes at the start of every campaign and
-  writes new ones when it hits and overcomes a non-obvious issue, so the
-  user's local checkout compounds across campaigns without anything going
-  upstream. Five-section shape template under
-  `skills/bioprospector/references/memory-note-template.md`.
+- Local process-note pattern under `.bioprospector-memory/` (gitignored), with
+  a template that prohibits secrets, private paths, campaign-specific data, raw
+  sequences, provider identifiers, and signed URLs.
 - Campaign control plane: scaffold, preflight, input audit, issue dry-run,
   agent brief, handoff, status, stage contract, self-learning,
   retrospective.
@@ -49,7 +58,7 @@ construct hypotheses, and compute-portable work graphs.
   pods, submit jobs, or touch AWS.
 - Release gates: `bioprospector_doctor.py`, `public_audit.py`,
   `check_docs_links.py`, `check_docs_index.py`,
-  `check_release_metadata.py`. CI matrix covers Python 3.10 through 3.13.
+  `check_release_metadata.py`. CI matrix covers Python 3.11 through 3.13.
 - Synthetic samples under `demos/sample-inputs/` (BLAST6, DIAMOND, MMseqs,
   HMMER) and `skills/bioprospector/examples/genecluster-synthetic-v0/`
   (cluster calls, BGC consensus, function votes, function jury).
@@ -64,18 +73,18 @@ construct hypotheses, and compute-portable work graphs.
   ElasticBLAST prep, enzyme family sweep, evidence lane, genome mining,
   host comparison, input audit, ledger schema, literature ledger, and
   metabolic model lanes.
-- README Why This Is Powerful section surfacing the L0-L5 maturity ladder,
-  the multi-winner Pareto frontier (minimal-gene, highest-evidence,
+- README sections for the L0-L5 maturity ladder and route rankings
+  (minimal-gene, highest-evidence,
   clearest validation handoff, best host-fit, ambitious de novo,
   diversity-library), and the self-learning loop.
-- README diagrams: public/private boundary, ledger-labeled core workflow,
-  and multi-harness portability bowtie.
-- Campaign-shaped When To Reach For This chooser in `docs/USE_CASES.md`
+- README diagrams for the public-data boundary, ledger-labeled workflow,
+  agent harnesses, and compute providers.
+- Campaign use-case chooser in `docs/USE_CASES.md`
   leading the existing workflow and operational recipes.
 - Runnable tool-use round-trip walkthrough in the README so the
   evidence-ingest path can be exercised on the synthetic BLAST6, DIAMOND,
   MMseqs, and HMMER samples without a real search.
-- Freshness nudges: SKILL.md claim policy now requires tool versions, build
+- Provenance requirements: SKILL.md claim policy requires tool versions, build
   dates, database snapshot dates, and parameters in
   `evidence_event_ledger.tsv` so claims are version-anchored; the literature
   ledger template asks the agent to include preprint scans (biorxiv,

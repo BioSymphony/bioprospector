@@ -3,7 +3,7 @@
 Status: draft v0
 
 Use this campaign mode when a target should be prepared all the way up to a
-reviewable RunPod/HPC execution bundle without actually launching compute.
+reviewable RunPod or HPC execution bundle without launching compute.
 
 ## Goal
 

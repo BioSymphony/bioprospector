@@ -22,12 +22,12 @@ do not discover and run repo-shaped code from the caller working directory.
 An installed wheel without `BIOPROSPECTOR_REPO_ROOT` can print version/help, but
 script-backed commands fail closed instead of guessing a checkout.
 
-## Health And Release
+## Health and release
 
 | Command | Purpose |
 | --- | --- |
 | `bioprospector doctor --include-runtime` | Check schema, examples, optional tools, public audit, and forbidden tracked paths. |
-| `bioprospector workspace-status` | Summarize git state, runtime sidecar counts, key files, and suggested commands with local paths hidden by default. |
+| `bioprospector workspace-status` | Summarize git state, runtime sidecar counts, key files, and suggested commands. Paths, names, branches, and commit identifiers are hidden by default. |
 | `bioprospector commands --json` | Print a machine-readable command index for wrappers, docs, and agents. |
 | `bioprospector quickstart` | Print the local-only first-run path. |
 | `bioprospector --version` | Print the package version without checkout discovery. |
@@ -49,7 +49,7 @@ script-backed commands fail closed instead of guessing a checkout.
 | `bioprospector stage-contract` | Validate stage contracts, progress rows, stale heartbeats, and strict live closeout gates. |
 | `bioprospector self-learning` | Append a reusable process-learning row after a hiccup. |
 
-## Evidence And Dossier
+## Evidence and dossier
 
 | Command | Purpose |
 | --- | --- |

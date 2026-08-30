@@ -96,7 +96,21 @@ def repo_relative(path: Path) -> str:
     try:
         return resolved.relative_to(REPO_ROOT).as_posix()
     except ValueError:
-        return resolved.as_posix()
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def declared_path(base: Path, value: object) -> Path | None:
+    text = str(value or "").strip()
+    rel = Path(text)
+    if not text or rel.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
 
 
 def path_is_under(path: Path, parent: Path) -> bool:
@@ -105,6 +119,21 @@ def path_is_under(path: Path, parent: Path) -> bool:
         return True
     except ValueError:
         return False
+
+
+def reject_symlink_components(path: Path) -> None:
+    candidate = path.expanduser()
+    if not candidate.is_absolute():
+        candidate = REPO_ROOT / candidate
+    current = Path(candidate.anchor)
+    for name in candidate.parts[1:]:
+        current = current / name
+        if not current.is_symlink():
+            continue
+        if current.parent == Path("/") and current.name in {"tmp", "var"}:
+            current = current.resolve()
+            continue
+        raise ValueError("output path contains a symlink; choose a path without symlinks")
 
 
 def slug(value: str) -> str:
@@ -126,10 +155,11 @@ def resolve_output_dir(out_arg: Path | None, campaign_id: str) -> Path:
     else:
         out = out_arg.expanduser()
         if not out.is_absolute():
-            out = (REPO_ROOT / out).resolve()
+            out = REPO_ROOT / out
+    reject_symlink_components(out)
     out = out.resolve()
     if not path_is_under(out, RUNTIME_ROOT):
-        raise ValueError(f"output directory must be under {RUNTIME_ROOT}")
+        raise ValueError("output directory must be under .runtime")
     return out
 
 
@@ -137,13 +167,15 @@ def campaign_file_hashes(campaign_path: Path, manifest: dict[str, Any]) -> list[
     base = campaign_path.parent
     files: list[Path] = [campaign_path]
     target_contract = manifest.get("target_contract")
-    if isinstance(target_contract, str) and target_contract:
-        files.append(base / target_contract)
+    target_path = declared_path(base, target_contract)
+    if target_path is not None:
+        files.append(target_path)
     ledgers = manifest.get("ledgers")
     if isinstance(ledgers, dict):
         for rel in ledgers.values():
-            if isinstance(rel, str) and rel:
-                files.append(base / rel)
+            path = declared_path(base, rel)
+            if path is not None:
+                files.append(path)
 
     hashes = []
     seen: set[Path] = set()
@@ -169,8 +201,8 @@ def heavy_steps(campaign_path: Path, manifest: dict[str, Any]) -> list[dict[str,
     rel = ledgers.get("reaction_step_ledger")
     if not isinstance(rel, str) or not rel:
         return []
-    path = campaign_path.parent / rel
-    if not path.exists():
+    path = declared_path(campaign_path.parent, rel)
+    if path is None or not path.exists():
         return []
     return [
         step
@@ -662,7 +694,7 @@ def main() -> int:
 
     campaign_path = args.campaign.resolve()
     if not campaign_path.exists():
-        print(f"FAIL campaign not found: {campaign_path}")
+        print(f"FAIL campaign not found: {repo_relative(campaign_path)}")
         return 1
     if args.budget_usd <= 0 or args.budget_usd >= 100:
         print("FAIL --budget-usd must be greater than 0 and less than 100")
@@ -719,7 +751,7 @@ def main() -> int:
     )
     written = write_bundle(out_dir, manifest, searches, runs, safety)
 
-    print(f"Wrote AWS ElasticBLAST readiness bundle to {out_dir}")
+    print(f"Wrote AWS ElasticBLAST readiness bundle to {repo_relative(out_dir)}")
     for path in written:
         print(f"- {repo_relative(path)}")
     return 0

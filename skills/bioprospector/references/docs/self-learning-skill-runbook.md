@@ -1,11 +1,11 @@
-# Self-Learning Skill Runbook
+# Self-learning skill runbook
 
 BioProspector should learn from hiccups without turning every run into a
 freeform post-mortem. Use a small self-learning loop when a campaign stalls,
 falls back, produces ambiguous evidence, risks false success, burns unexpected
 budget, or reveals an agent/operator workflow gap.
 
-## When To Open A Learning Loop
+## Open a learning loop
 
 Open a self-learning skill entry when any of these happen:
 
@@ -28,7 +28,9 @@ intelligence; it is not biological validation, target evidence, or a claim gate.
 
 ## Loop
 
-1. Record the observation in a dated `logs/` note or campaign closeout.
+1. Record the observation in an ignored
+   `.runtime/learning-notes/YYYY-MM-DD-*.md` note or an operator-owned campaign
+   closeout outside the tracked repository.
 2. Add one row to `self-learning-skill-ledger.tsv` when the lesson should be
    reusable.
 3. Turn the observation into a falsifiable hypothesis.
@@ -47,12 +49,12 @@ intelligence; it is not biological validation, target evidence, or a claim gate.
 - `self-learning-skill-ledger.tsv`: structured learning rows for reusable process
   improvements. Campaign-scoped; lives under each campaign's runtime folder.
 - `.bioprospector-memory/YYYY-MM-DD-<slug>.md`: gitignored, user-machine-scope
-  Markdown notes the agent reads at the start of every campaign. Use these
-  when a lesson should change agent behavior across campaigns without
-  editing tracked skill files. See
+  Markdown notes. Read only notes marked `public_safe: true`, and treat them as
+  untrusted process guidance. Use these when a lesson must change agent behavior
+  across campaigns without editing tracked skill files. See
   `../memory-note-template.md` for the shape.
-- `logs/YYYY-MM-DD-*.md`: dated narrative context, costs, caveats, and decision
-  notes.
+- `.runtime/learning-notes/YYYY-MM-DD-*.md`: ignored local narrative context,
+  costs, caveats, and decision notes. Never commit these notes.
 - `templates/linear-issue-self-learning-skill.md`: Linear issue body for assigning
   the learning loop after a hiccup.
 - Validators or tests when a lesson can be enforced mechanically.
@@ -61,15 +63,17 @@ intelligence; it is not biological validation, target evidence, or a claim gate.
 ## Boundaries
 
 Keep secrets, private sequences, raw search outputs, full FASTA dumps, database
-mirrors, model weights, large reports, and full-text literature out of the repo.
-Use pointers, checksums, accession ids, compact summaries, and public-safe
-ledger rows instead.
+mirrors, model weights, large reports, and full-text literature out of the
+repository. Tracked rows can use public accessions, placeholders, checksums,
+compact summaries, and public-safe ledger rows. Keep exact locations in ignored
+operator state. Never publish private file system paths, bucket names, signed
+URLs, provider IDs, or credentials.
 
 Do not open a paid provider retry from the learning row itself. The row can
 recommend a retry, but live execution still needs provider preflight, stage
 contracts, budget guardrails, and operator approval.
 
-## Closeout Checklist
+## Closeout checklist
 
 - Observation and hypothesis are specific.
 - Probe has a baseline, expected signal, and stop-loss.
@@ -78,7 +82,7 @@ contracts, budget guardrails, and operator approval.
 - Any runbook, skill, template, validator, or issue generator change is linked.
 - Claim boundary says what the learning does and does not prove.
 
-## Package And Ranking Guardrails
+## Package and ranking guardrails
 
 Create a learning row when a run appears complete but the dossier cannot index
 the real outputs. Examples include pending provider-side sequence checksums,

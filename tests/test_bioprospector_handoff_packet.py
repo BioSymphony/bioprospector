@@ -76,6 +76,21 @@ class BioProspectorHandoffPacketTests(unittest.TestCase):
             self.assertIn("Wrote handoff packet", result.stdout)
             self.assertEqual("HUPERZINE", manifest["prefix"])
 
+    def test_external_paths_are_not_written_to_handoff_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out = Path(tmpdir) / "handoff"
+            handoff.build_packet(
+                CAMPAIGN,
+                out,
+                prefix="HUPERZINE",
+                profile="public-demo",
+                include_issue_drafts=False,
+            )
+
+            rendered = "\n".join(path.read_text(encoding="utf-8") for path in out.iterdir())
+            self.assertNotIn(str(out), rendered)
+            self.assertIn("REPLACE_ME_EXTERNAL_PATH", rendered)
+
 
 if __name__ == "__main__":
     unittest.main()

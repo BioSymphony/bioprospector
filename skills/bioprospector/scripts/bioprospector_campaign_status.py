@@ -60,17 +60,25 @@ def read_tsv(path: Path) -> list[dict[str, str]]:
 
 def display_path(path: Path) -> str:
     resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return path.as_posix()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
 
 
 def ledger_path(base: Path, manifest: dict[str, Any], key: str) -> Path | None:
     rel = manifest.get("ledgers", {}).get(key)
-    return base / rel if rel else None
+    text = str(rel or "").strip()
+    candidate = Path(text)
+    if not text or candidate.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / candidate).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
 
 
 def rows_for(base: Path, manifest: dict[str, Any], key: str) -> list[dict[str, str]]:
@@ -113,7 +121,8 @@ def missing_ledgers(base: Path, manifest: dict[str, Any], keys: list[str]) -> li
         if not rel:
             missing.append(f"{key}: not declared")
             continue
-        if not (base / rel).exists():
+        path = ledger_path(base, manifest, key)
+        if path is None or not path.exists():
             missing.append(f"{key}: {rel} missing")
     return missing
 

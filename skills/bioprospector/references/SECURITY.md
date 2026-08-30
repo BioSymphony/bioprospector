@@ -5,13 +5,13 @@ the project is hosted on GitHub, use GitHub private vulnerability reporting if
 it is enabled for the repository. Do not open a public issue for secrets,
 private data, provider identifiers, or unpublished biological material.
 
-## Supported Versions
+## Supported versions
 
-Until the first public release is tagged, only the current `main` branch is
-maintained. After tagging begins, supported versions will be documented in the
-release notes.
+Security maintenance covers the `main` branch and the tagged release with the
+highest semantic version.
+Release notes document any narrower support window.
 
-## Public Repo Boundaries
+## Public repository boundaries
 
 See [`docs/PRIVACY_SECURITY_MODEL.md`](docs/PRIVACY_SECURITY_MODEL.md) for the
 full data-class and threat model.
@@ -23,20 +23,20 @@ This repository must not contain:
 - pod IDs, network volume IDs, account IDs, or billing records
 - unpublished biological data, private sequences, raw reads, large database snapshots, model weights, or restricted datasets
 
-If sensitive content appears in the tree, remove it before publishing and
-re-create public history from a clean export. Do not push a repaired commit on
-top of a leaked public history without maintainer review.
+If sensitive content appears in the tree or history, stop the release and report
+it privately. Rotate affected credentials outside this repository. Re-create
+public history from a reviewed clean export before publishing again.
 
-## Response Handling
+## Response handling
 
-Maintainers should acknowledge private security reports, triage whether the
+Maintainers must acknowledge private security reports, triage whether the
 issue affects current tree content or history, rotate any affected credentials
 outside this repository, and prepare a clean public export when history contains
-sensitive content. Public advisories should avoid repeating leaked values.
+sensitive content. Public advisories must not repeat leaked values.
 
-## Release Gate
+## Release gate
 
-Before publishing, run:
+Before each public release, run:
 
 ```bash
 make release-check

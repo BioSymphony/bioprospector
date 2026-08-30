@@ -22,12 +22,24 @@ REPO_ROOT = SCRIPT_DIR.parents[2]
 
 def display_path(path: Path) -> str:
     resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return path.as_posix()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def declared_path(base: Path, value: object) -> Path | None:
+    text = str(value or "").strip()
+    rel = Path(text)
+    if not text or rel.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -73,8 +85,8 @@ def sidecar_filename(key: str) -> str:
 def ledger_path(base: Path, campaign: dict[str, Any], key: str, sidecar_dirs: list[Path] | None = None) -> Path | None:
     rel = campaign.get("ledgers", {}).get(key)
     if rel:
-        path = base / rel
-        if path.exists():
+        path = declared_path(base, rel)
+        if path is not None and path.exists():
             return path
     for sidecar_dir in sidecar_dirs or []:
         path = sidecar_dir / sidecar_filename(key)
@@ -92,8 +104,8 @@ def build_dossier(campaign_path: Path, row_limit: int, sidecar_dirs: list[Path] 
     campaign = load_json(campaign_path)
     base = campaign_path.parent
     sidecar_dirs = [path.resolve() for path in sidecar_dirs or []]
-    contract_path = base / campaign.get("target_contract", "target-contract.json")
-    contract = load_json(contract_path) if contract_path.exists() else {}
+    contract_path = declared_path(base, campaign.get("target_contract", "target-contract.json"))
+    contract = load_json(contract_path) if contract_path is not None and contract_path.exists() else {}
 
     target = campaign.get("target_molecule", contract.get("target_molecule", "unknown target"))
     host = campaign.get("host", contract.get("host", "unknown host"))

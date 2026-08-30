@@ -1,13 +1,13 @@
-# BioProspector Modes
+# BioProspector modes
 
 BioProspector is local-first. The same ledgers can describe future provider
-work, but this public repo ships only planning, review, validation, and
+work, but this public repository ships only planning, review, contract-check, and
 readiness helpers.
 
 For a task-oriented chooser across local, agent, tracker, cloud-readiness, and
 live-closeout paths, see [`WORKFLOWS.md`](WORKFLOWS.md).
 
-## Local Planning
+## Local planning
 
 Use this mode for new campaigns, examples, issue drafts, graph exports,
 candidate packages, Pareto ranking, and dossiers.
@@ -21,7 +21,7 @@ python3 scripts/bioprospector_preflight.py \
 This mode does not call providers, download biological databases, or write
 outside the checkout except ignored `.runtime/` artifacts you request.
 
-## Local Demo
+## Local demo
 
 Use this when evaluating the repo quickly.
 
@@ -34,13 +34,13 @@ atlas checks, candidate package, Pareto frontier, and compact dossier under
 `.runtime/`. Compare the shape with
 [`../demos/expected-outputs`](../demos/expected-outputs).
 
-## Agent Skill Mode
+## Agent skill mode
 
 Use this mode when installing the BioProspector skill into another local agent
 environment. The skill points agents to the same scripts, schemas, examples,
 and safety rules in this checkout. See [`AGENT_INSTALL.md`](AGENT_INSTALL.md).
 
-## Provider Readiness Review
+## Provider readiness review
 
 RunPod, HPC, and AWS ElasticBLAST docs and bundles are review-only. They create
 plans, manifests, and preflight rows. They do not create pods, submit jobs,
@@ -58,14 +58,14 @@ python3 scripts/bioprospector_elasticblast_bundle.py \
 Provider probe reports redact profile, bucket, IAM user, stack, and compute
 environment names by default. Use explicit opt-in only for local private review.
 
-## Public Switch Mode
+## Release review mode
 
-Before publishing, run the release gate and inspect the switch checklist.
+Before publishing, run the release gate and inspect the release checklist.
 
 ```bash
 make switch-check
 sed -n '1,220p' docs/PUBLIC_SWITCH_CHECKLIST.md
 ```
 
-The public switch gate is about repository hygiene. It is not evidence that a
+The release gate checks repository hygiene. It is not evidence that a
 biological campaign succeeded.

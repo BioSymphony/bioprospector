@@ -7,7 +7,7 @@ operator decides whether to copy reviewed drafts into an external tracker.
 For the user-facing workflow, see
 [`WORKFLOWS.md`](WORKFLOWS.md#4-linear-or-tracker-mirror).
 
-## What The Sidecar Provides
+## What the sidecar provides
 
 - Dry-run issue bodies for target contract, route, step, integration, and red-team work.
 - Optional evidence-lane child drafts for every `wide` or `frontier` reaction step.
@@ -78,7 +78,7 @@ Tracker mapping:
 | title | draft heading |
 | labels | campaign prefix, lane type, provider/readiness tag |
 | owner | assigned after local review |
-| status | `Backlog` except the first validated wave |
+| status | `Backlog` except the first approved, contract-checked wave |
 | dependency | `Depends On` and `Review Gate` sections |
 | acceptance criteria | `Continuation Criteria`, `Kill Criteria`, validation commands |
 | closeout comment | changed ledgers, generated artifacts, claim level, blockers |
@@ -120,7 +120,7 @@ python3 scripts/bioprospector_issue_dry_run.py \
 
 </details>
 
-## Validate Before Handoff
+## Validate before handoff
 
 Run campaign preflight:
 
@@ -159,7 +159,7 @@ python3 scripts/bioprospector_contract_self_check.py \
 ```
 
 If you copy the workflow into a local operator stack and replace the
-placeholders, run the equivalent repo preflight from that stack:
+placeholders, run the equivalent repository preflight from that stack:
 
 ```bash
 ${SYMPHONY_HOME}/bin/repo-preflight \
@@ -167,7 +167,7 @@ ${SYMPHONY_HOME}/bin/repo-preflight \
   bioprospector
 ```
 
-## Use The Workflow Draft
+## Use the workflow draft
 
 Copy the workflow into an operator setup only after local review, then edit the
 portable placeholders:
@@ -197,21 +197,22 @@ Execution defaults:
 - no long-run closeout without stage progress and done markers
 - no genome mining, structure prediction, or host-model execution from prep-only issues
 
-## Operator Pattern
+## Operator pattern
 
 1. Generate dry-run issue drafts.
 2. Review and prune drafts before creating real external tracker issues.
 3. Add the workflow routing label to every issue intended for this sidecar.
-4. Keep most issues in `Backlog`; activate only the first validated wave.
-5. Start with one worker until the campaign proves its validation loop.
+4. Keep most issues in `Backlog`; activate only the first approved, contract-checked wave.
+5. Start with one worker until the campaign demonstrates its review loop.
 6. Promote downstream issues only after dependencies, review gates, and claim boundaries are satisfied.
 
-## Data And Claim Boundaries
+## Data and claim boundaries
 
 Do not store API keys, tokens, private sequence data, unpublished constructs,
 raw reads, large database snapshots, model weights, or restricted database
-content in this repo or in external tracker issue bodies.
+content in this repository or in external tracker issue bodies.
 
-Use accessions, checksums, secure path references, compact ledgers, citations,
-and derived summaries. BioProspector issue outputs are planning intelligence,
-not wet-lab validation or target-host production claims.
+Use public accessions, placeholders, checksums, compact ledgers, citations, and
+derived summaries. Keep exact locations in ignored operator state.
+BioProspector issue outputs are planning records, not wet-lab validation or
+target-host production claims.

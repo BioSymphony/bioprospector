@@ -148,7 +148,9 @@ Defer until the candidate funnel proves value:
 - structure prediction for thousands of candidates
 - docking for thousands of candidates
 
-Also defer private, proprietary, collaborator-restricted, or unpublished sequence resources until rights, secure paths, and explicit execution approval are recorded outside this repo.
+Also defer private, proprietary, collaborator-restricted, or unpublished
+sequence resources until rights, opaque external pointers, and explicit
+execution approval are recorded outside this repository.
 
 ## AWS ElasticBLAST Escalation
 

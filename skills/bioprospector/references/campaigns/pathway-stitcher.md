@@ -6,7 +6,7 @@ Use this campaign after route and enzyme candidate shortlists exist.
 
 ## Goal
 
-Assemble candidate enzymes into coherent routes and score whether the route actually works as an integrated design hypothesis.
+Assemble candidate enzymes into coherent routes and score each integrated design hypothesis.
 
 ## Required Outputs
 
@@ -31,7 +31,7 @@ Assemble candidate enzymes into coherent routes and score whether the route actu
 - side reactions
 - missing validation evidence
 
-## Pareto Winners
+## Route rankings
 
 Always report:
 

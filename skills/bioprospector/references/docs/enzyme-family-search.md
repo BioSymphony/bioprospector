@@ -1,9 +1,9 @@
-# Enzyme Family Search Backbone
+# Enzyme family search backbone
 
-The default search backbone is layered. BioProspector should compress candidate
-families before promoting individual enzymes.
+Use a layered search order. Compress candidate families before reviewing
+individual enzymes.
 
-## Default Order
+## Default order
 
 1. Literature and accession seeds.
 2. Curated databases such as Swiss-Prot or reviewed pathway resources.
@@ -12,7 +12,7 @@ families before promoting individual enzymes.
 5. Evidence review with claim levels and rejected classes preserved.
 6. Structure-risk and host-fit lanes only for survivors.
 
-## Family Sweep Ledger
+## Family sweep ledger
 
 `enzyme-family-sweep.tsv` records:
 
@@ -25,8 +25,8 @@ families before promoting individual enzymes.
 This keeps `enzyme-draft-board.tsv` focused on reviewed candidates rather than
 thousands of raw hits.
 
-## Predictor Role
+## Predictor role
 
 CLEAN, CLEAN-Contact, EasIFA, protein language models, and structure-search
-tools are evidence generators. They do not replace accession, motif, substrate,
-host-fit, and red-team review.
+tools provide ranking signals. Combine their outputs with accession, motif,
+substrate, host-fit, and red-team review.

@@ -71,23 +71,44 @@ def read_tsv(path: Path) -> tuple[list[dict[str, str]], list[str]]:
         reader = csv.DictReader(handle, delimiter="\t")
         rows = [{key: (value or "").strip() for key, value in row.items() if key is not None} for row in reader]
         fieldnames = set(reader.fieldnames or [])
-    return rows, errors + ([] if fieldnames else [f"{path} is missing a TSV header"])
+    return rows, errors + ([] if fieldnames else [f"{path.name} is missing a TSV header"])
 
 
 def optional_tsv(path: Path | None) -> tuple[list[dict[str, str]], list[str]]:
     if path is None:
         return [], []
     if not path.exists():
-        return [], [f"missing ledger: {path}"]
+        return [], [f"missing ledger: {path.name}"]
     return read_tsv(path)
 
 
-def manifest_ledger_path(campaign: Path, key: str) -> Path | None:
+def manifest_ledger_path(campaign: Path, key: str) -> tuple[Path | None, str | None]:
     manifest = read_json(campaign)
     ledgers = manifest.get("ledgers", {})
     if not isinstance(ledgers, dict) or key not in ledgers:
-        return None
-    return campaign.parent / str(ledgers[key])
+        return None, None
+    value = str(ledgers[key] or "").strip()
+    rel = Path(value)
+    if not value or rel.is_absolute():
+        return None, f"{key} must be a relative path inside the campaign directory"
+    base = campaign.parent.resolve()
+    resolved = (base / rel).resolve()
+    try:
+        resolved.relative_to(base)
+    except ValueError:
+        return None, f"{key} must be a relative path inside the campaign directory"
+    return resolved, None
+
+
+def display_path(path: Path | None) -> str:
+    if path is None:
+        return ""
+    resolved = path.resolve()
+    repo_root = Path(__file__).resolve().parents[3]
+    try:
+        return resolved.relative_to(repo_root).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
 
 
 def as_bool(value: str) -> bool:
@@ -139,8 +160,14 @@ def artifact_is_path(value: str) -> bool:
 def artifact_exists(artifact: str, artifact_root: Path) -> bool:
     path = Path(artifact)
     if path.is_absolute():
-        return path.exists()
-    return (artifact_root / path).exists()
+        return False
+    root = artifact_root.resolve()
+    resolved = (root / path).resolve()
+    try:
+        resolved.relative_to(root)
+    except ValueError:
+        return False
+    return resolved.exists()
 
 
 def validate_headers(rows: list[dict[str, str]], required: set[str], label: str) -> list[str]:
@@ -233,10 +260,14 @@ def check_stage_contracts(
             for artifact in split_artifacts(row.get("expected_artifact", "")):
                 if not artifact_is_path(artifact):
                     continue
+                artifact_path = Path(artifact)
+                if artifact_path.is_absolute() or ".." in artifact_path.parts:
+                    errors.append(f"{label}: expected artifact path must stay inside the artifact root")
+                    continue
                 exists_locally = artifact_exists(artifact, artifact_root)
                 materialized = artifact in materialized_artifacts or str(artifact_root / artifact) in materialized_artifacts
                 if not exists_locally and not materialized:
-                    errors.append(f"{label}: expected artifact is not present or materialized: {artifact}")
+                    errors.append(f"{label}: expected artifact is not present or materialized")
 
     return {
         "ok": not errors,
@@ -248,18 +279,32 @@ def check_stage_contracts(
     }
 
 
-def resolve_inputs(args: argparse.Namespace) -> tuple[Path | None, Path | None, Path | None, Path]:
+def resolve_inputs(args: argparse.Namespace) -> tuple[Path | None, Path | None, Path | None, Path, list[str]]:
     campaign = args.campaign.resolve() if args.campaign else None
     contract = args.stage_contract_ledger
     progress = args.stage_progress_ledger
     artifacts = args.execution_artifact_ledger
     artifact_root = args.artifact_root
+    errors: list[str] = []
     if campaign:
-        contract = contract or manifest_ledger_path(campaign, "stage_contract_ledger")
-        progress = progress or manifest_ledger_path(campaign, "stage_progress_ledger")
-        artifacts = artifacts or manifest_ledger_path(campaign, "execution_artifact_ledger")
+        for key, current in (
+            ("stage_contract_ledger", contract),
+            ("stage_progress_ledger", progress),
+            ("execution_artifact_ledger", artifacts),
+        ):
+            if current is not None:
+                continue
+            resolved, error = manifest_ledger_path(campaign, key)
+            if error:
+                errors.append(error)
+            if key == "stage_contract_ledger":
+                contract = resolved
+            elif key == "stage_progress_ledger":
+                progress = resolved
+            else:
+                artifacts = resolved
         artifact_root = artifact_root or campaign.parent
-    return contract, progress, artifacts, (artifact_root or Path.cwd()).resolve()
+    return contract, progress, artifacts, (artifact_root or Path.cwd()).resolve(), errors
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -276,8 +321,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
 
-    contract_path, progress_path, artifact_path, artifact_root = resolve_inputs(args)
-    errors: list[str] = []
+    contract_path, progress_path, artifact_path, artifact_root, errors = resolve_inputs(args)
     if not contract_path:
         errors.append("supply --campaign or --stage-contract-ledger")
     contracts, contract_errors = optional_tsv(contract_path)
@@ -297,10 +341,10 @@ def main(argv: list[str] | None = None) -> int:
     report["errors"] = errors + report["errors"]
     report["ok"] = not report["errors"]
     report["inputs"] = {
-        "stage_contract_ledger": str(contract_path) if contract_path else "",
-        "stage_progress_ledger": str(progress_path) if progress_path else "",
-        "execution_artifact_ledger": str(artifact_path) if artifact_path else "",
-        "artifact_root": str(artifact_root),
+        "stage_contract_ledger": display_path(contract_path),
+        "stage_progress_ledger": display_path(progress_path),
+        "execution_artifact_ledger": display_path(artifact_path),
+        "artifact_root": display_path(artifact_root),
     }
 
     if args.json:

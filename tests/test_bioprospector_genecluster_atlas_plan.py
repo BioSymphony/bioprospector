@@ -139,6 +139,10 @@ class GeneClusterAtlasPlanTests(unittest.TestCase):
             self.assertTrue((out / "genecluster-source-scout-ledger.tsv").exists())
             self.assertTrue((out / "genecluster-route-decision-ledger.tsv").exists())
             self.assertTrue((out / "genecluster-atlas-contract-ledger.tsv").exists())
+            self.assertNotIn(str(out), result.stdout)
+            contract_text = (out / "genecluster-atlas-contract-ledger.tsv").read_text(encoding="utf-8")
+            self.assertNotIn(str(out), contract_text)
+            self.assertIn("REPLACE_ME_EXTERNAL_PATH", contract_text)
 
     def test_ready_annotation_context_gets_l3_route(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -154,7 +158,8 @@ class GeneClusterAtlasPlanTests(unittest.TestCase):
     def test_local_raw_pointer_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            campaign = write_minimal_atlas_campaign(root, source_pointer="local-target.fasta")
+            private_pointer = str(root / "local-target.fasta")
+            campaign = write_minimal_atlas_campaign(root, source_pointer=private_pointer)
             out = root / "atlas"
             result = run("--campaign", str(campaign), "--out", str(out), "--json", check=False)
 
@@ -162,6 +167,13 @@ class GeneClusterAtlasPlanTests(unittest.TestCase):
             data = json.loads(result.stdout)
             self.assertFalse(data["ok"])
             self.assertIn("local raw/heavy pointer", "\n".join(data["errors"]))
+            self.assertNotIn(private_pointer, result.stdout)
+            for generated in out.iterdir():
+                self.assertNotIn(private_pointer, generated.read_text(encoding="utf-8"))
+            self.assertIn(
+                "REPLACE_ME_EXTERNAL_PATH",
+                (out / "genecluster-source-scout-ledger.tsv").read_text(encoding="utf-8"),
+            )
 
 
 if __name__ == "__main__":

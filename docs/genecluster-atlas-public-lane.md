@@ -1,8 +1,8 @@
 # GeneCluster Atlas Public Lane
 
-This lane ports the useful mechanics from private atlas campaigns without
-porting private run output, raw biological artifacts, provider traces, or
-campaign-specific aliases.
+This lane uses metadata-only contracts and compact summaries to plan
+genome-context work while keeping raw biological artifacts and provider
+execution state outside the repository.
 
 ## Purpose
 
@@ -14,7 +14,7 @@ GeneCluster Atlas is the genome-context extension of BioProspector. It answers:
 - what claim ceiling applies to transcript, genome, annotation, and literature evidence
 - what compact artifacts a worker must return
 
-The public release treats this as a control-plane lane. It does not fetch
+BioProspector treats this as a control-plane lane. It does not fetch
 sequence data, build databases, run BLAST, call provider APIs, or write raw
 FASTA/GFF/FASTQ-style artifacts into the repo.
 
@@ -70,10 +70,10 @@ Keep these out of the public repo:
 
 - raw reads, assemblies, annotations, alignments, sequence FASTA, BLAST/MMseqs/HMMER databases, model weights, and provider workdirs
 - provider IDs, volume IDs, signed URLs, credential names with values, and private issue text
-- private campaign logs and generated atlas outputs
-- source-specific defaults that only make sense for one private run
+- campaign logs and generated atlas outputs
+- source-specific defaults that do not generalize across campaigns
 
-Port these patterns:
+Use these patterns:
 
 - source scout before execution
 - route decision before dispatch

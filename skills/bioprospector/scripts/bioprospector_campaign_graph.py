@@ -13,6 +13,20 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parents[2]
 
 
+def declared_path(base: Path, value: object) -> Path | None:
+    text = str(value or "").strip()
+    rel = Path(text)
+    if not text or rel.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
+
+
 def load_json(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
@@ -27,19 +41,18 @@ def read_tsv(path: Path) -> list[dict[str, str]]:
 
 def rows_for(base: Path, manifest: dict[str, Any], key: str) -> list[dict[str, str]]:
     rel = manifest.get("ledgers", {}).get(key)
-    return read_tsv(base / rel) if rel else []
+    path = declared_path(base, rel)
+    return read_tsv(path) if path else []
 
 
 def public_display_path(path: Path) -> str:
     """Use stable relative paths in generated artifacts when possible."""
 
     resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return path.as_posix()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
 
 
 def node(

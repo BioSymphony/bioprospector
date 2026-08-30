@@ -1,4 +1,4 @@
-# Stage Progress And Provider Preflight
+# Stage progress and provider preflight
 
 Provider status is intent, not evidence. A RunPod pod with desired status
 `RUNNING`, an AWS job submission, or a local process id does not prove that the

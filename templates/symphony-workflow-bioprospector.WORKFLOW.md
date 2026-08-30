@@ -31,14 +31,13 @@ hooks:
     #   export BIOPROSPECTOR_REPO_URL=git@github.com:your-org/bioprospector.git
     #   export BIOPROSPECTOR_BRANCH=main
     #
-    # The clone pattern mirrors the shared Symphony template but keeps closeout
-    # direct-done and avoids after_run promotion or GitHub handoff mutation.
-    rm -rf ./* ./.[!.]* 2>/dev/null || true
-    git clone --depth 1 --branch "${BIOPROSPECTOR_BRANCH:-main}" "${BIOPROSPECTOR_REPO_URL:?set BIOPROSPECTOR_REPO_URL}" . || {
-      git clone --depth 1 --branch "${BIOPROSPECTOR_BRANCH:-main}" "${BIOPROSPECTOR_REPO_URL:?set BIOPROSPECTOR_REPO_URL}" repo
-      shopt -s dotglob && mv repo/* repo/.git . 2>/dev/null; rm -rf repo
+    # Fail closed if the workspace contains anything. The bootstrap hook never
+    # deletes or overwrites an existing checkout.
+    test -z "$(find . -mindepth 1 -maxdepth 1 -print -quit)" || {
+      echo "workspace is not empty; choose an empty workspace and rerun" >&2
+      exit 1
     }
-    rm -f .symphony-promote-ready .symphony-promoted .symphony-promote-result .symphony-github-handoff .symphony-github-handoff-result
+    git clone --depth 1 --branch "${BIOPROSPECTOR_BRANCH:-main}" "${BIOPROSPECTOR_REPO_URL:?set BIOPROSPECTOR_REPO_URL}" .
   # after_run intentionally disabled for this sidecar. Workers use direct-done
   # closeout after self-review and validation; operators perform any repo
   # integration manually.
@@ -51,7 +50,7 @@ agent:
   idle_grace_checks: 3
 
 codex:
-  command: 'CODEX_HOME="$SYMPHONY_CODEX_HOME" codex --model gpt-5.4 --config ''shell_environment_policy.include_only=["TRACKER_AUTH_ENV","BIOPROSPECTOR_REPO_URL","BIOPROSPECTOR_BRANCH"]'' --config model_reasoning_effort=medium app-server'
+  command: 'CODEX_HOME="$SYMPHONY_CODEX_HOME" codex --config ''shell_environment_policy.include_only=["PATH"]'' --config model_reasoning_effort=medium app-server'
   approval_policy: never
   thread_sandbox: workspace-write
 ---

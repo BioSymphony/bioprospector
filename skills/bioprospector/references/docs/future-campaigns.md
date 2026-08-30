@@ -12,7 +12,7 @@ host-expression burden.
 Stress test for branchpoint reasoning, cross-species enzyme mining, tissue or
 coexpression evidence, and unknown-gene discovery.
 
-## QS-21 And Complex Saponin Stitching
+## QS-21 and complex saponin stitching
 
 Stress test for many enzyme families, glycosylation/acylation logic, donor
 dependencies, host burden, and analog planning.
@@ -22,7 +22,7 @@ dependencies, host burden, and analog planning.
 Stress test for antiSMASH/MIBiG/BiG-SCAPE style cluster-product reasoning,
 novelty triage, and weak cluster-product links.
 
-## Fungal Or Endophyte Natural-Products Mining
+## Fungal or endophyte natural-products mining
 
 Stress test for noisy eukaryotic gene models, silent clusters, elicitor
 metadata, and metabolomics-guided evidence.

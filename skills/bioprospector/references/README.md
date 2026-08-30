@@ -1,14 +1,22 @@
 # BioSymphony BioProspector
 
-![BioProspector agentic biosynthetic pathway discovery banner](docs/assets/bioprospector-banner-woodblock-2to1.jpg)
+![BioProspector biosynthetic-pathway planning banner](docs/assets/bioprospector-banner-woodblock-2to1.jpg)
 
-**A portable skill repo for biosynthetic pathway campaigns: route families, enzyme and gene search lanes, pathway options, construct-oriented work lanes, and compute-ready plans.**
+**A portable agent skill for turning a target molecule and host into route
+options, enzyme and gene search plans, and evidence-bounded review packages.**
 
-BioProspector helps agents and agentic harnesses tackle long-horizon bioprospecting work. You describe the target molecule, host, constraints, and available compute. The skill gives the agent a campaign contract, ledgers, validators, issue templates, and review artifacts it can use to plan the work and keep later workers aligned.
+BioProspector gives research agents a shared campaign contract for
+biosynthetic-pathway planning and evidence review. Provide a target molecule,
+host, constraints, and compute boundary. The skill organizes route exploration,
+candidate mining, dark-step resolution, and route review into compact ledgers
+and reviewable handoffs.
 
-The repo works from a laptop and can prepare heavier search lanes for RunPod, HPC, a cloud VM, or AWS ElasticBLAST when the campaign calls for it. It fits Claude Code, Codex, Symphony with Linear, and tracker-neutral queues. One campaign contract gives each agent the same target, boundaries, work lanes, and artifact expectations.
+Start locally. When a lane needs more compute, the same contract can prepare
+operator-reviewed work for RunPod, HPC, a cloud VM, or AWS ElasticBLAST. It
+works with Claude Code, Codex, Symphony with Linear, and tracker-neutral queues.
 
-Three public example campaigns ship ready to run: **vanillin**, **nootkatone**, and **Huperzine A**. All are target-swappable for your own molecule.
+The repository includes planning examples for **vanillin**, **nootkatone**, and
+**Huperzine A**, each designed to be adapted to another target.
 
 ```mermaid
 %%{init:{'theme':'base','flowchart':{'htmlLabels':false,'padding':16,'subGraphTitleMargin':{'top':10,'bottom':18}},'themeVariables':{'fontFamily':'Menlo, Consolas, monospace','lineColor':'#7a7a7a','clusterBkg':'#0c0c0c','clusterBorder':'#3a3a3a','titleColor':'#dcdcdc'}}}%%
@@ -25,15 +33,20 @@ flowchart LR
   D --> F
 ```
 
-## What Agents Get
+## What agents get
 
 A campaign gives an agent concrete work products:
 
-- **Expands the route space:** natural, engineered, fed-substrate, analog, reverse-catabolism, dark-step, and de novo families, so the agent weighs real alternatives early.
-- **Reasons about the unknown:** missing chemistry, unknown genes, and hidden multi-gene steps become explicit, testable hypotheses with the counterevidence attached.
-- **Mines every reaction step:** shortlist the genes, summarize the domains, keep the source pointers, and record what was rejected so the next agent skips known dead ends.
-- **Returns several routes:** the minimal-gene option, the strongest-evidence option, the best host-fit, and an ambitious one, each with its trade-offs.
-- **Keeps result boundaries explicit:** planning, execution, search output, controls, and claim records stay separate, so downstream workers know what is ready and what still needs review.
+- **A broader route space:** compare natural, engineered, fed-substrate,
+  analog, reverse-catabolism, dark-step, and de novo route families early.
+- **Explicit unknowns:** turn missing chemistry, unknown genes, and hidden
+  multi-gene steps into testable hypotheses with counterevidence.
+- **Traceable candidates:** shortlist genes for each reaction, preserve source
+  pointers, summarize domains, and record rejected candidates.
+- **Four route views:** return minimal-gene, strongest-evidence,
+  best-host-fit, and ambitious options with their trade-offs.
+- **Clear evidence boundaries:** keep plans, execution records, search results,
+  controls, and claims separate so reviewers can see what remains unproven.
 
 ```mermaid
 %%{init:{'theme':'base','flowchart':{'htmlLabels':false,'padding':16,'subGraphTitleMargin':{'top':10,'bottom':18}},'themeVariables':{'fontFamily':'Menlo, Consolas, monospace','lineColor':'#7a7a7a','clusterBkg':'#0c0c0c','clusterBorder':'#3a3a3a','titleColor':'#dcdcdc'}}}%%
@@ -42,7 +55,7 @@ flowchart TD
   classDef mid fill:#0c0c0c,stroke:#5a5a5a,color:#ededed,stroke-width:1.5px
   classDef win fill:#0c0c0c,stroke:#bdf0a0,color:#bdf0a0,stroke-width:1.5px
   T("TARGET MOLECULE + HOST"):::mid
-  subgraph EX["EXPLORE: keep the weird options alive"]
+  subgraph EX["EXPLORE: retain alternative routes"]
     direction LR
     R1("natural"):::wide
     R2("engineered"):::wide
@@ -53,7 +66,7 @@ flowchart TD
     R1 ~~~ R2 ~~~ R3 ~~~ R4 ~~~ R5 ~~~ R6
   end
   M("MINE + RESOLVE + STITCH"):::mid
-  subgraph WIN["RETURN SEVERAL ROUTES"]
+  subgraph WIN["RETURN FOUR ROUTE VIEWS"]
     direction LR
     P1("minimal-gene"):::win
     P2("strongest-evidence"):::win
@@ -81,11 +94,15 @@ flowchart TD
   L0 --> L1 --> L2 --> G1 --> L3 --> G2 --> L4 --> L5
 ```
 
-The public examples are planning-only. They stop before any validated claim, because no real search has run.
+The public examples are planning fixtures. They do not show that a search ran
+or that a route, host, construct, or assay was validated.
 
-## Where It Runs
+## Where it runs
 
-Start on a laptop. Escalate one lane to heavier compute only when the science calls for it, and only after you approve the budget and credentials outside this repo. Switch agent harnesses without rewriting the campaign.
+Start on a laptop. Move only the lanes that need more compute, after an operator
+approves the budget, data policy, and credentials outside this repository. The
+campaign contract stays the same when the agent harness or compute provider
+changes.
 
 ```mermaid
 %%{init:{'theme':'base','flowchart':{'htmlLabels':false,'padding':16,'subGraphTitleMargin':{'top':10,'bottom':18}},'themeVariables':{'fontFamily':'Menlo, Consolas, monospace','lineColor':'#7a7a7a','clusterBkg':'#0c0c0c','clusterBorder':'#3a3a3a','titleColor':'#dcdcdc'}}}%%
@@ -119,9 +136,12 @@ flowchart LR
   C --> P5
 ```
 
-## What's in the Checkout, and What Stays Out
+## What stays in the checkout
 
-The checkout stays small, forkable, and auditable. It carries the skill, prompts, schemas, validators, and the compact summaries and rankings a campaign produces. The heavy data (raw reads, database snapshots, model weights, full search outputs) stays in storage you own. The checkout holds pointers and checksums into it.
+The checkout contains the skill, prompts, schemas, validators, and compact
+campaign summaries. Raw reads, database snapshots, model weights, full search
+output, and exact external locations stay in ignored operator state. The
+checkout keeps public accessions, placeholders, checksums, and reviewed summaries.
 
 ```mermaid
 %%{init:{'theme':'base','flowchart':{'htmlLabels':false,'padding':16,'subGraphTitleMargin':{'top':10,'bottom':18}},'themeVariables':{'fontFamily':'Menlo, Consolas, monospace','lineColor':'#7a7a7a','clusterBkg':'#0c0c0c','clusterBorder':'#3a3a3a','titleColor':'#dcdcdc'}}}%%
@@ -133,7 +153,7 @@ flowchart LR
     R1("skill + prompts"):::repo
     R2("schemas + validators"):::repo
     R3("summaries · rankings"):::repo
-    R4("pointers + checksums"):::repo
+    R4("public accessions + checksums"):::repo
   end
   subgraph OUT["OPERATOR-OWNED · heavy · stays put"]
     direction TB
@@ -141,7 +161,7 @@ flowchart LR
     E2("database snapshots · model weights"):::ext
     E3("full search outputs · provider workdirs"):::ext
   end
-  R4 -. "reference by path + checksum" .-> OUT
+  R4 -. "placeholder + checksum" .-> OUT
 ```
 
 ```text
@@ -154,46 +174,62 @@ src/                    installable bioprospector CLI
 tests/                  validators and contract checks
 ```
 
-## Start in Five Minutes
+## Verify the checkout
 
-You don't need to run any of this yourself; your agent does. These confirm the skill installed cleanly and show what it produces:
+To verify the checkout and generate the local demo:
 
 ```bash
 python3 scripts/bioprospector_doctor.py --include-runtime
 make local-demo
 ```
 
-In about five minutes you get a campaign on the Huperzine A example: the explored route space, mined candidates with source pointers, a ranked set of routes, a metadata-only gene-cluster plan, and a compact review package, with every claim labeled for how far the evidence goes.
+The demo builds Huperzine A planning artifacts: route options, candidate
+pointers, a ranked route set, a metadata-only gene-cluster plan, and a compact
+review package. Every claim remains labeled by its evidence level.
 
 New here? Start with [`docs/QUICKSTART.md`](docs/QUICKSTART.md) and [`docs/WORKFLOWS.md`](docs/WORKFLOWS.md). To run a campaign for your own molecule, see [`docs/FIRST_CAMPAIGN.md`](docs/FIRST_CAMPAIGN.md). Copy-paste agent prompts live in [`docs/AGENT_PLAYBOOK.md`](docs/AGENT_PLAYBOOK.md).
 
-## Talk to Your Agent
+## Talk to your agent
 
-Once the skill is installed, describe the campaign and the agent runs it:
+Once the skill is installed, give the agent a target, host, and boundary:
 
 ```text
 Use the bioprospector skill in this checkout. Run doctor, keep everything local,
 and start a campaign for <target molecule> in <host>. Explore the route space,
-draft construct-oriented work lanes, and return a short review package under .runtime/.
+draft non-procedural construct-hypothesis lanes, and return a short review
+package under .runtime/. Keep raw or private data, credentials, provider IDs,
+and private paths outside the repository.
 ```
 
 ```text
 Use BioProspector to resolve the dark steps in the Huperzine A example: turn the
 unknown chemistry into single-gene and multi-gene hypotheses with counterevidence,
-then tell me the cheapest next experiment that would tell them apart.
+then identify the lowest-cost non-procedural evidence check that would distinguish them.
 ```
 
-## Result Boundaries
+## Result boundaries
 
-BioProspector returns planning artifacts, search contracts, rankings, and review packages. Production, host performance, assay results, and deployment readiness require separate execution records, controls, and expert review. See [`NON_CLAIMS.md`](NON_CLAIMS.md) and [`docs/no-false-success-gates.md`](docs/no-false-success-gates.md).
+BioProspector returns plans, search contracts, rankings, and review packages.
+Production, host performance, assay results, and deployment readiness require
+separate execution records, controls, and expert review. See
+[`NON_CLAIMS.md`](NON_CLAIMS.md) and
+[`docs/no-false-success-gates.md`](docs/no-false-success-gates.md).
 
-## Go Deeper
+## Reference documentation
 
-[`docs/PUBLIC_LAUNCH_PAD.md`](docs/PUBLIC_LAUNCH_PAD.md) is the full capability map and workflow reference. The canonical agent skill is [`skills/bioprospector/SKILL.md`](../SKILL.md). The command surface is in [`docs/CLI_REFERENCE.md`](docs/CLI_REFERENCE.md), and the repository boundary is detailed in [`docs/PRIVACY_SECURITY_MODEL.md`](docs/PRIVACY_SECURITY_MODEL.md).
+Use [`docs/PUBLIC_LAUNCH_PAD.md`](docs/PUBLIC_LAUNCH_PAD.md) for the full
+capability map, [`skills/bioprospector/SKILL.md`](../SKILL.md) for the canonical
+agent instructions, and [`docs/CLI_REFERENCE.md`](docs/CLI_REFERENCE.md) for
+commands. The data boundary is defined in
+[`docs/PRIVACY_SECURITY_MODEL.md`](docs/PRIVACY_SECURITY_MODEL.md).
 
 <details>
-<summary><strong>Under the Hood: The Artifact Contract</strong></summary>
+<summary><strong>Artifact contract</strong></summary>
 
-A campaign is backed by a set of compact, versioned ledgers and review artifacts: route and reaction-step ledgers, candidate funnels and rankings, dark-step and unknown-gene hypotheses, evidence-event and proof rows, provider readiness bundles, claim records, and the review dossier that indexes them. This is the machinery behind the behaviors above; you rarely touch it directly. The full list and shared contract live in [`docs/capability-map.md`](docs/capability-map.md) and [`schemas/bioprospector-ledgers.json`](schemas/bioprospector-ledgers.json).
+A campaign uses versioned ledgers and review artifacts for routes, reaction
+steps, candidates, evidence, controls, provider readiness, and claims. The
+shared contract and full artifact list are in
+[`docs/capability-map.md`](docs/capability-map.md) and
+[`schemas/bioprospector-ledgers.json`](schemas/bioprospector-ledgers.json).
 
 </details>

@@ -12,3 +12,6 @@ tool, dataset, database, and cloud provider license or terms before execution.
 The included examples are compact public-safe planning examples. They are not
 evidence of biological production, host validation, assay success, or clinical
 utility.
+
+BioSymphony contributors distribute the banner and control-plane diagram under
+the MIT License in `LICENSE`.

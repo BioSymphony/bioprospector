@@ -1,6 +1,6 @@
-# Public Nootkatone Demo Walkthrough
+# Public Nootkatone demo walkthrough
 
-## What This Proves
+## What this demo shows
 
 - Target contracts can expand into route, step, evidence, ambiguity, host-fit,
   structure-risk, genome-context, RunPod prep, and ElasticBLAST prep issues.
@@ -8,10 +8,10 @@
   overclaiming production or pathway completion.
 - Wide searches are gated through prep issues, budget limits, compact output
   contracts, and explicit stop points.
-- Public examples can validate without raw sequences, database mirrors, model
+- Public examples can pass contract checks without raw sequences, database mirrors, model
   weights, AWS credentials, or large local artifacts.
 
-## Claim Ceiling
+## Claim ceiling
 
 The demo establishes planning maturity for routes, candidate families,
 evidence gates, and Pareto ranking. Production claims, enzyme catalysis
@@ -69,9 +69,9 @@ python3 skills/bioprospector/scripts/bioprospector_elasticblast_bundle.py \
   --budget-usd 25
 ```
 
-## Expected Outputs
+## Expected outputs
 
-- Validated campaign ledgers.
+- Contract-checked planning ledgers.
 - Deterministic dry-run issue markdown under ignored `.runtime/`.
 - Pareto frontier rows under `.runtime/rankings/nootkatone-yeast-v0/`.
 - RunPod readiness bundle under `.runtime/runpod-readiness/nootkatone-yeast-v0/`.

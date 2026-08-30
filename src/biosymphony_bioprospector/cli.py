@@ -114,7 +114,7 @@ def run_script(script_name: str, argv: list[str] | None = None) -> int:
     root = repo_root()
     script_path = root / "skills" / "bioprospector" / "scripts" / script_name
     if not script_path.exists():
-        raise SystemExit(f"BioProspector script not found: {script_path}")
+        raise SystemExit("A required BioProspector script is missing; reinstall or repair the checkout.")
 
     old_argv = sys.argv[:]
     try:

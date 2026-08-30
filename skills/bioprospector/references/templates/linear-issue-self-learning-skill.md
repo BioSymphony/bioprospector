@@ -12,11 +12,12 @@ the learning as biological evidence.
 ## Inputs
 
 - campaign manifest
-- relevant `logs/YYYY-MM-DD-*.md` note or closeout
+- relevant ignored `.runtime/learning-notes/YYYY-MM-DD-*.md` note or
+  operator-owned closeout
 - `stage-progress-ledger.tsv`, `execution-artifact-ledger.tsv`, or provider
   status summary when applicable
 - `self-learning-skill-ledger.tsv` if present
-- failed command, validator output, or compact artifact pointer
+- public-safe failure summary, validator status, or reviewed placeholder
 
 ## Artifact Contract
 
@@ -30,8 +31,9 @@ the learning as biological evidence.
 ## Acceptance Criteria
 
 - The row distinguishes process learning from biological validation.
-- No secrets, private sequences, raw outputs, full FASTA dumps, database mirrors,
-  or full-text literature enter the repo.
+- No secrets, private paths, provider or account IDs, internal logs, cost or
+  timing records, private sequences, raw outputs, full FASTA dumps, database
+  mirrors, or full-text literature enter the repository.
 - Paid or remote retries remain blocked unless a separate execution issue has
   provider preflight, budget guardrail, stage contract, and operator approval.
 - A repeated hiccup becomes a reusable guardrail when it can be enforced by a
@@ -39,14 +41,14 @@ the learning as biological evidence.
 
 ## Claim Boundary
 
-Self-learning entries improve future execution quality. They do not prove route
+Self-learning entries record process changes. They do not prove route
 chemistry, enzyme activity, host production, or candidate validity.
 
 <!-- symphony:schema
 complexity: low
 touched_areas:
   - self-learning-skill-ledger
-  - logs
+  - self-learning
   - docs
   - templates
   - validators

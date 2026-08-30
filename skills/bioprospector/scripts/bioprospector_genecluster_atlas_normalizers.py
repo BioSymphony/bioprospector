@@ -20,6 +20,17 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 
+REPO_ROOT = Path(__file__).resolve().parents[3]
+
+
+def display_path(path: Path | str) -> str:
+    resolved = Path(path).resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
 CLUSTER_CALL_COLUMNS = [
     "cluster_id",
     "caller",
@@ -1432,7 +1443,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(json.dumps(summary, indent=2, sort_keys=True))
     else:
         for label, path in summary["paths"].items():
-            print(f"{label}: {path}")
+            print(f"{label}: {display_path(path)}")
         for label, count in summary["row_counts"].items():
             print(f"{label}: {count} rows")
     return 0

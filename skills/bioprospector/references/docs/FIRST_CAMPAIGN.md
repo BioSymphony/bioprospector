@@ -5,7 +5,7 @@ host. Use it when you want the agent to build the first route, enzyme,
 evidence, and review lanes before deciding whether any deeper search is worth
 running.
 
-## 1. Start From The Target Contract
+## 1. Start from the target contract
 
 Copy the example contract to ignored runtime space and edit the planning fields.
 
@@ -28,7 +28,7 @@ Keep the contract compact and useful:
 Do not add private sequence data, unpublished constructs, collaborator notes,
 credentials, provider IDs, or raw database paths.
 
-## 2. Generate The Scaffold
+## 2. Generate the scaffold
 
 ```bash
 python3 scripts/bioprospector_new_campaign.py \

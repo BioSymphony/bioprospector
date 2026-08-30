@@ -56,7 +56,15 @@ def optional_tsv(base: Path, ledgers: dict[str, str], key: str) -> list[dict[str
     rel = ledgers.get(key)
     if not rel:
         return []
-    path = base / rel
+    candidate = Path(str(rel))
+    if candidate.is_absolute():
+        return []
+    resolved_base = base.resolve()
+    path = (resolved_base / candidate).resolve()
+    try:
+        path.relative_to(resolved_base)
+    except ValueError:
+        return []
     if not path.exists():
         return []
     return read_tsv(path)

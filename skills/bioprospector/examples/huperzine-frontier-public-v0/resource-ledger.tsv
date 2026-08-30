@@ -1,8 +1,8 @@
 resource	resource_type	version	license_class	use_mode	redistribution_policy	citation_or_url	notes
-NCBI_Datasets	public_accession_tool	review_before_run	open-data-with-terms	accession_lookup	no-bulk-redistribution-without-review	https://www.ncbi.nlm.nih.gov/datasets/	Use accession-stable public records; do not copy raw FASTA.
-UniProt	public_protein_database	review_before_run	open-data-with-terms	accession_lookup	no-bulk-redistribution-without-review	https://www.uniprot.org/	Use accessions and compact summaries only.
-InterPro	protein_family_database	review_before_run	open-data-with-terms	domain_review	attribution-required	https://www.ebi.ac.uk/interpro/	Domain review for CAO/DAO, PKS-III, 2OGD, CYP, dehydrogenase, and unknown-tailoring families.
-PubMed	public_literature_index	review_before_run	open-citation	abstract_and_citation	no-full-text-copy	https://pubmed.ncbi.nlm.nih.gov/	Citation-plan source only in this demo.
-OpenAlex	public_literature_index	review_before_run	open-metadata	citation_discovery	metadata-only	https://openalex.org/	Use for public citation discovery; no private full text.
-RunPod	manual_compute_provider	review_before_run	commercial-provider	readiness_only	no-credentials-in-repo	https://www.runpod.io/	Readiness contracts only; no launch from public scaffold.
-AWS_ElasticBLAST	cloud_blast_service	review_before_run	commercial-provider	cloud_escalation	no-credentials-in-repo	https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/	Reviewed escalation only; no AWS calls from fixture.
+NCBI_Datasets	public_accession_tool	not_pinned_planning_fixture	open-data-with-terms	accession_lookup	no-bulk-redistribution-without-review	https://www.ncbi.nlm.nih.gov/datasets/	Use accession-stable public records; do not copy raw FASTA.
+UniProt	public_protein_database	not_pinned_planning_fixture	open-data-with-terms	accession_lookup	no-bulk-redistribution-without-review	https://www.uniprot.org/	Use accessions and compact summaries only.
+InterPro	protein_family_database	not_pinned_planning_fixture	open-data-with-terms	domain_review	attribution-required	https://www.ebi.ac.uk/interpro/	Domain review for CAO/DAO, PKS-III, 2OGD, CYP, dehydrogenase, and unknown-tailoring families.
+PubMed	public_literature_index	not_pinned_planning_fixture	open-citation	abstract_and_citation	no-full-text-copy	https://pubmed.ncbi.nlm.nih.gov/	Citation-plan source only in this demo.
+OpenAlex	public_literature_index	not_pinned_planning_fixture	open-metadata	citation_discovery	metadata-only	https://openalex.org/	Use for public citation discovery; no private full text.
+RunPod	manual_compute_provider	not_pinned_planning_fixture	commercial-provider	readiness_only	no-credentials-in-repo	https://www.runpod.io/	Readiness contracts only; no launch from public scaffold.
+AWS_ElasticBLAST	cloud_blast_service	not_pinned_planning_fixture	commercial-provider	cloud_escalation	no-credentials-in-repo	https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/	Reviewed escalation only; no AWS calls from fixture.

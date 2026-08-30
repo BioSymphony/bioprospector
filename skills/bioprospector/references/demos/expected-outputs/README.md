@@ -1,9 +1,9 @@
-# Expected Output Snapshots
+# Expected-output snapshots
 
-These snapshots show the shape of useful BioProspector outputs without bundling
+These snapshots show representative BioProspector output formats without bundling
 raw biological data, provider logs, private paths, or generated runtime folders.
 
-They illustrate artifact shape for documentation review. To see a live
+They illustrate artifact structure for documentation review. To see a live
 campaign's joined evidence, regenerate the full outputs locally:
 
 ```bash
@@ -19,6 +19,6 @@ Included snapshots:
 - `genecluster-atlas-plan.summary.json`: metadata-only atlas plan summary.
 - `pareto-frontier-ledger.sample.tsv`: route frontier sample rows.
 - `workgraph-inventory.sample.md`: generated issue-lane inventory.
-- `provider-readiness-tree.sample.md`: future RunPod/HPC/cloud handoff shape.
-- `closeout-packet.sample.md`: promoted/parked/killed candidate closeout shape.
+- `provider-readiness-tree.sample.md`: future RunPod, HPC, or cloud handoff format.
+- `closeout-packet.sample.md`: promoted, parked, and killed candidate closeout format.
 - `dossier-excerpt.md`: human-readable dossier excerpt.

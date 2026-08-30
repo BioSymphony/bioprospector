@@ -1,9 +1,9 @@
-# Public Capability Map
+# Public capability map
 
-BioProspector is an agentic harness for discovering biosynthetic pathways to
-target molecules. Give your agent a molecule, host chassis, constraints, and
-available compute; the skill helps it expand route space, mine enzyme and
-gene candidates, stitch plausible pathways, and draft construct hypotheses.
+BioProspector plans biosynthetic-pathway campaigns and evidence review. Give
+your agent a molecule, host chassis, constraints, and available compute. The
+skill helps the agent expand route options, mine enzyme and gene candidates,
+review pathway connections, and draft non-procedural candidate hypotheses.
 The same campaign contract drives Symphony with Linear, Claude Code workers
 with Linear, Codex with any tracker, or another multi-agent harness the
 operator already uses, across local compute, RunPod, HPC, cloud VMs,
@@ -13,7 +13,7 @@ This is the longer capability map. New users should follow
 [`QUICKSTART.md`](QUICKSTART.md) first, then come back here when they need the
 full public release surface.
 
-## Recommended Path
+## Recommended path
 
 1. Run the local path in [`QUICKSTART.md`](QUICKSTART.md).
 2. Read the imported skill file: [`SKILL.md`](../../SKILL.md).
@@ -30,7 +30,7 @@ full public release surface.
 10. Read [`NON_CLAIMS.md`](../NON_CLAIMS.md) and [`PRIVACY_SECURITY_MODEL.md`](PRIVACY_SECURITY_MODEL.md) before publishing examples or running live provider work.
 11. Run `make release-check`.
 
-## What The Foundation Gives Agents
+## What the foundation gives agents
 
 - Target contracts and input-audit ledgers.
 - Route, reaction-step, unknown-step, and unknown-gene ledgers.

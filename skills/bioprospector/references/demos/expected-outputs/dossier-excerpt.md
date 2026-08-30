@@ -1,6 +1,6 @@
-# BioProspector Dossier Excerpt
+# BioProspector dossier excerpt
 
-## Campaign Snapshot
+## Campaign snapshot
 
 - Target: Huperzine A frontier example
 - Mode: route expansion, dark-step review, source-context planning, and
@@ -8,7 +8,7 @@
 - Primary outputs: route graph, GeneCluster atlas plan, candidate package,
   Pareto frontier, and next-wave work lanes
 
-## Typical Sections
+## Typical sections
 
 - Route Universe
 - Reaction Steps
@@ -19,13 +19,13 @@
 - Pareto Frontier
 - Claims
 
-## Example Payoff
+## Example results
 
 - Route families stay visible instead of collapsing into one guessed pathway.
 - Unknown transformations become explicit dark-step lanes.
 - Candidate rows carry accession/source pointers, domain context, and ranking
   rationale.
-- Pareto output returns multiple useful winners: strongest evidence, minimal
+- Pareto output ranks routes by strongest evidence, minimal
   genes, best host fit, clearest validation handoff, ambitious route, and
   diversity-library route.
 - The dossier links next-wave issue lanes so an agent can continue the campaign

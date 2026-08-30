@@ -2,17 +2,17 @@
 
 help:
 	@echo "BioProspector local commands"
-	@echo "  make first-look            Run doctor, local demo, and point at the resulting dossier"
+	@echo "  make first-look            Run doctor and local demo, then print the dossier path"
 	@echo "  make doctor                Check checkout, schema, optional tools, and public audit"
 	@echo "  make workspace-status      Summarize checkout status with local paths hidden"
 	@echo "  make local-demo            Generate local-only demo artifacts under .runtime/"
 	@echo "  make campaign-status-demo  Write compact campaign status snapshots"
-	@echo "  make handoff-demo          Write review-only worker/reviewer handoff packets"
-	@echo "  make agent-brief-demo      Write Codex/Claude/goal-ready campaign briefs"
-	@echo "  make release-check         Run tests, docs, examples, demos, tree audit, and runtime audit"
-	@echo "  make switch-check          Alias for release-check before any public switch"
-	@echo "  make wheel-smoke           Build/install the wheel into an isolated target and run CLI smoke"
-	@echo "  make provider-demo         Review-only provider bundle smoke; no resource creation"
+	@echo "  make handoff-demo          Write review-only handoff packets for workers and reviewers"
+	@echo "  make agent-brief-demo      Write campaign briefs for Codex, Claude, and goal-oriented agents"
+	@echo "  make release-check         Run tests, documentation checks, examples, demos, tree audit, and runtime audit"
+	@echo "  make switch-check          Compatibility alias for the pre-release gate"
+	@echo "  make wheel-smoke           Build and install the wheel in an isolated target, then run CLI smoke"
+	@echo "  make provider-demo         Generate review-only provider bundles without creating resources"
 	@echo "  make retrospective-demo    Write a public-safe retrospective ledger over local demo runs"
 
 first-look: doctor local-demo
@@ -31,6 +31,7 @@ test:
 	python3 -m pytest -q
 
 build:
+	@if [ -L .runtime ] || [ -L .runtime/package-smoke ]; then echo "FAIL package-smoke path contains a symlink; replace it with a directory and rerun" >&2; exit 1; fi
 	rm -rf .runtime/package-smoke/dist
 	mkdir -p .runtime/package-smoke/dist
 	python3 -m pip wheel . --no-deps -w .runtime/package-smoke/dist
@@ -38,6 +39,7 @@ build:
 package-smoke: wheel-smoke
 
 wheel-smoke: build
+	@if [ -L .runtime ] || [ -L .runtime/package-smoke ]; then echo "FAIL package-smoke path contains a symlink; replace it with a directory and rerun" >&2; exit 1; fi
 	rm -rf .runtime/package-smoke/install
 	python3 -m pip install --no-index --find-links .runtime/package-smoke/dist --target .runtime/package-smoke/install biosymphony-bioprospector
 	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli --help >/dev/null
@@ -50,10 +52,13 @@ wheel-smoke: build
 	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli stage-contract --help >/dev/null
 	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli retrospective --help >/dev/null
 	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli workspace-status --help >/dev/null
-	rm -rf /tmp/bioprospector-wheel-no-checkout-install
-	python3 -m pip install --no-index --find-links .runtime/package-smoke/dist --target /tmp/bioprospector-wheel-no-checkout-install biosymphony-bioprospector >/dev/null
-	cd /tmp && PYTHONPATH=/tmp/bioprospector-wheel-no-checkout-install python3 -m biosymphony_bioprospector.cli --version >/dev/null
-	cd /tmp && if PYTHONPATH=/tmp/bioprospector-wheel-no-checkout-install python3 -m biosymphony_bioprospector.cli doctor >/tmp/bioprospector-wheel-no-checkout.out 2>&1; then cat /tmp/bioprospector-wheel-no-checkout.out; exit 1; else grep -q "Could not locate a BioProspector checkout" /tmp/bioprospector-wheel-no-checkout.out; fi
+	@set -eu; \
+	smoke_tmp=$$(mktemp -d "$${TMPDIR:-/tmp}/bioprospector-wheel-no-checkout.XXXXXX"); \
+	trap 'rm -rf "$$smoke_tmp"' EXIT; \
+	python3 -m pip install --no-index --find-links .runtime/package-smoke/dist --target "$$smoke_tmp/install" biosymphony-bioprospector >/dev/null; \
+	cd "$$smoke_tmp"; \
+	PYTHONPATH="$$smoke_tmp/install" python3 -m biosymphony_bioprospector.cli --version >/dev/null; \
+	if PYTHONPATH="$$smoke_tmp/install" python3 -m biosymphony_bioprospector.cli doctor >"$$smoke_tmp/doctor.out" 2>&1; then cat "$$smoke_tmp/doctor.out"; exit 1; else grep -q "Could not locate a BioProspector checkout" "$$smoke_tmp/doctor.out"; fi
 
 doctor:
 	python3 skills/bioprospector/scripts/bioprospector_doctor.py --include-runtime

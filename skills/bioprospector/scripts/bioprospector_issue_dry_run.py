@@ -16,12 +16,23 @@ REPO_ROOT = SCRIPT_DIR.parents[2]
 
 def display_path(path: Path) -> str:
     resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return path.as_posix()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def declared_path(base: Path, value: object) -> Path | None:
+    rel = Path(str(value or ""))
+    if not str(value or "").strip() or rel.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
 
 INCLUDE_FLAG_ATTRS = (
     "include_evidence_lanes",
@@ -112,8 +123,8 @@ def read_optional_tsv(base: Path, ledgers: dict, key: str) -> list[dict[str, str
     rel = ledgers.get(key)
     if not rel:
         return []
-    path = base / rel
-    if not path.exists():
+    path = declared_path(base, rel)
+    if path is None or not path.exists():
         return []
     return read_tsv(path)
 
@@ -305,7 +316,7 @@ def evidence_lane_issue(
             f"{step['substrate']} -> {step['product']}."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             f"Parent step id: {step_id}",
             f"Route id: {step['route_id']}",
             f"Transformation: {step['transformation']}",
@@ -371,7 +382,7 @@ def campaign_runpod_prep_issue(
         role="RunPod prep operator",
         goal="Prepare the remote search lane contract without launching pods or executing heavy biological search.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "RunPod stack doc: docs/runpod-stack.md",
             "Resource ledger: resource-ledger.tsv",
             f"Remote workdir convention: {remote_workdir}",
@@ -444,7 +455,7 @@ def step_runpod_prep_issue(
             "without launching pods or running the heavy search."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             f"Step id: {step_id}",
             f"Route id: {step['route_id']}",
             f"Transformation: {step['transformation']}",
@@ -511,7 +522,7 @@ def sequence_search_lane_issue(
             f"{step['substrate']} -> {step['product']}, including AA-only candidate package outputs."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             f"Step id: {step_id}",
             f"Candidate search width: {step['candidate_search_width']}",
             "query-set-ledger.tsv",
@@ -580,7 +591,7 @@ def candidate_package_lane_issue(
         role="Candidate package integrator",
         goal="Assemble the conceptual enzyme graph, candidate evidence package, diversity spread, domain maps, candidate-intelligence summaries, literature search summaries, and output dossier boundaries.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "sequence-search-plan-ledger.tsv",
             "candidate-sequence-ledger.tsv",
             "domain-annotation-ledger.tsv",
@@ -658,7 +669,7 @@ def candidate_intelligence_lane_issue(
             "without requiring docking, wet-lab assay design, or production claims."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "enzyme-draft-board.tsv",
             "candidate-sequence-ledger.tsv when present",
             "domain-annotation-ledger.tsv when present",
@@ -730,7 +741,7 @@ def genecluster_atlas_lane_issue(
     filename = f"{prefix}-genecluster-atlas-60-source-route-and-jury.md"
     plan_command = (
         "python3 skills/bioprospector/scripts/bioprospector_genecluster_atlas_plan.py "
-        f"--campaign {campaign_path.as_posix()} --out .runtime/genecluster-atlas/{prefix.lower()}"
+        f"--campaign {display_path(campaign_path)} --out .runtime/genecluster-atlas/{prefix.lower()}"
     )
     body = issue_body(
         title=f"{prefix}: GeneCluster atlas source, route, and jury plan",
@@ -740,7 +751,7 @@ def genecluster_atlas_lane_issue(
             "without downloading raw biological data or launching provider work."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "organism-sample-ledger.tsv when present",
             "target-dataset-ledger.tsv when present",
             "query-set-ledger.tsv when present",
@@ -814,7 +825,7 @@ def scale_control_lane_issue(
             "and require partial summaries plus stale-output guards for resumable provider runs."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "lane-status-ledger.tsv",
             "fanout-estimate-ledger.tsv",
             "partial-summary-ledger.tsv",
@@ -889,7 +900,7 @@ def campaign_elasticblast_prep_issue(
             "uploading queries, or submitting ElasticBLAST jobs."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "AWS ElasticBLAST stack doc: docs/aws-elasticblast-stack.md",
             "ElasticBLAST search plan ledger: elasticblast-search-plan.tsv",
             "AWS safety ledger: aws-safety-ledger.tsv",
@@ -957,7 +968,7 @@ def step_elasticblast_prep_issue(
             f"step {step_id}: {step['substrate']} -> {step['product']}."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             f"Step id: {step_id}",
             f"Route id: {step['route_id']}",
             f"Transformation: {step['transformation']}",
@@ -1019,7 +1030,7 @@ def literature_lane_issue(
         role="Literature evidence reviewer",
         goal="Create a compact evidence trail for route, enzyme, host-fit, and ambiguity claims.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "Resource ledger: resource-ledger.tsv",
             "Claim ledger: claim-ledger.md",
             "Optional output ledgers: literature-ledger.tsv and literature-search-ledger.tsv",
@@ -1082,7 +1093,7 @@ def dark_step_resolver_issue(
             "without assuming the missing activity is a single obvious homolog."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             f"Unknown step id: {unknown_id}",
             f"Parent step id: {parent_step_id}",
             f"Route id: {unknown['route_id']}",
@@ -1151,7 +1162,7 @@ def enzyme_family_sweep_issue(
         role="Enzyme family sweep worker",
         goal=f"Compress broad family space for {step_id} into reviewable candidate classes before individual ranking.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             f"Step id: {step_id}",
             f"Transformation: {step['transformation']}",
             f"Enzyme role: {step['enzyme_role']}",
@@ -1205,7 +1216,7 @@ def genome_mining_lane_issue(
         role="Genome-context mining planner",
         goal="Plan anchor, neighborhood, and BGC-context searches without downloading raw genome artifacts into the repo.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             f"Step id: {step_id}",
             f"Route id: {step['route_id']}",
             f"Enzyme role: {step['enzyme_role']}",
@@ -1261,7 +1272,7 @@ def structure_risk_lane_issue(
         role="Structure-risk reviewer",
         goal="Triage candidate structural risks without bulk prediction, docking, or model-weight storage.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "Enzyme draft board: enzyme-draft-board.tsv",
             "Optional output ledger: structure-risk-ledger.tsv",
         ],
@@ -1310,7 +1321,7 @@ def host_comparison_lane_issue(
         role="Host-fit reviewer",
         goal="Compare host options and route burdens without claiming production or providing strain-construction guidance.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "Target contract: target-contract.json",
             "Route stitching scorecard: route-stitching-scorecard.tsv",
             "Optional output ledger: host-comparison-ledger.tsv",
@@ -1360,7 +1371,7 @@ def assay_handoff_lane_issue(
         role="Validation-readiness planner",
         goal="Convert route and candidate uncertainty into non-procedural evidence gaps, measurement categories, and control categories.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "Route stitching scorecard: route-stitching-scorecard.tsv",
             "Claim ledger: claim-ledger.md",
             "Optional output ledger: assay-handoff-ledger.tsv",
@@ -1410,7 +1421,7 @@ def monitoring_lane_issue(
         role="Campaign monitoring reviewer",
         goal="Define heartbeat, blocker, artifact, and closeout tracking for a Symphony + Linear BioProspector campaign.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "Generated issue drafts",
             "Optional output ledger: monitoring-ledger.tsv",
             "Workflow draft: templates/symphony-workflow-bioprospector.WORKFLOW.md",
@@ -1463,15 +1474,15 @@ def self_learning_lane_issue(
             "into reusable process intelligence."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
-            "Relevant logs/YYYY-MM-DD-*.md note or campaign closeout",
+            f"Campaign manifest: {display_path(campaign_path)}",
+            "Relevant ignored .runtime/learning-notes note or campaign closeout",
             "stage-progress-ledger.tsv, execution-artifact-ledger.tsv, monitoring-ledger.tsv, or compact provider status summary",
             "self-learning-skill-ledger.tsv when present",
             "docs/self-learning-skill-runbook.md",
         ],
         artifacts=[
             "self-learning-skill-ledger.tsv row with observation, hypothesis, probe, baseline/control, expected signal, stop-loss, result, and decision",
-            "dated log note if the context is not already recorded",
+            "ignored local learning note if the context is not already recorded",
             "small runbook, skill, template, validator, or issue-generator update when the lesson is reusable",
         ],
         acceptance=[
@@ -1671,7 +1682,7 @@ def opportunity_contract_lane_issue(
         title=f"{prefix}: {spec['title']}",
         role=spec["role"],
         goal=spec["goal"],
-        inputs=[f"Campaign manifest: {campaign_path.as_posix()}", "docs/opportunity-radar.md", *spec["touched"]],
+        inputs=[f"Campaign manifest: {display_path(campaign_path)}", "docs/opportunity-radar.md", *spec["touched"]],
         artifacts=spec["artifacts"],
         acceptance=[
             f"Named tools/resources are handled as opt-in contract inputs only: {spec['tools']}.",
@@ -1712,7 +1723,7 @@ def stage_contract_lane_issue(
         role="BioProspector stage controller",
         goal="Define fail-closed stage contracts and progress events before any long local, RunPod, cloud, HPC, or ElasticBLAST run.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "stage-contract-ledger.tsv",
             "stage-progress-ledger.tsv",
             "run-maturity-ledger.tsv",
@@ -1760,14 +1771,14 @@ def input_audit_lane_issue(
     filename = f"{prefix}-input-audit-00-known-inputs.md"
     audit_command = (
         "python3 skills/bioprospector/scripts/bioprospector_input_audit.py "
-        f"--campaign {campaign_path.as_posix()}"
+        f"--campaign {display_path(campaign_path)}"
     )
     body = issue_body(
         title=f"{prefix}: Input audit before operator questions",
         role="BioProspector input auditor",
         goal="Read all declared manifests and ledgers first, then identify only explicit missing_operator_items.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "target-contract.json",
             "input-audit-ledger.tsv if present",
             "organism/sample, query-set, target-dataset, resource, and provenance ledgers if present",
@@ -1813,7 +1824,7 @@ def operator_intake_lane_issue(
     filename = f"{prefix}-operator-intake-00-confirmation.md"
     audit_command = (
         "python3 skills/bioprospector/scripts/bioprospector_input_audit.py "
-        f"--campaign {campaign_path.as_posix()}"
+        f"--campaign {display_path(campaign_path)}"
     )
     body = issue_body(
         title=f"{prefix}: Operator intake and assumption confirmation",
@@ -1823,7 +1834,7 @@ def operator_intake_lane_issue(
             "data-policy, provider, budget, success, or claim-boundary gaps remain."
         ),
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "input-audit JSON summary",
             "operator-intake-ledger.tsv if present",
             "target-contract.json",
@@ -1880,7 +1891,7 @@ def provider_launch_preflight_lane_issue(
         role="BioProspector provider launch auditor",
         goal="Fail before paid compute starts if image pull, registry auth, branch snapshot, payload, volume, budget, secrets, or stage contracts are not ready.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "provider-launch-preflight-ledger.tsv",
             "compute-provider-ledger.tsv",
             "runpod-run-manifest.json or equivalent provider bundle",
@@ -1932,7 +1943,7 @@ def maturity_lane_issue(
         role="BioProspector maturity reviewer",
         goal="Separate plan, tools, materialized inputs, execution, evidence joins, and claim-audited dossier status.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "run-maturity-ledger.tsv",
             "execution-artifact-ledger.tsv",
             "target-evidence-ledger.tsv",
@@ -1979,14 +1990,14 @@ def target_evidence_lane_issue(
     filename = f"{prefix}-target-evidence-00-join-gate.md"
     self_check = (
         "python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py "
-        f"--campaign {campaign_path.as_posix()} --require-target-evidence"
+        f"--campaign {display_path(campaign_path)} --require-target-evidence"
     )
     body = issue_body(
         title=f"{prefix}: Target evidence join gate",
         role="BioProspector evidence join reviewer",
         goal="Prevent public/reference hits from masquerading as target organism or sample evidence.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "organism-sample-ledger.tsv",
             "target-dataset-ledger.tsv",
             "target-evidence-ledger.tsv",
@@ -2033,14 +2044,14 @@ def decoy_control_lane_issue(
     filename = f"{prefix}-decoy-control-00-negative-gate.md"
     self_check = (
         "python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py "
-        f"--campaign {campaign_path.as_posix()} --require-decoy-controls"
+        f"--campaign {display_path(campaign_path)} --require-decoy-controls"
     )
     body = issue_body(
         title=f"{prefix}: Decoy and negative-control search gate",
         role="BioProspector control reviewer",
         goal="Require decoy or negative-control evidence before wide/frontier search lanes promote candidates.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "reaction-step-ledger.tsv",
             "decoy-control-ledger.tsv",
             "candidate-funnels.tsv",
@@ -2088,7 +2099,7 @@ def contract_self_check_lane_issue(
     filename = f"{prefix}-contract-self-check-99-final-join.md"
     self_check = (
         "python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py "
-        f"--campaign {campaign_path.as_posix()} --require-real-execution --require-target-evidence "
+        f"--campaign {display_path(campaign_path)} --require-real-execution --require-target-evidence "
         "--require-decoy-controls --require-maturity L5"
     )
     body = issue_body(
@@ -2096,7 +2107,7 @@ def contract_self_check_lane_issue(
         role="BioProspector contract auditor",
         goal="Join inputs, materialized data, commands/results, evidence, controls, and claims before declaring success.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "input-audit-ledger.tsv",
             "operator-intake-ledger.tsv",
             "run-maturity-ledger.tsv",
@@ -2164,7 +2175,7 @@ def provider_strategy_lane_issue(
         role="BioProspector provider strategist",
         goal="Keep RunPod as one reviewed optional heavy-search pattern while allowing AWS ElasticBLAST and compatible neocloud/HPC/cloud paths only as role-specific, contract-preserving escalations.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "compute-provider-ledger.tsv",
             "provider-launch-preflight-ledger.tsv",
             "stage-contract-ledger.tsv",
@@ -2222,7 +2233,7 @@ def workflow_framework_lane_issue(
         role="BioProspector workflow framework reviewer",
         goal="Define how shell scripts, Python CLIs, Nextflow, Snakemake, CWL, WDL, or managed workflows can all satisfy the same BioProspector output contract.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
             "workflow-framework-ledger.tsv",
             "execution-artifact-ledger.tsv",
             "run-maturity-ledger.tsv",
@@ -2309,15 +2320,19 @@ def build_issues(
     manifest = load_json(campaign_path)
     base = campaign_path.parent
     ledgers = manifest["ledgers"]
-    routes = read_tsv(base / ledgers["route_ledger"])
-    steps = read_tsv(base / ledgers["reaction_step_ledger"])
+    route_path = declared_path(base, ledgers.get("route_ledger"))
+    step_path = declared_path(base, ledgers.get("reaction_step_ledger"))
+    if route_path is None or step_path is None:
+        raise ValueError("required ledger paths must stay inside the campaign directory")
+    routes = read_tsv(route_path)
+    steps = read_tsv(step_path)
     unknown_steps = read_optional_tsv(base, ledgers, "unknown_step_ledger")
     sequence_searches = read_optional_tsv(base, ledgers, "sequence_search_plan_ledger")
     sequence_search_steps = {row.get("step_id", "").strip() for row in sequence_searches if row.get("step_id", "").strip()}
 
     validation = (
         "python3 skills/bioprospector/scripts/bioprospector_preflight.py "
-        f"--campaign {campaign_path.as_posix()}"
+        f"--campaign {display_path(campaign_path)}"
     )
     claim_boundary = manifest["claim_boundary"]
 
@@ -2331,8 +2346,8 @@ def build_issues(
         role="BioProspector orchestrator",
         goal=f"Review and freeze the campaign contract for {target} in {host}.",
         inputs=[
-            f"Campaign manifest: {campaign_path.as_posix()}",
-            f"Target contract: {(base / manifest['target_contract']).as_posix()}",
+            f"Campaign manifest: {display_path(campaign_path)}",
+            f"Target contract: {display_path(base / manifest['target_contract'])}",
             f"Campaign id: {campaign_id}",
         ],
         artifacts=[
@@ -3033,7 +3048,11 @@ def main() -> int:
         {name: getattr(args, name) for name in INCLUDE_FLAG_ATTRS},
     )
 
-    issues = build_issues(campaign, args.prefix, **include_options)
+    try:
+        issues = build_issues(campaign, args.prefix, **include_options)
+    except ValueError as exc:
+        print(f"FAIL issue draft generation: {exc}")
+        return 1
     for filename, body in issues.items():
         (out / filename).write_text(body, encoding="utf-8")
 

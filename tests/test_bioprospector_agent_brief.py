@@ -87,6 +87,22 @@ class BioProspectorAgentBriefTests(unittest.TestCase):
             self.assertEqual("HUPERZINE", manifest["prefix"])
             self.assertEqual("symphony-linear", manifest["mode"])
 
+    def test_external_paths_are_not_written_to_brief_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out = Path(tmpdir) / "agent-brief"
+            agent_brief.build_brief(
+                CAMPAIGN,
+                out,
+                prefix="HUPERZINE",
+                profile="public-demo",
+                mode="goal",
+                agent="generic",
+            )
+
+            rendered = "\n".join(path.read_text(encoding="utf-8") for path in out.iterdir())
+            self.assertNotIn(str(out), rendered)
+            self.assertIn("REPLACE_ME_EXTERNAL_PATH", rendered)
+
 
 if __name__ == "__main__":
     unittest.main()

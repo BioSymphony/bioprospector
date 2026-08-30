@@ -46,7 +46,7 @@ class BioProspectorRetrospectiveTests(unittest.TestCase):
                         "contract": {"run_id": "demo-run"},
                         "plan": {
                             "compute": {
-                                "profile": "cpu-tiny-blast-runpod-smoke",
+                                "profile": "operator-private-profile",
                                 "max_estimated_cost_usd": 2,
                                 "max_runtime_minutes": 30,
                             },
@@ -61,8 +61,9 @@ class BioProspectorRetrospectiveTests(unittest.TestCase):
         (run_dir / "trusted_after_run_summary.json").write_text(
             json.dumps(
                 {
-                    "issue_identifier": "PUBLIC-TEST",
+                    "issue_identifier": "operator-private-issue",
                     "final_status": "success",
+                    "error": "operator-private-error-text",
                     "steps": [
                         {
                             "started_at": "2026-05-13T00:00:00Z",
@@ -84,7 +85,21 @@ class BioProspectorRetrospectiveTests(unittest.TestCase):
         self.assertEqual("succeeded", row["final_status"])
         self.assertEqual("yes", row["provider_resource_seen"])
         self.assertEqual("redacted", row["provider_resource_ref"])
-        self.assertNotIn("example-resource", "\t".join(str(value) for value in row.values()))
+        rendered = "\t".join(str(value) for value in row.values())
+        self.assertNotIn("example-resource", rendered)
+        self.assertNotIn("operator-private", rendered)
+        self.assertNotIn(str(self.temp_dir), rendered)
+        self.assertEqual("recorded", row["profile"])
+        self.assertEqual("recorded", row["issue"])
+        self.assertEqual("present", row["error"])
+        self.assertEqual("recorded", row["run_dir"])
+        self.assertEqual("recorded", row["run_id"])
+        self.assertEqual("recorded", row["max_cost_usd"])
+        self.assertEqual("recorded", row["max_minutes"])
+        self.assertEqual("", row["start_iso"])
+        self.assertEqual("", row["end_iso"])
+        self.assertEqual("", row["duration_min"])
+        self.assertIn("timing_recorded", row["notes"])
 
     def test_cli_writes_retrospective_tsv_for_provider_and_elasticblast_runs(self) -> None:
         provider_run = self.temp_dir / "provider-after-run-20260513T000000Z"
@@ -118,6 +133,8 @@ class BioProspectorRetrospectiveTests(unittest.TestCase):
             rows = list(csv.DictReader(handle, delimiter="\t"))
         self.assertEqual(2, len(rows))
         self.assertEqual({"elasticblast", "runpod"}, {row["provider"] for row in rows})
+        self.assertEqual({"run-001", "run-002"}, {row["run_dir"] for row in rows})
+        self.assertEqual({"run-001", "run-002"}, {row["run_id"] for row in rows})
         self.assertIn("provider resources redacted", result.stderr)
 
 

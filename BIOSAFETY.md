@@ -9,10 +9,10 @@ The public examples are compact planning scaffolds. They must not contain
 private sequences, unpublished constructs, raw reads, restricted datasets, or
 operational wet-lab protocols.
 
-## Operator Responsibilities
+## Operator responsibilities
 
-Before any real campaign moves beyond planning, operators should use the
-appropriate institutional review paths for:
+Before a real campaign moves beyond planning, operators must follow the
+applicable institutional review processes for:
 
 - recombinant DNA work
 - work involving pathogenic organisms or toxins
@@ -20,8 +20,8 @@ appropriate institutional review paths for:
 - dual-use concerns
 - collaborator, customer, or unpublished biological material
 
-## Repo Boundary
+## Repository boundary
 
-Do not use this public repo to store biological materials, raw sequence data,
-provider credentials, private run logs, or execution instructions that bypass
-local safety review.
+Do not use this public repository to store unpublished biological data, raw
+sequence files, provider credentials, private run logs, or execution
+instructions that bypass local safety review.

@@ -1,5 +1,5 @@
 route_id	route_name	target_product	host	feedstock_mode	route_class	evidence_level	route_status	primary_risk	notes
-R001	ferulic-acid-bioconversion	vanillin	Saccharomyces cerevisiae	fed_substrate	bioconversion	characterized_elsewhere	seed	side_products	Clear validation-handoff route family; needs enzyme casting and yeast-fit review.
+R001	ferulic-acid-bioconversion	vanillin	Saccharomyces cerevisiae	fed_substrate	bioconversion	hypothesis	seed	side_products	Clear validation-handoff route family; needs enzyme casting and yeast-fit review.
 R002	eugenol-or-isoeugenol-route	vanillin	Saccharomyces cerevisiae	fed_substrate	alternative_route	hypothesis	seed	substrate_toxicity	Useful alternate feedstock route; needs route stitching and source-enzyme review.
 R003	de-novo-shikimate-derived-route	vanillin	Saccharomyces cerevisiae	glucose	de_novo	evidence_supported	seed	flux_and_toxicity	Ambitious route class; needs precursor, cofactor, and burden review.
 R004	protected-glucovanillin-route	glucovanillin_or_vanillin	Saccharomyces cerevisiae	mixed	protected_product	hypothesis	seed	product_handling	May reduce toxicity by protection/storage; requires glycosylation specificity review.

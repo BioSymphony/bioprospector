@@ -1,22 +1,21 @@
-# Agent Playbook
+# Agent playbook
 
-BioProspector works best when an agent treats the repo as a local control plane:
-read the skill, run checks first, generate compact artifacts under `.runtime/`,
-and keep pathway decisions, construct hypotheses, and claim boundaries
-explicit.
+BioProspector uses the repository as a local control plane. Read the skill, run
+the checks, generate compact artifacts under `.runtime/`, and record pathway
+decisions, non-procedural candidate hypotheses, and claim boundaries.
 
-## Power Prompt
+## Campaign planning prompt
 
 ```text
 Use the bioprospector skill in this checkout. Turn <target molecule> in <host>
-into a biosynthetic pathway discovery campaign: route families, enzyme/gene
-mining lanes, pathway-stitching review, construct hypotheses, and a
-Linear-ready issue graph under .runtime/. Keep everything local for now and do
+into a biosynthetic-pathway planning campaign: route families, enzyme and gene
+mining lanes, pathway-stitching review, non-procedural candidate hypotheses, and a
+Linear-ready issue graph under .runtime/. Keep this planning pass local and do
 not write raw sequences, credentials, provider identifiers, signed URLs,
-private paths, or large databases into the repo.
+private paths, or large databases into the repository.
 ```
 
-## First Check Prompt
+## First check prompt
 
 ```text
 Use the bioprospector skill in this checkout. Run the local doctor and public
@@ -24,7 +23,7 @@ audit first. Then tell me which local examples and commands are ready to use.
 Keep generated artifacts under .runtime/.
 ```
 
-## New Campaign Prompt
+## New campaign prompt
 
 ```text
 Create a BioProspector campaign for <target molecule> in <host>. Start from
@@ -42,7 +41,7 @@ Expected agent behavior:
 - run `bioprospector_input_audit.py`
 - keep claims at planning level until evidence and controls exist
 
-## Example Review Prompt
+## Example review prompt
 
 ```text
 Inspect the nootkatone public example. Generate full-frontier issue drafts under
@@ -64,7 +63,7 @@ python3 scripts/bioprospector_stage_contract.py \
   --campaign examples/nootkatone-yeast-v0/campaign-manifest.json
 ```
 
-## What A Generated Linear Issue Looks Like
+## What a generated Linear issue looks like
 
 `bioprospector_issue_dry_run.py` produces tracker-ready Markdown drafts.
 The shape is short, scannable, and ledger-bound. Example draft for the
@@ -106,11 +105,12 @@ for the full index.
 ```text
 Use BioProspector to create a Linear-ready work graph for the nootkatone public
 example, but do not call Linear or any tracker API. Generate Markdown issue
-drafts under .runtime/nootkatone-workgraph, summarize the first useful wave, and
+drafts under .runtime/nootkatone-workgraph, summarize the first approved,
+contract-checked wave, and
 list the lanes that should stay blocked until provider or data approvals exist.
 ```
 
-Useful command:
+Command:
 
 ```bash
 python3 scripts/bioprospector_issue_dry_run.py \
@@ -120,11 +120,11 @@ python3 scripts/bioprospector_issue_dry_run.py \
   --include-profile full-frontier
 ```
 
-## Generate A Campaign Agent Brief
+## Generate a campaign agent brief
 
 Use this when the operator has a capable agent, Symphony + Linear setup, or
-`/goal` workflow and needs a better starting packet rather than more machinery
-inside the repo.
+`/goal` workflow and needs a campaign-specific prompt, command list, lane counts,
+and boundaries.
 
 ```bash
 python3 scripts/bioprospector_agent_brief.py \
@@ -142,25 +142,12 @@ ledgers, validators, and local work graphs while the agent or external
 orchestrator owns sequencing, tracker mutation, provider execution, and final
 judgment.
 
-## Public Skill Safety Audit Prompt
+## Public artifact boundary
 
-Use this prompt to check another public BioSymphony-style skill repo for the
-same boundary:
-
-```text
-Audit this public BioSymphony-style skill repo for result-return and data-boundary clarity.
-
-The repo should not imply that a user's capable agent is forbidden from getting real results back to the user. It should only forbid writing raw/private/heavy biological data into the repo, tracked examples, public artifacts, tracker issues, chat logs, or publishable docs.
-
-Check README, quickstart, agent playbooks, CLI help, generated prompts, handoff packets, issue templates, and tests for ambiguous phrases like "do not materialize raw data" or "no raw data output." Replace them with language that says:
-- raw/heavy/private outputs belong in user-approved external workdirs, volumes, HPC paths, RunPod volumes, or cloud buckets;
-- the repo-facing return should be compact ledgers, pointers, checksums, summaries, rankings, dossiers, citations/accessions, and validation logs;
-- generated planning/readiness artifacts do not launch providers, mutate trackers, download databases, or prove execution;
-- mock, dry-run, planned, or readiness rows are not evidence;
-- a public checkout is reusable control-plane code for the user's own campaign, with private data kept outside repo, tracker, chat, and publishable artifacts.
-
-After edits, add or update tests so generated agent prompts and handoff packets include both halves of the boundary: "do not write raw/private data into repo/tracker/chat/publishable artifacts" and "return results through user-approved external locations plus compact ledgers/pointers/hashes/summaries/dossiers." Run the repo's local release or docs checks and report exactly what changed.
-```
+Keep raw, heavy, or private outputs in an operator-approved external location.
+Return compact ledgers, opaque pointers, checksums, summaries, rankings,
+dossiers, citations, and accessions to the campaign. Planning, dry-run,
+readiness, and mock rows do not prove execution or biological validity.
 
 ## Cloud Readiness Prompt
 
@@ -218,7 +205,7 @@ push, or publish. Report any tracked forbidden files, docs gaps, or repository
 boundary risks.
 ```
 
-## Good Agent Closeout
+## Agent closeout
 
 Ask the agent to close with:
 
@@ -226,5 +213,5 @@ Ask the agent to close with:
 - generated `.runtime/` paths
 - changed tracked files, if any
 - claim level and remaining blockers
-- explicit confirmation that no provider launch, database download, raw sequence
-  materialization, Linear write, or public publish occurred
+- provider launch, database download, raw sequence materialization, tracker
+  writes, and publication, each marked `occurred`, `did_not_occur`, or `unknown`

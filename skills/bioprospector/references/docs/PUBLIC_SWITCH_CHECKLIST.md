@@ -1,9 +1,8 @@
-# Public Switch Checklist
+# Public release checklist
 
-This repository is intended to be publishable only after this checklist passes
-from a clean local checkout.
+Run this checklist from a clean local checkout for every public release.
 
-## Required Gates
+## Required gates
 
 ```bash
 python3 scripts/bioprospector_doctor.py --include-runtime
@@ -27,20 +26,20 @@ Expected result:
   packaging, CLI, docs-check, quickstart, and citation files are tracked.
 - [`PRIVACY_SECURITY_MODEL.md`](PRIVACY_SECURITY_MODEL.md) still matches the intended public boundary.
 
-## Secret And History Scans
+## Secret and history scans
 
-Run these before the first public push when `gitleaks` is available:
+Run these before publishing when `gitleaks` is available:
 
 ```bash
 gitleaks detect --source . --no-banner --redact --verbose
 gitleaks dir . --no-banner --redact --verbose
 ```
 
-Use `detect` for history and `dir` for the current tree. If the binary is not
-available, record that exception in the release notes and do not treat it as a
-substitute for manual review.
+Use `detect` for history and `dir` for the current tree. If `gitleaks` is
+unavailable, record the missing scan in the release notes and complete the
+manual review.
 
-## Manual Review
+## Manual review
 
 Review every public release for:
 
@@ -50,8 +49,8 @@ Review every public release for:
 - source-specific campaign aliases that present a private run as a public default
 - claim language that implies biological validation, route completion, production, assay success, or clinical utility
 
-## Publish Boundary
+## Publish boundary
 
-The public switch should publish schemas, validators, examples, templates,
-docs, and small planning/dossier outputs only. Runtime sidecars remain ignored
-and reproducible; they are not release artifacts.
+Publish schemas, validators, examples, templates, documentation, and compact
+planning or dossier outputs only. Runtime sidecars remain ignored and
+reproducible; they are not release artifacts.

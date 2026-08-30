@@ -14,4 +14,3 @@ Symphony starts happen only on operator-approved live commands.
 - Run `make capabilities` to generate and audit public demo issue drafts,
   dossiers, rankings, and GeneCluster contract artifacts under ignored
   `.runtime/`.
-- Internal stress fixtures and private notes live in ignored local folders.

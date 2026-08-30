@@ -1,13 +1,12 @@
-# Use Cases
+# Use cases
 
-BioProspector is a skill repo for agentic bioprospecting: route expansion,
-enzyme mining, dark-step resolution, candidate compression, source-context
-planning, tracker work graphs, cloud-run handoffs, and review dossiers. These
-use cases are designed to be useful before any provider execution exists. For a
-path-based chooser, see
+BioProspector organizes route expansion, enzyme mining, dark-step review,
+candidate compression, source-context planning, tracker work graphs,
+provider-readiness planning, and dossier review. Each use case works before
+provider execution. For a workflow chooser, read
 [`WORKFLOWS.md`](WORKFLOWS.md).
 
-## When To Reach For This
+## When to use BioProspector
 
 | You want to... | Recipe |
 | --- | --- |
@@ -21,14 +20,13 @@ path-based chooser, see
 Each row links to a workflow recipe below with its prompt, command path, and
 expected outputs.
 
-Out of scope for this skill: one-shot BLAST lookups, plasmid or strain design,
-and routes you already have and just need a vendor to make. The scaffolding here
-pays back when a campaign is large enough to need ledgers, lanes, and a claim
-audit.
+Out of scope: one-shot BLAST lookups, plasmid or strain design, and vendor
+handoff for an existing route. Use this skill when a campaign needs ledgers,
+work lanes, and claim review.
 
-## Workflow Recipes
+## Workflow recipes
 
-### 1. First Target Campaign
+### 1. First target campaign
 
 Start here when you have a target molecule and a host but no campaign packet
 yet.
@@ -67,7 +65,7 @@ python3 skills/bioprospector/scripts/bioprospector_input_audit.py \
   --campaign .runtime/scaffolds/example-target-v0/campaign-manifest.json
 ```
 
-### 2. Route And Unknown-Step Review
+### 2. Route and unknown-step review
 
 Use this when a biosynthetic route is plausible but one or more steps are
 uncertain.
@@ -89,7 +87,7 @@ Good closeout:
 Claim ceiling: route plausibility and unresolved-gap review, not pathway
 completion or production.
 
-### 3. Candidate Compression
+### 3. Candidate compression
 
 Use this after a search or fixture has compact hit summaries, not raw sequence
 archives.
@@ -123,7 +121,7 @@ Expected outputs:
 Claim ceiling: ranked planning candidates and evidence gaps, not enzyme
 validation.
 
-### 4. Long-Run Readiness
+### 4. Long-run readiness
 
 Use this when a promising route or enzyme frontier is ready to become a
 resumable local, RunPod, HPC, cloud VM, neocloud, managed workflow, or
@@ -158,10 +156,10 @@ python3 skills/bioprospector/scripts/bioprospector_runpod_bundle.py \
   --out .runtime/runpod-readiness/nootkatone-yeast-v0
 ```
 
-The bundle is a launch packet, not a launch action. It tells an operator what a
-future run should produce and what still blocks execution.
+The bundle defines expected outputs and execution blockers. It does not launch
+a provider.
 
-### 5. Linear Or Tracker Work Graph
+### 5. Linear or tracker work graph
 
 Use this when a team wants a campaign split into reviewable work lanes before
 copying selected tasks into Linear or another tracker.
@@ -184,11 +182,11 @@ python3 skills/bioprospector/scripts/bioprospector_issue_dry_run.py \
   --include-profile full-frontier
 ```
 
-Why it is useful: Linear or another tracker can hold owners, dependencies,
-blocked lanes, route-review decisions, provider-readiness tasks, and closeout
-comments while the campaign contract remains the local source of truth.
+A tracker can hold owners, dependencies, blocked lanes, route-review decisions,
+provider-readiness tasks, and closeout comments. The local campaign contract
+remains the source of truth.
 
-### 6. Cloud Readiness And Live Handoff
+### 6. Cloud readiness and live handoff
 
 Use this when a future search might need RunPod, HPC, cloud VMs, neocloud VMs,
 or AWS ElasticBLAST.
@@ -220,7 +218,7 @@ Good closeout: the returned package joins execution artifacts, target evidence,
 decoy controls, maturity, and claim audit back to the original campaign
 contract.
 
-### 7. Metadata-Only GeneCluster Atlas Planning
+### 7. Metadata-only GeneCluster Atlas planning
 
 Use this when source context, gene clusters, or route ceilings matter but raw
 data should stay out of the public repo.
@@ -248,9 +246,9 @@ python3 skills/bioprospector/scripts/bioprospector_genecluster_atlas_plan.py \
   --out .runtime/genecluster-atlas/huperzine-frontier-public-v0
 ```
 
-## Operational Recipes
+## Operational recipes
 
-### 8. Demo Or Teaching Artifact
+### 8. Demo or teaching artifact
 
 Use this when you want to show the full route-to-dossier workflow on compact
 example data.
@@ -270,7 +268,7 @@ make local-demo
 python3 scripts/public_audit.py .runtime
 ```
 
-### 9. Public Switch Readiness
+### 9. Public release review
 
 Use this before any future public release.
 

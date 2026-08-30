@@ -1,4 +1,4 @@
-# BioSymphony BioProspector Agent Guide
+# BioSymphony BioProspector agent guide
 
 Guide for agents and operators working in this repo.
 
@@ -26,7 +26,7 @@ The repo ships:
 - Linear and Symphony issue templates and sidecar workflow drafts
 - validator and public-release audit checks
 
-## Public Safety Rules
+## Public safety rules
 
 Do not add:
 
@@ -40,7 +40,7 @@ Do not add:
 Use synthetic or explicitly public examples only. Keep public examples compact
 and label dry-run or mock artifacts clearly.
 
-## Required Checks
+## Required checks
 
 Run before committing public-release changes:
 
@@ -53,18 +53,18 @@ That gate compiles the scripts, runs unit tests, validates the public example
 campaigns, runs planning self-checks, generates local-only demo sidecars, and
 scans both the tree and `.runtime` output for public-release blockers.
 
-Before any public switch, also read [`docs/PUBLIC_SWITCH_CHECKLIST.md`](docs/PUBLIC_SWITCH_CHECKLIST.md)
+Before each public release, also read [`docs/PUBLIC_SWITCH_CHECKLIST.md`](docs/PUBLIC_SWITCH_CHECKLIST.md)
 and confirm no `.runtime`, `logs`, raw biological artifacts, private paths, or
 provider identifiers are tracked.
 
-## Skill Loop
+## Skill loop
 
 Use [`skills/bioprospector/SKILL.md`](skills/bioprospector/SKILL.md). Summary:
 target contract -> input audit -> minimal operator intake -> route universe ->
 reaction steps -> candidate mining lanes -> target evidence and controls ->
 route stitching -> claim audit -> review-package ledgers.
 
-## Claim Boundaries
+## Claim boundaries
 
 Treat outputs as design intelligence and prioritization, not biological
 validation. Do not claim production, validation in a host, route completion, or

@@ -1,4 +1,4 @@
-# Genome Context And BGC Mining
+# Genome context and BGC mining
 
 Genome-context lanes handle anchor-neighborhood searches, co-localized genes,
 and cryptic biosynthetic gene cluster evidence. They are planning lanes until an
@@ -25,6 +25,7 @@ outside this repo. BioProspector stores only:
 
 - `genome-mining-plan.tsv`
 - `genome-hit-ledger.tsv`
-- accession IDs, secure external pointers, coordinates, checksums, and compact claim summaries
+- public accession IDs, opaque external pointers managed outside this
+  repository, coordinates, checksums, and compact claim summaries
 
 Neighborhood support is evidence, not functional validation.

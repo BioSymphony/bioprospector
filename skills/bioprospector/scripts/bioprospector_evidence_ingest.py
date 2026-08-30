@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parents[2]
 if str(SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR))
 
@@ -31,6 +32,14 @@ BLAST6_COLUMNS = [
     "evalue",
     "bitscore",
 ]
+
+
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
 
 
 def reject_raw_input(path: Path) -> None:
@@ -451,7 +460,7 @@ def main() -> int:
     except ValueError as exc:
         print(f"FAIL {exc}")
         return 1
-    print(f"Wrote derived evidence ledgers to {args.out.resolve()}")
+    print(f"Wrote derived evidence ledgers to {display_path(args.out)}")
     return 0
 
 

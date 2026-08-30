@@ -3,7 +3,7 @@
 ## Goal
 
 Convert the input audit into a short operator interview only where decisions are
-actually missing.
+missing.
 
 ## Required Artifacts
 

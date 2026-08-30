@@ -34,7 +34,7 @@ def load_script_module(module_name: str, filename: str):
     path = SCRIPT_DIR / filename
     spec = importlib.util.spec_from_file_location(module_name, path)
     if not spec or not spec.loader:
-        raise RuntimeError(f"could not load {path}")
+        raise RuntimeError("a required BioProspector script is missing; reinstall or repair the checkout")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -42,12 +42,10 @@ def load_script_module(module_name: str, filename: str):
 
 def display_path(path: Path) -> str:
     resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return resolved.as_posix()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
 
 
 def shell_join(parts: list[str]) -> str:

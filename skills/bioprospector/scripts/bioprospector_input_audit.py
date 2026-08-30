@@ -74,6 +74,20 @@ def boolish(value: str) -> bool:
     return value.strip().lower() == "true"
 
 
+def resolve_declared_path(base: Path, value: object) -> tuple[Path | None, str]:
+    text = str(value or "").strip()
+    rel = Path(text)
+    if not text or rel.is_absolute():
+        return None, "blocked_invalid_path"
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        public_ref = resolved.relative_to(resolved_base).as_posix()
+    except ValueError:
+        return None, "blocked_invalid_path"
+    return resolved, public_ref
+
+
 def input_row(
     *,
     input_id: str,
@@ -124,52 +138,54 @@ def audit_campaign(campaign_path: Path) -> dict[str, Any]:
             declared_in=campaign_path.name,
             expected_artifact=campaign_path.name,
             status="materialized" if campaign_path.exists() else "missing",
-            location_or_pointer=campaign_path.as_posix(),
+            location_or_pointer=campaign_path.name,
             notes="Campaign manifest read before asking operator questions.",
         )
     )
 
-    target_contract = base / str(manifest.get("target_contract", ""))
-    target_status = "materialized" if target_contract.exists() else "missing"
+    target_contract, target_ref = resolve_declared_path(base, manifest.get("target_contract", ""))
+    target_status = (
+        "blocked" if target_contract is None else "materialized" if target_contract.exists() else "missing"
+    )
     known_inputs.append(
         input_row(
             input_id="target_contract",
             input_class="target_contract",
             declared_in=campaign_path.name,
-            expected_artifact=manifest.get("target_contract", ""),
+            expected_artifact=target_ref,
             status=target_status,
-            location_or_pointer=target_contract.as_posix(),
+            location_or_pointer=target_ref,
             notes="Target contract declared by manifest.",
         )
     )
-    if target_status == "missing":
+    if target_status != "materialized":
         missing_operator_items.append(
             {
                 "item": "target_contract",
-                "reason": f"declared file is missing: {target_contract}",
+                "reason": "declared target contract is missing or outside the campaign directory",
                 "blocking": "true",
             }
         )
 
     for key, rel in sorted(ledgers.items()):
-        path = base / str(rel)
-        status = "materialized" if path.exists() else "missing"
+        path, public_ref = resolve_declared_path(base, rel)
+        status = "blocked" if path is None else "materialized" if path.exists() else "missing"
         known_inputs.append(
             input_row(
                 input_id=key,
                 input_class=key if key in CORE_LEDGER_KEYS else "resource",
                 declared_in=campaign_path.name,
-                expected_artifact=str(rel),
+                expected_artifact=public_ref,
                 status=status,
-                location_or_pointer=path.as_posix(),
+                location_or_pointer=public_ref,
                 notes="Ledger declared by manifest.",
             )
         )
-        if status == "missing":
+        if status != "materialized":
             missing_operator_items.append(
                 {
                     "item": key,
-                    "reason": f"declared ledger is missing: {path}",
+                    "reason": "declared ledger is missing or outside the campaign directory",
                     "blocking": "true",
                 }
             )
@@ -186,15 +202,15 @@ def audit_campaign(campaign_path: Path) -> dict[str, Any]:
 
     audit_rel = ledgers.get("input_audit_ledger")
     if audit_rel:
-        audit_path = base / audit_rel
-        if audit_path.exists():
+        audit_path, _ = resolve_declared_path(base, audit_rel)
+        if audit_path is not None and audit_path.exists():
             for row in read_tsv(audit_path):
                 status = row.get("materialized_status", "").strip()
                 if boolish(row.get("operator_required", "")) and status in MISSING_STATUSES:
                     missing_operator_items.append(
                         {
                             "item": row.get("missing_operator_item") or row.get("input_id", ""),
-                            "reason": row.get("notes", "input audit ledger row requires operator action"),
+                            "reason": "input audit ledger row requires operator action",
                             "blocking": "true",
                         }
                     )

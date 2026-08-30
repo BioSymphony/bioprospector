@@ -1,19 +1,19 @@
-# Public Huperzine A Frontier Demo Walkthrough
+# Public Huperzine A frontier demo walkthrough
 
-## What This Proves
+## What this demo shows
 
-- BioProspector can keep a useful campaign open when the route is not fully
+- BioProspector can keep a campaign open when the route is not fully
   resolved.
 - Dark-step lanes can track unknown chemistry, possible multi-gene modules,
   hidden substeps, and source-context ambiguity without pretending the pathway
   is complete.
-- Candidate-family sweeps can stay useful for ranking and follow-up planning
+- Candidate-family sweeps can support ranking and follow-up planning
   without storing raw sequences, BLAST dumps, private paths, or provider
   artifacts.
 - Claim ceilings can be tested on a target where users naturally expect a
   complete answer, which makes it a good public stress case.
 
-## Claim Ceiling
+## Claim ceiling
 
 The demo establishes dark-step hypotheses, source-context lanes, candidate
 families, metadata-only atlas planning, and a claim-bounded dossier at
@@ -65,10 +65,10 @@ python3 skills/bioprospector/scripts/bioprospector_dossier_export.py \
   --out .runtime/dossiers/huperzine-frontier-public-v0.md
 ```
 
-## Expected Outputs
+## Expected outputs
 
-- Validated public planning ledgers.
-- A useful unresolved-route example for dark-step, source-context, and
+- Contract-checked public planning ledgers.
+- An unresolved-route example for dark-step, source-context, and
   candidate-family planning.
 - Metadata-only atlas and candidate-package sidecars under ignored `.runtime/`.
 - A compact dossier under `.runtime/dossiers/huperzine-frontier-public-v0.md`.

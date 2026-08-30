@@ -22,12 +22,24 @@ from bioprospector_schema import load_schema
 
 def display_path(path: Path) -> str:
     resolved = path.resolve()
-    for base in (Path.cwd().resolve(), REPO_ROOT.resolve()):
-        try:
-            return resolved.relative_to(base).as_posix()
-        except ValueError:
-            continue
-    return path.as_posix()
+    try:
+        return resolved.relative_to(REPO_ROOT.resolve()).as_posix()
+    except ValueError:
+        return "REPLACE_ME_EXTERNAL_PATH"
+
+
+def resolve_declared_path(base: Path, value: object) -> Path | None:
+    text = str(value or "").strip()
+    rel = Path(text)
+    if not text or rel.is_absolute():
+        return None
+    resolved_base = base.resolve()
+    resolved = (resolved_base / rel).resolve()
+    try:
+        resolved.relative_to(resolved_base)
+    except ValueError:
+        return None
+    return resolved
 
 
 REQUIRED_MANIFEST_FIELDS = {
@@ -1569,7 +1581,10 @@ def check_manifest(path: Path) -> list[CheckResult]:
 
     base = path.parent
     for key, rel in ledgers.items():
-        ledger_path = base / rel
+        ledger_path = resolve_declared_path(base, rel)
+        if ledger_path is None:
+            results.append(CheckResult(False, f"{key} path stays inside campaign directory"))
+            continue
         results.append(CheckResult(ledger_path.exists(), f"{key} exists: {display_path(ledger_path)}"))
         if key == "runpod_run_manifest" and ledger_path.exists() and ledger_path.suffix == ".json":
             try:
@@ -1579,10 +1594,13 @@ def check_manifest(path: Path) -> list[CheckResult]:
             else:
                 results.append(CheckResult(True, "runpod_run_manifest JSON parses"))
 
-    target_contract = base / str(manifest.get("target_contract", ""))
-    results.append(CheckResult(target_contract.exists(), f"target contract exists: {display_path(target_contract)}"))
+    target_contract = resolve_declared_path(base, manifest.get("target_contract", ""))
+    if target_contract is None:
+        results.append(CheckResult(False, "target contract path stays inside campaign directory"))
+    else:
+        results.append(CheckResult(target_contract.exists(), f"target contract exists: {display_path(target_contract)}"))
 
-    if target_contract.exists():
+    if target_contract is not None and target_contract.exists():
         contract = load_json(target_contract)
         for field in ["target_molecule", "host", "campaign_goal", "optimization_goals", "hard_boundaries"]:
             results.append(CheckResult(field in contract, f"target contract field `{field}` present"))
@@ -1602,7 +1620,9 @@ def check_claim_ledger(manifest_path: Path) -> list[CheckResult]:
     if not rel:
         return []
 
-    path = manifest_path.parent / rel
+    path = resolve_declared_path(manifest_path.parent, rel)
+    if path is None:
+        return [CheckResult(False, "claim_ledger path stays inside campaign directory")]
     if not path.exists():
         return []
 
@@ -1650,7 +1670,10 @@ def check_tsv_ledgers(manifest_path: Path) -> list[CheckResult]:
         rel = ledgers.get(key)
         if not rel:
             continue
-        path = base / rel
+        path = resolve_declared_path(base, rel)
+        if path is None:
+            results.append(CheckResult(False, f"{key} path stays inside campaign directory"))
+            continue
         if not path.exists():
             continue
         headers, rows = read_tsv(path)

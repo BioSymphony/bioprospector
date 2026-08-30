@@ -1,7 +1,7 @@
 # BioProspector RunPod Readiness
 
 Status: readiness contract v1
-Last reviewed: 2026-04-30
+Last reviewed: 2026-08-30
 
 This reference defines the prep-only RunPod handoff for BioProspector campaigns. It is for bundle review and pod readiness, not live execution.
 
@@ -54,7 +54,7 @@ Allowed first:
 - public accessions
 - open or openly documented reference databases
 - derived summaries with citations
-- checksums and remote paths
+- checksums and opaque external pointers managed outside this repository
 
 Not allowed without separate approval:
 

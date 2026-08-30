@@ -1,9 +1,9 @@
-# Synthetic GeneCluster Atlas Fixture
+# Synthetic GeneCluster Atlas fixture
 
-This fixture proves the public GeneCluster Atlas contracts without real
+This fixture exercises the public GeneCluster Atlas contracts without real
 organism data, private paths, raw sequences, or provider output.
 
-It validates:
+It contract-checks:
 
 - caller-level cluster summaries in `cluster_calls.tsv`
 - cross-caller BGC consensus in `bgc_consensus.tsv`

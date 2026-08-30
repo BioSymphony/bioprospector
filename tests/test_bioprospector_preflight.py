@@ -861,6 +861,22 @@ class BioProspectorPreflightTests(unittest.TestCase):
             checks = self.run_checks(campaign)
             self.assertTrue(any(not check.ok and "workflow_framework_ledger provider class refs" in check.message for check in checks))
 
+    def test_manifest_paths_cannot_escape_campaign_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            campaign = self.write_campaign(root)
+            manifest = json.loads(campaign.read_text(encoding="utf-8"))
+            manifest["target_contract"] = "../target-contract.json"
+            manifest["ledgers"]["route_ledger"] = "/outside/route-ledger.tsv"
+            campaign.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+            checks = self.run_checks(campaign)
+
+            messages = [check.message for check in checks if not check.ok]
+            self.assertTrue(any("route_ledger path stays inside" in message for message in messages))
+            self.assertTrue(any("target contract path stays inside" in message for message in messages))
+            self.assertNotIn("/outside/", "\n".join(messages))
+
     def test_workflow_framework_requires_active_runpod_compatible_framework(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             bad_row = list(OPTIONAL_ROWS["workflow_framework_ledger"])

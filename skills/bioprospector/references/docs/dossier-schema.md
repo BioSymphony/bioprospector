@@ -117,7 +117,8 @@ Campaigns may also list optional or campaign-required artifacts under `ledgers`:
 
 Use a top-level `required_ledgers` array when one of the optional artifacts is mandatory for a campaign. This keeps the starter vanillin dossier valid while letting frontier demos, such as nootkatone-route work, require unknown-step, ambiguity, family-sweep, genome-context, structure-risk, host-fit, rejection, provenance, RunPod handoff, or ElasticBLAST handoff artifacts.
 
-The validator only reads local files and metadata. It must not download databases, accessions, model weights, sequences, or remote artifacts.
+The validator reads local files and metadata only. It must not download
+databases, sequences, model weights, or remote artifacts.
 
 ## TSV Header Contracts
 
@@ -528,9 +529,11 @@ contain AWS credentials, uploaded query sequences, large result files, or copied
 BLAST database content.
 
 Sequence-search and candidate-package ledgers are output contracts, not raw data
-containers. They may hold AA sequence pointers, checksums, accessions, domain
-spans, motif summaries, candidate-intelligence rows, graph edges, package paths,
-and citation summaries. They must not hold raw all-hit BLAST output, database
+containers. They may hold public accessions, opaque redacted pointers, checksums,
+domain spans, motif summaries, candidate-intelligence rows, graph edges, package
+identifiers, and citation summaries. Tracked rows must not contain private file
+system paths, bucket names, signed URLs, provider IDs, credentials, or restricted
+sequence content. They must not hold raw all-hit BLAST output, database
 mirrors, unrestricted FASTA dumps, nucleotide constructs, full-text literature,
 model weights, or private sequence data.
 
@@ -541,10 +544,9 @@ not vendored tools or live-compute artifacts. `raw_data_retained` must be
 `false` for repo-tracked events.
 
 Candidate ranking and Pareto frontier ledgers must be derived from joined
-candidates, clusters, evidence, controls, host-fit, route context, and package
-indexes. They preserve several useful winners instead of forcing one route:
-minimal genes, highest evidence, clearest validation handoff, best host fit, ambitious
-route, and diversity-library options.
+candidates, clusters, evidence, controls, host fit, route context, and package
+indexes. They rank routes for minimal genes, evidence level, validation handoff,
+host fit, route ambition, and library diversity.
 
 Candidate-intelligence rows capture ranking-useful interpretation such as
 publicly reported reference enzymes, variant annotations, signal peptides,
@@ -553,12 +555,15 @@ watchouts, cofactors, oligomer state, motifs, expression context, and close
 canonical-match inferences. They are not docking, wet-lab assay design,
 construct recipes, or target-host validation.
 
-Self-learning skill rows capture process lessons from hiccups. They may reference
-logs, compact provider summaries, failed validation output, and durable
-runbook/skill/template/validator changes. They must not contain secrets, private
-sequence data, raw all-hit outputs, full FASTA dumps, database mirrors, or
-full-text literature. They do not satisfy biological evidence, provider
-readiness, execution, or final claim gates.
+Self-learning skill rows capture process lessons from hiccups. They may
+reference ignored `.runtime` notes, compact provider summaries, failed
+validation output, and durable runbook, skill, template, or validator changes.
+Tracked or publishable rows may contain only public accessions or opaque,
+redacted external pointers with checksums. They must not contain private paths,
+bucket names, signed URLs, provider IDs, credentials, private sequence data,
+raw all-hit outputs, full FASTA dumps, database mirrors, or full-text
+literature. They do not satisfy biological evidence, provider readiness,
+execution, or final claim gates.
 
 Ambiguity, genome-context, structure-risk, host-fit, assay-handoff, and
 monitoring ledgers are planning artifacts. They must not contain raw FASTA/GFF,
@@ -576,7 +581,7 @@ long-run and cloud/provider false success. They distinguish provider intent
 from container/workflow progress, private image pull readiness from image names,
 and partial/fallback execution from complete execution.
 
-Opportunity-lane ledgers are contracts for powerful optional tools. Supply-chain
+Opportunity-lane ledgers define schemas for optional tools. Supply-chain
 rows gate image readiness. Route-rule, thermodynamic, model, strain-design,
 fallback, BGC, metagenome, metabolomics, source-prior, MAG-quality, and
 eukaryotic-annotation rows are planning or context evidence until joined to

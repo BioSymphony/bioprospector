@@ -1,15 +1,15 @@
-# Product Foundation
+# Product foundation
 
 ## Decision
 
 BioSymphony BioProspector is a sibling project to the structural BioSymphony foundation. It focuses on bioprospecting, pathway expansion, enzyme candidate mining, route stitching, and host-fit review.
 
-For v1, BioProspector is a repo-hosted skill kit: schemas, validators,
+For v1, BioProspector is a repository-hosted skill kit: schemas, validators,
 campaign templates, and provider-readiness layer. The public default is
 local Markdown artifacts; optional Symphony or Linear-style operator stacks
 can consume those artifacts when a user has that setup.
 
-## Product Unit
+## Product unit
 
 The product unit is a campaign:
 
@@ -24,9 +24,9 @@ operator request
   -> ranked route shortlist and validation roadmap
 ```
 
-## What This Enables
+## What the campaign records
 
-BioProspector makes the expensive part of bioprospecting explicit:
+BioProspector records the inputs and decisions behind a bioprospecting campaign:
 
 - where the route universe came from
 - which steps are known, inferred, or missing
@@ -38,7 +38,7 @@ BioProspector makes the expensive part of bioprospecting explicit:
 - which routes stitch chemically and fit the host
 - which claims are evidence-supported versus speculative
 
-## What It Is Not Yet
+## Excluded scope
 
 BioProspector v1 is not:
 
@@ -47,11 +47,10 @@ BioProspector v1 is not:
 - a LIMS
 - a full DBTL platform
 - a public database mirror
-- a one-click strain engineering platform
+- a strain engineering platform
 
-Those may become downstream layers. The foundation should prove the local
-contract graph, search funnel, evidence ledger, route stitching, and red-team
-review first.
+Version 1 tests the local contract graph, search funnel, evidence ledger, route
+stitching, and red-team review.
 
 ## Naming
 

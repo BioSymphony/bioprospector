@@ -70,6 +70,90 @@ class PublicAuditTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("tracked forbidden directory component 'dist'", result.stdout)
 
+    def test_git_tracked_environment_file_is_rejected_by_name(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
+            environment = root / ("." + "env.production")
+            environment.write_text("placeholder only\n", encoding="utf-8")
+            subprocess.run(["git", "add", str(environment)], cwd=root, check=True, capture_output=True)
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("tracked forbidden filename pattern", result.stdout)
+
+    def test_git_tracked_private_key_filename_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
+            key_file = root / ("deploy" + ".pem")
+            key_file.write_text("encoded placeholder\n", encoding="utf-8")
+            subprocess.run(["git", "add", str(key_file)], cwd=root, check=True, capture_output=True)
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("tracked forbidden filename pattern", result.stdout)
+
+    def test_git_tracked_credential_config_filenames_are_rejected(self) -> None:
+        for filename in (".envrc", ".netrc", ".pypirc", ".npmrc", ".git-credentials"):
+            with self.subTest(filename=filename), tempfile.TemporaryDirectory() as tmpdir:
+                root = Path(tmpdir)
+                subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
+                credential_file = root / filename
+                credential_file.write_text("synthetic placeholder\n", encoding="utf-8")
+                subprocess.run(["git", "add", "-f", str(credential_file)], cwd=root, check=True, capture_output=True)
+
+                result = run_audit(root)
+
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("tracked forbidden filename pattern", result.stdout)
+
+    def test_git_tracked_symbolic_link_is_rejected_without_reading_target(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            subprocess.run(["git", "init"], cwd=root, check=True, capture_output=True)
+            target = root.parent / "outside-public-audit-target.txt"
+            link = root / "external-pointer.txt"
+            link.symlink_to(target)
+            subprocess.run(["git", "add", str(link)], cwd=root, check=True, capture_output=True)
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("symbolic link is not allowed", result.stdout)
+
+    def test_untracked_directory_symbolic_link_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir) / "repository"
+            target = Path(tmpdir) / "external-directory"
+            root.mkdir()
+            target.mkdir()
+            (root / "external-directory").symlink_to(target, target_is_directory=True)
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("symbolic link is not allowed", result.stdout)
+
+    def test_skipped_directory_symbolic_link_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir) / "repository"
+            target = Path(tmpdir) / "external-runtime"
+            root.mkdir()
+            target.mkdir()
+            runtime_link = root / ".runtime"
+            runtime_link.symlink_to(target, target_is_directory=True)
+
+            parent_result = run_audit(root)
+            direct_result = run_audit(runtime_link)
+
+            self.assertNotEqual(parent_result.returncode, 0)
+            self.assertIn("symbolic link is not allowed", parent_result.stdout)
+            self.assertNotEqual(direct_result.returncode, 0)
+            self.assertIn("symbolic link", direct_result.stdout)
+
     def test_secret_like_literal_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -180,7 +264,40 @@ class PublicAuditTests(unittest.TestCase):
             result = run_audit(runtime)
 
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn("forbidden text", result.stdout)
+            self.assertIn("possible private path", result.stdout)
+
+    def test_linux_user_home_path_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            leaked = root / "path.txt"
+            leaked.write_text("/" + "home" + "/example-user/workspace/output.tsv\n", encoding="utf-8")
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("possible private path", result.stdout)
+
+    def test_user_home_root_path_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            leaked = root / "path.txt"
+            leaked.write_text("/" + "home" + "/example-user\n", encoding="utf-8")
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("possible private path", result.stdout)
+
+    def test_windows_user_home_path_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            leaked = root / "path.txt"
+            leaked.write_text("C:" + "\\Users\\example-user\\workspace\\output.tsv\n", encoding="utf-8")
+
+            result = run_audit(root)
+
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("possible private path", result.stdout)
 
     def test_public_process_cleanup_terms_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

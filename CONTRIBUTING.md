@@ -1,9 +1,9 @@
 # Contributing
 
-Keep contributions public-safe, compact, and claim-bounded. The skill
-should remain useful from a laptop and across multi-agent harnesses.
+Keep contributions public-safe, compact, and claim-bounded. Keep the local
+planning path practical on a laptop and portable across agent harnesses.
 
-## Before Opening A PR
+## Before opening a pull request
 
 ```bash
 make release-check
@@ -11,16 +11,16 @@ make release-check
 
 `release-check` runs the test suite, doctor, docs link checks, docs index
 check, release metadata check, example preflights, capability demo, public
-audit on the tree, and public audit on `.runtime/`. For public-switch work,
+audit on the tree, and public audit on `.runtime/`. Before a public release,
 also review [`docs/PUBLIC_SWITCH_CHECKLIST.md`](docs/PUBLIC_SWITCH_CHECKLIST.md).
 
 If you have `pre-commit` installed, `pre-commit install` enables a local
 hook that runs the audit and docs link checks before each commit. See
 `.pre-commit-config.yaml`.
 
-## How To Extend The Skill
+## Extend the skill
 
-### Add A Public Example Campaign
+### Add a public example campaign
 
 1. Copy `templates/target-contract.example.json` and adapt for the target
    molecule and host.
@@ -42,22 +42,22 @@ hook that runs the audit and docs link checks before each commit. See
    python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py \
      --campaign skills/bioprospector/examples/<example-id>/campaign-manifest.json
    ```
-5. Add the example to `docs/README.md` under "Examples" and to the example
-   table in the top-level `README.md`.
+5. Add the example under "Examples" in `docs/README.md` and update the examples
+   sentence in the top-level `README.md`.
 
-### Extend The Schema
+### Extend the schema
 
-The shared schema lives in `schemas/bioprospector-ledgers.json`. Adding a
-new ledger type or column:
+The shared schema lives in `schemas/bioprospector-ledgers.json`. To add a ledger
+type or column, do the following:
 
 1. Edit the schema and update any affected ledger templates under
    `skills/bioprospector/examples/`.
 2. Update validators in `skills/bioprospector/scripts/` that consume the
    ledger.
-3. Add a test in `tests/` that covers the new field shape.
+3. Add a test in `tests/` that covers the new field contract.
 4. Run `python3 -m pytest -q` and `make release-check`.
 
-### Add A New CLI Subcommand
+### Add a CLI subcommand
 
 1. Implement the script under `skills/bioprospector/scripts/` with a
    `main()` entry point.
@@ -65,20 +65,19 @@ new ledger type or column:
    a `bioprospector <subcommand>`.
 3. Add an entry in `pyproject.toml` under `[project.scripts]`.
 4. Add a unit test in `tests/`.
-5. Update `docs/CLI_REFERENCE.md` and `docs/CLI` references in the README
-   as needed.
+5. Update `docs/CLI_REFERENCE.md` and the README's CLI reference link as needed.
 6. Run `make wheel-smoke` to confirm the installed CLI works.
 
-## Public-Safe Examples
+## Public-safe examples
 
 - Use synthetic or explicitly public-source examples.
-- Keep raw or heavy data outside the repo.
+- Keep raw or heavy data outside the repository.
 - Store accessions, checksums, public URLs, and compact summaries instead
   of sequence dumps or database mirrors.
 - Mark dry-run and mock artifacts as `dry_run: true` or `mock_tools: true`.
 - Preserve rejected candidates and counterevidence.
 
-## Out Of Scope For The Public Repo
+## Content excluded from the public repository
 
 - credentials, tokens, `.env` files, signed URLs, or private registry auth
 - private workstation paths, private issue text, or internal run logs
@@ -89,7 +88,7 @@ new ledger type or column:
 See [`docs/PRIVACY_SECURITY_MODEL.md`](docs/PRIVACY_SECURITY_MODEL.md) for
 the full data-class policy.
 
-## Claim Language
+## Claim language
 
 Prefer "candidate", "hypothesized", "domain-supported", "ortholog-supported",
 "characterized elsewhere", or "validated elsewhere" when that is the

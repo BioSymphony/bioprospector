@@ -208,7 +208,7 @@ def secret_like(value: str) -> bool:
 
 
 def safe_secret_reference(value: str) -> bool:
-    return bool(re.match(r"^[A-Z][A-Z0-9_]{3,}$", value) or value.startswith(("env:", "secret://", "secure://")))
+    return bool(re.match(r"^[A-Z][A-Z0-9_]{3,}$", value) or re.match(r"^env:[A-Z][A-Z0-9_]{3,}$", value))
 
 
 def path_is_raw_heavy(value: str) -> bool:
@@ -224,7 +224,7 @@ def find_raw_or_secret_values(data: Any, label: str, path: str = "$") -> list[st
             key_lower = str(key).lower()
             if isinstance(value, str):
                 if path_is_raw_heavy(value):
-                    errors.append(f"{label} {next_path} points at raw/heavy local artifact: {value}")
+                    errors.append(f"{label} {next_path} points at a raw/heavy local artifact")
                 if secret_like(value):
                     errors.append(f"{label} {next_path} contains a secret-looking value")
                 if any(term in key_lower for term in ("api_key", "token", "secret", "password")) and value and not safe_secret_reference(value):

@@ -1,4 +1,4 @@
-# Compute Provider Strategy
+# Compute provider strategy
 
 BioProspector is a control plane. Provider choice must not change the scientific
 contract, claim language, or closeout gates.
@@ -6,7 +6,7 @@ contract, claim language, or closeout gates.
 For the user-facing local-to-cloud progression, see
 [`WORKFLOWS.md`](WORKFLOWS.md#5-cloud-readiness).
 
-## Reviewed Provider Patterns
+## Reviewed provider patterns
 
 RunPod manual Pods are the documented optional v0 pattern for controlled heavy
 search lanes:
@@ -17,7 +17,7 @@ search lanes:
 - provider launch preflight before paid compute
 - image pull and private registry auth verified before launch
 - tool/image smoke before database staging
-- compact summaries copied back to the repo
+- compact summaries copied back to the repository
 - no full `nr` mirror by default
 
 AWS ElasticBLAST is a reviewed escalation lane for official NCBI BLAST
@@ -25,17 +25,17 @@ database scale. RunPod remains the primary lane for candidate compression,
 scoring, route stitching, and provenance assembly.
 
 Neocloud, cloud VM, SSH/HPC, local-full, and managed workflow providers can be
-approved for a specific compatible role only after they prove the same storage,
-progress, artifact, cost, secrets, and self-check contracts. Approval means
+approved for a specific compatible role only after they pass the same storage,
+progress, artifact, cost, secret, and self-check gates. Approval means
 accepted for that role, not exempt from gates.
 
 Candidate-intelligence execution, such as signal/transmembrane/PTM prediction or
 public UniProt/PubMed mutant extraction, is a compatible provider role. It can
 run on neocloud or similar providers when the job is explicit, scoped to public
-or approved AA-sequence pointers, and preflight proves tool availability, public
+or approved amino-acid sequence pointers, and preflight records tool availability, public
 API access, egress policy, workdir, stage contract, and compact ledger egress.
 
-## Compatible Provider Classes
+## Compatible provider classes
 
 Use `compute-provider-ledger.tsv` to declare provider choices:
 
@@ -71,7 +71,7 @@ Non-default rows may also set `blessed_path=true` only for a bounded role:
 Other non-RunPod rows remain compatible options, fallback options, or future
 paths until explicitly promoted.
 
-## Workflow Frameworks
+## Workflow frameworks
 
 Use `workflow-framework-ledger.tsv` to declare runner frameworks:
 
@@ -84,7 +84,7 @@ Framework choice is an implementation detail. It cannot weaken claim gates.
 At least one active framework row must support `runpod_*` or `all_providers` so
 the reviewed path is always represented in the runner contract.
 
-## Success Path
+## Example progression
 
 1. Local lite: preflight, input audit, issue generation, planning self-check.
 2. Provider readiness: tool/image/path smoke, no database staging.
@@ -94,7 +94,7 @@ the reviewed path is always represented in the runner contract.
 6. Strict self-check: require real execution, target evidence, controls, and L5.
 7. Only then widen searches, add agents, or escalate to ElasticBLAST.
 
-## Stop Conditions
+## Stop conditions
 
 Stop before execution if:
 
@@ -109,7 +109,7 @@ Stop before execution if:
 - a fallback would be silent instead of partial/degraded
 - reference hits would be presented as target organism/sample evidence
 
-## No Download Preference
+## No database download by default
 
 Default to no downloads during runs. The acceptable order is:
 

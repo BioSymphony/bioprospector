@@ -7,4 +7,4 @@ authors:
   - name: "BioSymphony Maintainers"
 license: "MIT"
 repository-code: "https://github.com/BioSymphony/bioprospector"
-abstract: "An agentic harness for discovering biosynthetic pathways to target molecules: enzyme mining, pathway stitching, host-fit review, construct hypotheses, and compute-portable work graphs."
+abstract: "Planning toolkit for biosynthetic-pathway campaigns, enzyme-mining plans, pathway stitching, host-fit review, and portable work graphs."

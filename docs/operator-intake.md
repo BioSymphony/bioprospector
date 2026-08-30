@@ -19,7 +19,7 @@ The interview should clarify only decisions that materially change the work:
 target, host, scope, inputs, data policy, provider path, budget, success
 criteria, claim boundary, or unresolved ambiguity.
 
-## Skip And Go
+## Skip and go
 
 `skip and go` is allowed for planning when assumptions are reversible and
 `planning_can_proceed=true`. It does not unlock live execution or final claim

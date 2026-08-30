@@ -1,6 +1,6 @@
-# Vanillin Yeast Starter
+# Vanillin yeast starter
 
-This compact scaffold proves the basic BioProspector dossier shape: route
+This compact scaffold exercises the basic BioProspector review-package shape: route
 ledgers, reaction steps, candidate funnels, draft candidates, claim language,
 provider readiness placeholders, and self-checkable campaign metadata.
 
