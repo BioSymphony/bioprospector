@@ -40,7 +40,9 @@ Primary risks:
 
 - `scripts/public_audit.py` scans working tree content, Git-tracked paths, and
   generated runtime sidecars for private text, forbidden directories, raw/heavy
-  biological file extensions, provider identifiers, and secret-looking values.
+  biological files, archives, model artifacts, provider
+  identifiers, credential-bearing URLs, and secret-looking values. URL
+  diagnostics omit credential values and storage locations.
 - `scripts/check_docs_links.py` catches broken local docs links without network
   access.
 - `bioprospector_doctor.py` checks schema/script/example health, public audit,

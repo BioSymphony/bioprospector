@@ -77,6 +77,28 @@ identifiers, citations, extracted entities, and
 short source-linked findings. Do not copy full-text articles, publisher PDFs,
 or unrestricted literature dumps into the repository.
 
+## Proposed AI adapters
+
+The [dated tool review](opportunity-radar.md) lists annotation, literature,
+and evaluation candidates. These tools have no dedicated parser or execution
+integration in this checkout. Use an operator-owned adapter only after its
+input policy, output columns, license boundary, and failure behavior pass review.
+Each tool retains its own contract and rights review, including tools grouped
+in the same row.
+
+| Candidate group | Proposed compact output | Required review |
+| --- | --- | --- |
+| ProTrek, GOAnnotator, Metagenomic-DeepFRI | Reference IDs, predicted terms, scores, source/model revisions | Compare with a declared baseline; preserve rejected predictions and source citations. |
+| LAFA, CAFA-evaluator-PK, Conformal Protein Retrieval | Metrics, annotation cutoffs, ontology version, calibration assumptions | Check time leakage, dataset shift, and score meaning. |
+| BGC Atlas, SeqForge, DiscERN, BGC-QUAST | Public source/context IDs, caller provenance, comparison summaries | Separate caller agreement from experimental evidence. |
+| Ai2 Scholar QA, OpenScholar, MinerU, SemanticCite | Paper IDs, evidence locators, short findings, support/review status | Verify source rights, outbound data, and citation support. |
+| Flowcept | Reviewed task, artifact, timestamp, and checksum metadata | Exclude prompt/response content, credentials, and exact runtime locations. |
+
+Reuse `tool_registry_ledger`, `adapter_contract_ledger`, and
+`evidence_event_ledger`. Predictions stay at their declared evidence level;
+execution proof records the declared command, versions, and status. Those
+records do not establish scientific validity.
+
 ## Compute and workflow backends
 
 | Provider | Role | Generator |

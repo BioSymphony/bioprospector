@@ -113,13 +113,13 @@ class ElasticBlastProbeHelperTests(unittest.TestCase):
                         "use-preemptible = true",
                         "machine-type = m5.4xlarge",
                         "[blast]",
-                        "results = s3://example-public-elasticblast-bucket/results/test",
+                        "results = s3://example/results/test",
                     ]
                 ),
                 encoding="utf-8",
             )
 
-            check = probe.elasticblast_template_check(path, "us-east-1", "example-public-elasticblast-bucket")
+            check = probe.elasticblast_template_check(path, "us-east-1", "example")
 
         self.assertEqual(check["status"], "pass")
 

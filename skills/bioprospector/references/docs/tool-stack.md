@@ -11,7 +11,7 @@ reviews and integration candidates.
 
 `tool_registry_ledger` and `adapter_contract_ledger` are optional schema
 contracts. A campaign that uses them must add both paths to the manifest's
-`ledgers` object and provide the TSV files before preflight. The campaign then
+`ledgers` object and provide the TSV files before preflight. The adapter
 normalizes compact output into `evidence-event-ledger.tsv`. Tool execution proof belongs in
 `tool-execution-proof-ledger.tsv` and cannot replace execution artifacts or
 claim-audit gates.
@@ -33,6 +33,13 @@ claim-audit gates.
   reviewed cloud-near-data escalation for official NCBI BLAST databases.
 
 ## Function and structure evidence
+
+- ProTrek, GOAnnotator, and Metagenomic-DeepFRI: optional retrieval and
+  annotation candidates. See the [dated review](opportunity-radar.md) for
+  sources, license boundaries, and evaluation requirements.
+- LAFA, CAFA-evaluator-PK, and Conformal Protein Retrieval: evaluation and
+  calibration references. Record time splits, ontology versions, and
+  calibration populations before comparing predictors.
 
 - CLEAN, CLEAN-Contact, ProtDETR, TopEC, and related EC predictors:
   function-evidence votes for enzyme candidates.
@@ -77,6 +84,10 @@ claim-audit gates.
   outputs.
 
 ## Host and provenance
+
+- Ai2 Scholar QA, OpenScholar, MinerU, and SemanticCite: reviewed literature
+  and extraction candidates; Flowcept: metadata-only provenance candidate.
+  Their [review decisions](opportunity-radar.md) do not imply shipped adapters.
 
 - COBRApy, CarveMe, ModelSEEDpy/KBase, cameo, and memote-style QA for host feasibility after route candidates exist.
 - PubTator 3.0, SciSpaCy, GROBID, Semantic Scholar, Europe PMC, and PaperQA2

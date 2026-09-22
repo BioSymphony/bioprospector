@@ -67,3 +67,27 @@ build/
 *.nin
 *.nhr
 *.nsq
+
+# Keep archives and model artifacts outside the repository.
+*.gz
+*.bz2
+*.xz
+*.zst
+*.zip
+*.tar
+*.7z
+*.bgz
+*.lz4
+*.tgz
+*.safetensors
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.gguf
+*.bin
+*.h5
+*.hdf5
+*.msgpack
+*.tflite
+*.index

@@ -24,6 +24,96 @@ def run_audit(root: Path) -> subprocess.CompletedProcess[str]:
 
 
 class PublicAuditTests(unittest.TestCase):
+    def test_double_slash_home_path_is_not_hidden_as_a_url(self) -> None:
+        for directory in ("Users", "home"):
+            with self.subTest(directory=directory), tempfile.TemporaryDirectory() as tmpdir:
+                root = Path(tmpdir)
+                value = "/" * 2 + directory + "/example/workspace"
+                (root / "source.md").write_text(value, encoding="utf-8")
+                result = run_audit(root)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("possible private path", result.stdout)
+
+    def test_compressed_biological_and_model_files_are_rejected(self) -> None:
+        for name in ("reads.fastq.gz", "proteins.faa.zst", "model.safetensors", "model.pt.gz", "model.onnx.zip",
+                     "reads.fastq.tar.gz", "reads.fastq.bgz", "model.pt.lz4", "pytorch_model.bin",
+                     "weights.h5", "weights.hdf5", "model.msgpack", "model.tflite", "model.index"):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as tmpdir:
+                root = Path(tmpdir)
+                (root / name).write_bytes(b"\0synthetic fixture")
+                result = run_audit(root)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("extension", result.stdout)
+
+    def test_authenticated_urls_are_rejected_without_echoing_values(self) -> None:
+        query_keys = ("X-Amz-Signature", "X-Goog-Credential", "sig", "access_token", "%61pi_key")
+        values = ["https://example.org/file?" + key + "=fixture-value" for key in query_keys]
+        values.append("https:" + "/" * 2 + "fixture-user:fixture-value@example.org/file")
+        values += [
+            "/" * 2 + "example.org/file?sig=fixture-value",
+            "https:" + "/" * 2 + "example.org/file#access_token=fixture-value",
+            "https:" + "/" * 2 + "example.org/file?q=example;auth_token=fixture-value",
+            "s3:" + "/" * 2 + "REPLACE_ME_OPERATOR_APPROVED_BUCKET/file?X-Amz-Signature=fixture-value",
+            "https:" + "/" * 2 + "example.org/file?q=example&amp;bearer=fixture-value",
+        ]
+        for value in values:
+            with self.subTest(value=value), tempfile.TemporaryDirectory() as tmpdir:
+                root = Path(tmpdir)
+                (root / "source.md").write_text(value, encoding="utf-8")
+                result = run_audit(root)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("URL contains", result.stdout)
+                self.assertNotIn("fixture-value", result.stdout)
+
+    def test_encoded_private_path_url_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "source.md").write_text("https:" + "/" * 2 + "example.org/%55sers/example/workspace", encoding="utf-8")
+            result = run_audit(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("URL contains a private path", result.stdout)
+
+    def test_public_source_urls_and_compact_data_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "sources.md").write_text("https://example.org/search?q=annotation&version=2\nhttps://example.org/home/docs\n", encoding="utf-8")
+            (root / "summary.tsv").write_text("id\tstatus\nexample\tunknown\n", encoding="utf-8")
+            result = run_audit(root)
+            self.assertEqual(result.returncode, 0, result.stdout)
+
+    def test_storage_uri_diagnostic_omits_location(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "result.txt").write_text("s3" + "://restricted-fixture-location/results", encoding="utf-8")
+            result = run_audit(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertNotIn("restricted-fixture-location", result.stdout)
+
+    def test_opaque_archive_is_rejected_without_unpacking(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            (root / "export.zip").write_bytes(b"\0synthetic fixture")
+            result = run_audit(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("archive requires external storage", result.stdout)
+
+    def test_private_path_in_url_parameter_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            value = "https:" + "/" * 2 + "example.org/redirect?next=%2FUsers%2Fexample%2Fworkspace"
+            (root / "source.md").write_text(value, encoding="utf-8")
+            result = run_audit(root)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("URL contains a private path", result.stdout)
+
+    def test_storage_placeholder_must_match_entire_bucket(self) -> None:
+        for bucket in ("example", "example-private-bucket"):
+            with self.subTest(bucket=bucket), tempfile.TemporaryDirectory() as tmpdir:
+                root = Path(tmpdir)
+                (root / "source.md").write_text("s3:" + "/" * 2 + bucket + "/result", encoding="utf-8")
+                result = run_audit(root)
+                self.assertEqual(result.returncode, 0 if bucket == "example" else 1, result.stdout)
+
     def test_current_repo_passes_public_audit(self) -> None:
         result = run_audit(REPO_ROOT)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

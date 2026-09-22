@@ -7,7 +7,9 @@ import os
 import re
 import subprocess
 import sys
+from html import unescape
 from pathlib import Path
+from urllib.parse import parse_qsl, unquote, urlsplit
 
 
 SKIP_DIRS = {
@@ -98,6 +100,21 @@ HEAVY_SUFFIXES = {
     ".nsq",
 }
 
+MODEL_SUFFIXES = {
+    ".safetensors", ".pt", ".pth", ".ckpt", ".onnx", ".gguf",
+    ".bin", ".h5", ".hdf5", ".msgpack", ".tflite", ".index",
+}
+ARCHIVE_SUFFIXES = {".gz", ".bz2", ".xz", ".zst", ".zip", ".tar", ".7z", ".bgz", ".lz4", ".tgz"}
+URL_PATTERN = re.compile(
+    r"(?:(?:https?|s3|gs|file):)?/" r"/(?!Users/|home/)[^\s<>\"'`]+", re.IGNORECASE
+)
+SENSITIVE_QUERY_KEYS = {
+    "access_token", "api_key", "apikey", "token", "password",
+    "jwt", "auth_token", "credential", "credentials", "bearer",
+    "x-amz-signature", "x-amz-credential", "x-amz-security-token",
+    "x-goog-signature", "x-goog-credential", "signature", "sig",
+}
+
 FORBIDDEN_TEXT = [
     "local" + "-notes",
     "demo" + "-runs",
@@ -143,13 +160,7 @@ SECRET_PATTERNS = [
 
 S3_SCHEME = "s3" + "://"
 S3_URI_PATTERN = re.compile(re.escape(S3_SCHEME) + r"[^ \t\r\n\"'<>),]+")
-ALLOWED_S3_PREFIXES = (
-    S3_SCHEME + "REPLACE_ME_OPERATOR_APPROVED_BUCKET",
-    S3_SCHEME + "TODO-",
-    S3_SCHEME + "example",
-    S3_SCHEME + "bucket-name",
-    S3_SCHEME + "your-bucket",
-)
+ALLOWED_S3_BUCKETS = {"REPLACE_ME_OPERATOR_APPROVED_BUCKET", "TODO-", "example", "bucket-name", "your-bucket"}
 
 PROVIDER_IDENTIFIER_PATTERNS = [
     (
@@ -226,8 +237,13 @@ def scan_path_name(root: Path, path: Path, *, tracked: bool) -> list[str]:
         issues.append(f"symbolic link is not allowed in public artifacts: {rel}")
         return issues
     lower_name = path.name.lower()
-    if any(lower_name.endswith(suffix) for suffix in HEAVY_SUFFIXES):
+    suffixes = set(Path(lower_name).suffixes)
+    if suffixes & ARCHIVE_SUFFIXES:
+        issues.append(f"archive requires external storage: {rel}")
+    if suffixes & HEAVY_SUFFIXES:
         issues.append(f"heavy/raw biological file extension: {rel}")
+    if suffixes & MODEL_SUFFIXES:
+        issues.append(f"model artifact extension: {rel}")
     if tracked:
         parts = set(rel.parts)
         forbidden_parts = sorted(parts & FORBIDDEN_TRACKED_DIR_NAMES)
@@ -262,8 +278,10 @@ def scan_file_content(root: Path, path: Path) -> list[str]:
     for token in FORBIDDEN_TEXT_CASE_INSENSITIVE:
         if token.lower() in lower_text:
             issues.append(f"forbidden text {token!r}: {rel}")
+    url_text = unescape(text.replace(r"\/", "/"))
+    non_url_text = URL_PATTERN.sub(" ", url_text)
     for label, pattern in PRIVATE_PATH_PATTERNS:
-        if pattern.search(text):
+        if pattern.search(non_url_text):
             issues.append(f"possible private path ({label}): {rel}")
     for pattern in SECRET_PATTERNS:
         if pattern.search(text):
@@ -273,8 +291,31 @@ def scan_file_content(root: Path, path: Path) -> list[str]:
             issues.append(f"possible provider identifier ({label}): {rel}")
     for match in S3_URI_PATTERN.finditer(text):
         uri = match.group(0)
-        if not uri.startswith(ALLOWED_S3_PREFIXES):
-            issues.append(f"non-placeholder S3 URI {uri!r}: {rel}")
+        try:
+            allowed = urlsplit(uri).netloc in ALLOWED_S3_BUCKETS
+        except ValueError:
+            allowed = False
+        if not allowed:
+            issues.append(f"non-placeholder S3 URI: {rel}")
+    for match in URL_PATTERN.finditer(url_text):
+        try:
+            parsed = urlsplit(match.group(0))
+            if parsed.username is not None or parsed.password is not None:
+                issues.append(f"URL contains credentials: {rel}")
+            fields = parse_qsl(parsed.query.replace(";", "&"), keep_blank_values=True)
+            fields += parse_qsl(parsed.fragment.replace(";", "&"), keep_blank_values=True)
+            keys = {key.lower() for key, _ in fields}
+            if keys & SENSITIVE_QUERY_KEYS:
+                issues.append(f"URL contains authentication or signature parameters: {rel}")
+            decoded_path = unquote(parsed.path)
+            # /home is also a common public website route, unlike a file URL.
+            locations = [unquote(value) for _, value in fields]
+            if parsed.scheme == "file" or not decoded_path.startswith("/home/"):
+                locations.append(decoded_path)
+            if any(pattern.search(value) for value in locations for _, pattern in PRIVATE_PATH_PATTERNS):
+                issues.append(f"URL contains a private path: {rel}")
+        except ValueError:
+            issues.append(f"malformed URL requires review: {rel}")
     return issues
 
 

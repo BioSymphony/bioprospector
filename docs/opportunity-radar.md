@@ -1,145 +1,100 @@
 # BioProspector opportunity radar
 
-Reviewed: 2026-08-30.
+Reviewed: 2026-09-22. Dates identify the cited publication or release; they
+are separate from this review date.
 
-This page tracks external tools that may strengthen BioProspector campaigns.
-It is a dated discovery index, not a compatibility promise or installation
-list. None of these projects becomes a default dependency until it has a
-ledger contract, a tool or provider preflight, a license and data-policy
-review, and a compact output path.
+Prioritize source-linked tools and references that
+return compact evidence records. These selections are research
+recommendations, not tested integrations. **Evaluate** means prepare a bounded
+comparison; **watch** means resolve the stated gap first. BioProspector adds no
+runtime dependency for a catalog entry.
 
-## Changes verified in this review
+## AI annotation, retrieval, and evaluation
 
-| Project | Verified upstream change | BioProspector treatment |
+| Tool and dated source | Useful output | Decision and limitation |
 | --- | --- | --- |
-| [MMseqs2 18-8cc5c](https://github.com/soedinglab/MMseqs2/releases/tag/18-8cc5c) | July 2025 release with a new aligner, GPU and ARM64 improvements, and a GPU-database ordering change | Keep optional. Record the exact binary and database-build version; do not assume indices from older versions are interchangeable. |
-| [DIAMOND 2.2.4](https://github.com/bbuchfink/diamond/releases/tag/v2.2.4) | July 2026 release with clustering, FASTA-processing, and distributed-workflow improvements | Keep optional. Search and clustering remain separate adapter contracts. |
-| [nf-core/proteinfamilies 2.5.0](https://github.com/nf-core/proteinfamilies/releases/tag/2.5.0) | August 2026 release adds iterative family-generation work | Keep on the family-workflow lane. Normalize only compact family, HMM, and membership summaries. |
-| [runpodctl 2.12.0](https://github.com/runpod/runpodctl/releases/tag/v2.12.0) | August 2026 release removes two automatic stop and terminate flags introduced by earlier versions | Keep provider commands out of tracked examples. Follow the current [runpodctl documentation](https://docs.runpod.io/runpodctl/overview) during an operator-reviewed run. |
-| [cblaster 1.4.2](https://github.com/gamcil/cblaster/releases/tag/v1.4.2) | August 2026 release stores taxonomy information in remote-search results and reduces the search batch size | Record the search mode, database, and tool version before normalizing neighborhood summaries. |
-| [BiG-SLiCE 2.0.2](https://github.com/medema-group/bigslice/releases/tag/v2.0.2) | August 2025 release adds antiSMASH 8 support | Record the caller, input format, database, and tool version before normalizing cluster summaries. |
-| [Folddisco](https://github.com/steineggerlab/folddisco) | Public discontinuous structural-motif search project and 2026 publication | Radar only. Adoption needs a compact motif-hit adapter, control design, and a clear claim ceiling. |
+| [ProTrek](https://github.com/westlake-repl/ProTrek); [paper, 2025-10-02](https://doi.org/10.1038/s41587-025-02836-0) | Sequence/structure/text retrieval scores and public reference IDs | Evaluate for candidate graph and diversity summaries. MIT code; review each model and index license. Similarity scores do not establish function. Keep embeddings and search databases external. |
+| [GOAnnotator](https://github.com/ZhuLab-Fudan/GOAnnotator); [issue, 2025-07-15](https://doi.org/10.1093/bioinformatics/btaf199) | Retrieved PMIDs, proposed GO terms, and scores | Evaluate for literature-linked function votes. Apache-2.0 code; checkpoint terms need separate review. Require the 2026-07-02 code/checkpoint correction, pin the PubMed index, and retain each supporting citation. |
+| [Metagenomic-DeepFRI](https://github.com/Tomasz-Lab/Metagenomic-DeepFRI); [preprint, 2026-04-29](https://doi.org/10.64898/2026.04.27.720983) | GO predictions with structural-template provenance | Evaluate as an additional function-vote source. BSD-3-Clause pipeline; upstream models and databases have separate terms. Annotation coverage does not measure accuracy. Keep template coverage and model scores with each vote. |
+| [Conformal Protein Retrieval](https://github.com/ronboger/conformal-protein-retrieval); [paper, 2025-01-02](https://doi.org/10.1038/s41467-024-55676-y) | Retrieval sets with declared statistical error control | Evaluate the calibration contract before predictor expansion. Apache-2.0 repository; conflicting model-card metadata and undeclared model/data rights require review. Record the calibration population, loss, threshold, and distribution assumptions; guarantees may fail under dataset shift. |
+| [LAFA](https://github.com/anphan0828/CAFA_forever); [preprint, 2026-04-22](https://arxiv.org/abs/2604.20782) | Timestamped comparisons of function-annotation models | Evaluate for repeatable model review. GPL-3.0 code. Pin annotation and ontology snapshots, evidence codes, and the training cutoff. The initial study covers a small method set; it does not establish universal rankings. |
+| [CAFA-evaluator-PK](https://github.com/claradepaolis/CAFA-evaluator-PK); [CAFA5 preprint, 2026](https://doi.org/10.64898/2026.04.27.716980) | Function metrics that account for previously known annotations | Evaluate alongside LAFA for partial-knowledge scoring. GPL-3.0 code; review evaluation-data terms separately. Preserve terms of interest, known annotations, ontology release, and split date. Keep benchmark archives external. |
 
-## Adoption filter
+## Genome context and source metadata
 
-- The item maps to a BioProspector ledger, stage contract, or package index.
-- Tracked outputs can use IDs, checksums, summaries, citations, graph edges,
-  public accessions, or placeholders. Exact runtime locations remain ignored.
-- Raw reads, private sequences, full database mirrors, unrestricted FASTA dumps,
-  model weights, full spectra, and full-text articles stay out of the repository.
-- Claim boundary is explicit: planning, prioritization, reference context,
-  target evidence, control evidence, or execution proof.
-- Live execution has tool-command proof and provider/data-policy approval.
+| Tool and dated source | Useful output | Decision and limitation |
+| --- | --- | --- |
+| [BGC Atlas v2](https://bgc-atlas.cs.uni-tuebingen.de/about); [preprint, 2026-09-18](https://doi.org/10.64898/2026.09.14.751540) | Public cluster IDs, taxonomy, and environmental metadata | Evaluate metadata-only source scouting. Generated annotations are CC BY 4.0; assemblies retain source terms. Caller and assembly errors persist. A cluster marked complete is not proof of biochemical function. |
+| [BGC-QUAST](https://github.com/gurevichlab/bgc-quast); [preprint v2, 2026-09-15](https://doi.org/10.64898/2026.05.04.722653) | Caller comparisons and coordinate-overlap summaries | Evaluate for control and benchmark reports. MIT code. Its reference may be another caller's prediction; report agreement separately from experimentally supported accuracy. Pin caller, coordinate conventions, and overlap settings. |
+| [DiscERN](https://github.com/MaxMeta/DiscERN); [paper, 2026-07-14](https://doi.org/10.1038/s41467-026-75491-x) | Related cluster-family summaries | Watch until a compact adapter and independent comparison exist. AGPL-3.0 code. Family-level similarity and the study's limited family set do not establish product identity; retain caller and model provenance. |
+| [SeqForge](https://github.com/ERBringHorvath/SeqForge); [paper, 2025-11-18](https://doi.org/10.1186/s12859-025-06297-9) | GenBank/JSON source metadata in tables | Evaluate only the metadata extraction component. MIT code. It is a utility, not a BGC caller; missing or inconsistent source records remain missing or uncertain. Keep sequence-bearing inputs external. |
 
-## Contract lanes
+## Literature, citation review, and provenance
 
-- Ledger schema hardening: Frictionless-style schemas and LinkML-ready semantic
-  notes for the TSV contract layer.
-- Supply-chain preflight: SBOM, vulnerability, signature, and provenance proof
-  for provider images.
-- Executable proof: exact commands, versions, database/model versions, and dry
-  invocation evidence before paid compute.
-- Review surface: candidate graph exports plus Quarto, marimo, Evidence.dev, or
-  Streamlit reports driven by ledgers.
+| Tool and dated source | Useful output | Decision and limitation |
+| --- | --- | --- |
+| [Ai2 Scholar QA](https://github.com/allenai/ai2-scholarqa-lib); [preprint, 2025-04-15](https://arxiv.org/abs/2504.10861) | Paper IDs, retrieved passages, and claim-linked citations | Evaluate a literature adapter. Apache-2.0 code; corpus and model-provider terms are separate. Queries and passages can reach external services. Retain source locators, retrieval settings, model revision, and reviewer status. |
+| [OpenScholar](https://github.com/akariasai/OpenScholar); [paper, 2026-02-04](https://www.nature.com/articles/s41586-025-10072-4) | Citation-aware literature synthesis and retrieval evaluation | Watch as an architecture/evaluation reference. Apache-2.0 code; verify model and corpus rights separately. The full index is too large for this kit. Source-linked synthesis still requires claim-by-claim review. |
+| [MinerU 4.0.6](https://github.com/opendatalab/MinerU/releases/tag/mineru-4.0.6-released), 2026-09-22 | Page/block locators and extracted text, table, and formula fields | Evaluate operator-side document extraction. Custom license includes commercial and service-use conditions. Keep public-paper PDFs and raw extraction external; return short findings with parser revision, locator, and checksum. Confirm local versus remote processing. |
+| [SemanticCite](https://github.com/sebhaan/semanticcite); [preprint, 2025-11-20](https://arxiv.org/abs/2511.16198) | Citation-support classes and supporting evidence locators | Watch until packaging and model/data terms are verified. MIT code. A verifier's confidence does not prove support; retain uncertain and unsupported outcomes for a reviewer. |
+| [Flowcept 1.0.3](https://github.com/ORNL/flowcept/releases/tag/v1.0.3), 2026-07-20 | Offline JSONL task and artifact provenance | Evaluate metadata-only event capture. MIT code. The local JSONL mode needs no broker; distributed modes have additional services. Disable prompt/response capture and normalize only reviewed events into execution and package ledgers. |
 
-## Hosted design and tool backends
+[PaperTrail](https://arxiv.org/abs/2602.21045), submitted 2026-02-24 and
+accepted at CHI 2026, is a useful review-interface study. Its 26-participant
+study found that clearer claim/evidence links reduced trust without changing
+reliance on generated edits. Require an explicit review decision; a citation
+interface alone does not establish that review happened.
 
-- Proto / Evo Design: `proto-tools` standardizes input, configuration, and output
-  schemas for structure prediction, inverse folding, PLM scoring, alignment,
-  annotation, retrieval, and sequence scoring. `proto-language` models design
-  work as sequences, segments, constructs, generators, constraints, optimizers,
-  and programs. Proto Bio MCP provides a hosted tool interface.
-- BioProspector fit: map Proto tool schemas, runs, metrics, assets, and exports
-  into `tool-execution-proof-ledger.tsv`,
-  `candidate-intelligence-ledger.tsv`, `structure-risk-ledger.tsv`,
-  `sequence-search-plan-ledger.tsv`, and `run-output-package-ledger.tsv`.
-- Primary sources: [Proto about](https://proto.evodesign.org/about),
-  [proto-tools](https://github.com/evo-design/proto-tools),
-  [proto-language](https://github.com/evo-design/proto-language), and
-  [Proto Bio MCP](https://proto.evodesign.org/docs/mcp/introduction).
+## Retained baselines and deferred tools
 
-## Candidate expansion and compression
+Retain BLAST/DIAMOND/MMseqs2, HMMER, curated reaction sources, and MIBiG as
+comparators. The [tool stack](tool-stack.md) maps these established roles.
+The [integration map](TOOL_INTEGRATIONS.md) distinguishes shipped parsers from
+operator-owned normalization.
 
-- Remote homology and diversity: HH-suite, PLMSearch/PLMAlign,
-  ProteinCartography, EFI tools, MGnify, OrthoFinder, OMA, PROSITE, NCBI CDD,
-  CATH-Gene3D, and M-CSA.
-- Recent sequence and family candidates: MMseqs2-GPU for approved GPU search,
-  nf-core/proteinfamilies for reproducible family/HMM workflows, and
-  PLMSearch/PLMAlign for remote-homology ranking. Keep model caches and raw
-  sequence stores outside the repo.
-- Enzyme-function and kinetics candidates: CatPred, CataPro, ProKcat, ProtDETR,
-  TopEC, EasIFA, CLEAN, and CLEAN-Contact. Treat outputs as votes for ranking
-  and review, not target evidence by themselves.
-- Relevant ledgers: `sequence-search-plan-ledger.tsv`,
-  `candidate-sequence-ledger.tsv`, `domain-annotation-ledger.tsv`,
-  `candidate-diversity-ledger.tsv`, `candidate-graph-ledger.tsv`,
-  `candidate-intelligence-ledger.tsv`, `target-evidence-ledger.tsv`, and
-  `claim-ledger.md`.
-- Boundary: ranking and evidence compression only until target evidence,
-  controls, and self-check gates support stronger language.
+| Release reference | Consequence for an existing contract |
+| --- | --- |
+| [MMseqs2 18-8cc5c, 2025-07-27](https://github.com/soedinglab/MMseqs2/releases/tag/18-8cc5c) | Record binary and database-build revisions; GPU-compatible database ordering can change results. |
+| [DIAMOND 2.2.4](https://github.com/bbuchfink/diamond/releases/tag/v2.2.4) | Keep search and clustering output contracts separate. |
+| [nf-core/proteinfamilies 2.5.0](https://github.com/nf-core/proteinfamilies/releases/tag/2.5.0) | Iterative family generation changes workflow and membership provenance. |
+| [cblaster 1.4.2](https://github.com/gamcil/cblaster/releases/tag/v1.4.2) | Retain remote-search mode, taxonomy fields, and database revision. |
+| [BiG-SLiCE 2.0.2](https://github.com/medema-group/bigslice/releases/tag/v2.0.2) | antiSMASH 8 support does not update every underlying model archive; record both releases. |
+| [runpodctl 2.14.0, 2026-09-10](https://github.com/runpod/runpodctl/releases/tag/v2.14.0) | Release adds serverless environment management and model-reference fixes. Review command compatibility separately from manual-Pod readiness. |
 
-## Route, reaction, and host fit
+Keep [ProtNote](https://github.com/microsoft/protnote) and
+[BGC-Prophet](https://github.com/HUST-NingKang-Lab/BGC-Prophet) as alternate
+predictors pending model/data review and comparisons with the selected
+baselines. [VenusX](https://github.com/ai4protein/VenusX), an ICLR 2026
+benchmark, has CC BY-NC-ND 4.0 repository terms; resolve intended-use rights
+before adapting its assets. [PlantBGC](https://arxiv.org/abs/2607.27258) is a
+July 2026 preprint; code and model availability remain unverified. Existing
+CatPred-style kinetics, Folddisco motif search, and hosted design backends
+remain separate, campaign-specific review options.
 
-- Route expansion and enzyme ranking: RetroRules, RetroBioCat, SelenzymeRF,
-  Pickaxe, novoStoic, ChemEnzyRetroPlanner, BioNavi, EnzRetro, and
-  ECREACT-style comparators.
-- Reference-only route history: [RP2Paths 1.5.1](https://pypi.org/project/rp2paths/)
-  was released on October 7, 2020. Use it to interpret older RetroPath2 outputs,
-  not as a default. Do not conflate it with the separate
-  [TraceLD RetroPath](https://github.com/TraceLD/retropath) project.
-- Feasibility and host context: eQuilibrator, component-contribution, gapseq,
-  COBRApy, StrainDesign, ModelSEEDpy, and KBase-style hosted summaries.
-- Fallback review: ASKCOS or manual chemoenzymatic rescue ideas for blocked
-  steps, recorded as degraded or alternate-route context.
-- Relevant ledgers: `route-rule-ledger.tsv`, `thermodynamics-ledger.tsv`,
-  `metabolic-model-ledger.tsv`, `strain-design-ledger.tsv`, and
-  `chemoenzymatic-fallback-ledger.tsv`.
+## Admission contract
 
-## Structure and active site
+Record a selected tool in `tool_registry_ledger` and its adapter in
+`adapter_contract_ledger`. Existing schema fields hold the input policy,
+license boundary, supported event types, required columns, failure mode, and
+compact output policy. Add both ledger paths to the campaign manifest before
+preflight.
 
-- Candidate-stage references after candidate compression: M-CSA,
-  PROSITE/ProRule, P2Rank, EnzyMM, PyJess, BioLiP2, PLINDER, and PoseBusters.
-- Keep Folddisco on the radar until it has a compact hit adapter and control
-  contract.
-- Defer to explicit design lanes: docking, free-energy, mutation design, and
-  AF3-class consensus checks.
-- Relevant ledgers: `structure-risk-ledger.tsv`,
-  `candidate-intelligence-ledger.tsv`, `decoy-control-ledger.tsv`,
-  `tool-execution-proof-ledger.tsv`, and `run-output-package-ledger.tsv`.
-- Boundary: pocket, motif, pose, and design scores are prioritization
-  intelligence, not biological validation.
+Each evaluation needs public or synthetic inputs, a declared baseline,
+held-out examples, acceptance criteria, and an abstention or rejection case.
+For AI outputs, retain the exact model revision, training or reference-data
+cutoff when available, score meaning, and applicable calibration population.
+Review code, weights, datasets, and hosted-service terms separately.
 
-## Genome, BGC, metagenome, and metabolomics context
+Map results to existing contracts:
 
-- BGC and genome context: antiSMASH 8, antiSMASH DB, plantiSMASH 2, GECCO,
-  BiG-SCAPE/BiG-SLiCE/BiG-FAM, MIBiG 4, GATOR-GC, BGCFlow, lsaBGC, FunBGCeX,
-  cblaster, clinker, and related cluster/neighborhood summaries.
-- Metagenome context: MAG quality, contig pointers, taxonomy summaries, and
-  decoy-control joins without raw reads or MAG archives.
-- Metabolomics handoff: MZmine, GNPS2, matchms, and MS2Query contracts with
-  explicit upload policy before any hosted/private spectra work.
-- Source priors: LOTUS and Natural Products Atlas as reference context with
-  license boundaries.
-- Relevant ledgers: `bgc-context-ledger.tsv`,
-  `metagenome-context-ledger.tsv`, `mag-quality-ledger.tsv`,
-  `metabolomics-evidence-ledger.tsv`, `compound-source-ledger.tsv`, and
-  `eukaryotic-annotation-ledger.tsv`.
+| Evidence role | Compact record |
+| --- | --- |
+| Retrieval and annotation | `candidate-graph-ledger.tsv`, `candidate-intelligence-ledger.tsv`, `protein_function_votes.tsv` |
+| Genome context | `cluster_calls.tsv`, `bgc_consensus.tsv`, `bgc-context-ledger.tsv` |
+| Literature | `literature-search-ledger.tsv`, `literature-ledger.tsv`, `evidence-event-ledger.tsv` |
+| Evaluation and provenance | `decoy-control-ledger.tsv`, `tool-execution-proof-ledger.tsv`, `run-output-package-ledger.tsv` |
 
-## Literature and evidence extraction
-
-- Candidate tools: PubTator 3.0 for biomedical entity and relation extraction;
-  SciSpaCy and GROBID for local extraction; and Semantic Scholar, Europe PMC,
-  and Crossref for citation metadata. Use PaperQA2-style citation-grounded
-  summarization only after an operator approves source access.
-- Relevant ledgers: `literature-search-ledger.tsv`,
-  `literature-ledger.tsv`, `candidate-intelligence-ledger.tsv`,
-  `evidence-event-ledger.tsv`, and `claim-ledger.md`.
-- Boundary: store public source identifiers, citations, extracted entities,
-  and short findings only. Do not store publisher PDFs, full-text dumps, or
-  uncited summaries.
-
-## Promotion rule
-
-Move an item from this radar into a campaign only when the issue generator can
-draft a bounded lane and preflight can validate the declared ledgers. If a tool
-is useful but cannot yet return compact, joinable artifacts, keep it here.
+Execution requires the campaign's tool, provider, budget, and data-policy
+checks. Keep weights, databases, full-text articles, raw sequences, and exact
+runtime locations outside tracked artifacts. A citation supports only the
+claim a reviewer verifies in that source; an AI score remains a prediction.
