@@ -2,21 +2,23 @@
 
 # BioSymphony BioProspector
 
-Give your agent this repository and a target molecule. Ask which
-biosynthetic routes are worth investigating. Your agent can find enzyme
-candidates for each step and design computational experiments to compare them.
+Point your agent at this repository to find enzyme candidates, compare
+biosynthetic pathways, or design and run computational experiments.
 
-The [tool catalog](docs/tool-stack.md) lists what tools need and what they
-return. The [agent skill](../SKILL.md) shows how to set up
-computational experiments and pass results between tools. Your agent makes
-the calls through its shell, APIs, or MCP connections.
+The [agent skill](../SKILL.md) covers tool selection,
+setup, controls, and analysis. Your agent runs tools through its shell,
+APIs, or MCP connections and passes identifiers and files between calls.
+The [tool catalog](docs/tool-stack.md) describes inputs, outputs, and use
+cases. BioProspector links the results to candidates and reaction steps
+for ranking and reporting.
 
 ## Find Enzymes for a Vanillin Pathway
 
 Which enzymes could convert ferulate to vanillin? Start with
 [RHEA:76491](https://www.rhea-db.org/rhea/76491) and its linked UniProt
-records. Use sequence and domain searches to find related proteins, then
-check the literature for activity measurements on ferulate.
+records. Search a chosen proteome with those reference sequences using
+DIAMOND. Retrieve the hit sequences for HMMER/Pfam domain searches, then
+look up activity measurements on ferulate in Europe PMC.
 
 ```mermaid
 %%{init: {"theme":"base","htmlLabels":false,"themeCSS":".edgeLabel rect { opacity: 1 !important; }","themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"16px","lineColor":"#7C827F","edgeLabelBackground":"#F6EEE0","textColor":"#203840"},"flowchart":{"htmlLabels":false,"curve":"linear","rankSpacing":24,"padding":10,"wrappingWidth":244}}}%%
@@ -41,16 +43,18 @@ did not reproduce the conversion with that enzyme alone. Keep both results
 with the candidate. [Gallage et al.](https://pubmed.ncbi.nlm.nih.gov/24941968/)
 · [Yang et al.](https://pubmed.ncbi.nlm.nih.gov/28411481/)
 
-## Do Domain Matches Improve the Shortlist?
+## Compare Enzyme Rankings
 
-Rank the same proteins twice, once by sequence similarity and once with
-domain matches added. Hold out enzymes with measured activity from the
-reference set. Use close relatives with measured inactivity on ferulate as
-negative controls. Count the known active enzymes in each ranking’s top ten.
-Keep disputed activity out of the benchmark labels.
+Test whether domain evidence improves sequence-based rankings. Define activity
+labels from published measurements, keeping disputed assignments separate.
+Hold out characterized proteins for testing and keep close homologs together
+when separating the reference and test sets.
 
-Return both rankings and cite the activity measurements. Record the tool
-versions, database releases, and test accessions so the analysis can be rerun.
+Rank the same test proteins by sequence similarity, then add domain evidence.
+Count proteins with measured activity or inactivity in each ranking’s top
+ten. Use Nextflow or Snakemake to repeat the comparison with the same inputs
+and database releases. Return both rankings, activity
+citations, and the commands and versions needed to reproduce the analysis.
 
 ## Tools by Research Question
 
@@ -63,24 +67,31 @@ versions, database releases, and test accessions so the analysis can be rerun.
 | Which domains are present? | HMMER and Pfam | Profile matches and domain boundaries |
 | Where do function predictions disagree? | CLEAN, TopEC, ProtDETR | Predicted enzyme classes to compare with curated annotations |
 | Which structures are similar? | Foldseek | Structural matches and alignment coverage |
-| What is near the candidate gene? | NCBI Datasets, cblaster, antiSMASH, MIBiG | Assembly accessions, neighboring genes, and reference cluster records |
+| Does the gene neighborhood support an enzyme assignment? | NCBI Datasets, cblaster, antiSMASH, MIBiG | Candidate and reference neighborhoods, with supporting and conflicting evidence |
 | Which reactions could connect two intermediates? | Rhea, ChEBI | Curated reaction IDs and chemical records |
-| What assumptions affect a metabolic model? | COBRApy, memote | Model constraints and quality checks |
+| What could explain an unresolved pathway step? | Rhea, UniProt, HMMER, Europe PMC | Candidate enzyme families and evidence for single-enzyme or multi-step explanations |
+| Which proposed route has stronger enzyme evidence? | Rhea, UniProt, Europe PMC | Stepwise comparison of measured activities, candidate enzymes, and missing assignments |
+| Which assumptions change predicted product flux? | COBRApy, memote | Predicted flux under stated constraints and model quality checks |
 | Can I reproduce a computational comparison? | Nextflow, Snakemake, RO-Crate | Workflow steps, tool versions, and links between inputs and outputs |
 
-## More Questions to Give Your Agent
+## Compare Routes and Host Models
 
-- Which steps in two proposed routes have measured enzyme activity, and
-  which still lack a candidate with direct evidence?
-- Does the gene neighborhood support an enzyme assignment? Compare candidate
-  neighborhoods against reference clusters and report disagreements.
-- Does a strain's metabolic model support a proposed route? Compare flux
-  predictions under two sets of constraints and report which assumptions
-  change the result.
+Compare proposed vanillin routes by mapping intermediates to ChEBI and
+reactions to Rhea. Link each step to UniProt candidates and published activity
+in Europe PMC. Return a route comparison covering enzyme evidence, missing
+steps, cofactor requirements, and cellular compartments.
+
+To investigate a route in a published yeast model, add its reactions and
+check the model with memote. Pass the model to
+[COBRApy](https://cobrapy.readthedocs.io/en/latest/simulating.html) and compare
+maximum predicted product flux with and without precursor uptake. Hold the
+growth requirement and other exchange bounds fixed. Report the predictions
+and the constraints that account for the difference.
 
 ## References
 
 - [Campaign setup](docs/FIRST_CAMPAIGN.md)
+- [Unresolved reactions and missing genes](docs/ambiguity-workflows.md)
 - [Supported result formats](docs/TOOL_INTEGRATIONS.md)
 - [Tool releases and evaluations](docs/opportunity-radar.md)
 - [CLI commands](docs/CLI_REFERENCE.md)
