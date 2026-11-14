@@ -1,43 +1,23 @@
-# BioProspector documentation index
+# BioProspector Documentation
 
-Start with [`QUICKSTART.md`](QUICKSTART.md) for the local first-hour path, then
-use [`WORKFLOWS.md`](WORKFLOWS.md) to choose between local, agent, tracker, cloud
-readiness, and live-closeout workflows. [`FAQ.md`](FAQ.md) and
-[`GLOSSARY.md`](GLOSSARY.md) provide newcomer context.
-[`PUBLIC_LAUNCH_PAD.md`](PUBLIC_LAUNCH_PAD.md) is the full capability map.
+## Get Started
 
-## Start here
+- [Quickstart](QUICKSTART.md) · Run the local demo and inspect its outputs.
+- [Agent installation](AGENT_INSTALL.md) · Link the skill and install the CLI.
+- [Agent playbook](AGENT_PLAYBOOK.md) · Prompts for review and planning.
+- [First campaign](FIRST_CAMPAIGN.md) · Create a manifest and validate its inputs.
+- [FAQ](FAQ.md) and [glossary](GLOSSARY.md) · Terms and common questions.
 
-- [`CLI_REFERENCE.md`](CLI_REFERENCE.md): public helper command map.
-- [`MODES.md`](MODES.md): local planning, skill, provider-readiness, and release-review modes.
-- [`AGENT_INSTALL.md`](AGENT_INSTALL.md): install the skill into local agent environments.
-- [`AGENT_PLAYBOOK.md`](AGENT_PLAYBOOK.md): copy-paste prompts and expected agent closeouts.
-- [`USE_CASES.md`](USE_CASES.md): task-shaped use cases with commands, outputs, and claim ceilings.
-- [`WORKFLOWS.md`](WORKFLOWS.md): local-to-cloud workflow chooser.
-- [`FAQ.md`](FAQ.md): common newcomer questions and local-only boundaries.
-- [`GLOSSARY.md`](GLOSSARY.md): core campaign, ledger, candidate, provider, and claim terms.
+## Tools and Workflows
 
-## Visual maps
-
-- [`../README.md`](../README.md): control-plane visual and first-hour workflow.
-- [`architecture.md`](architecture.md): local campaign DAG and provider boundary.
-- [`QUICKSTART.md`](QUICKSTART.md): first-hour command flow.
-- [`../demos/public-nootkatone-demo.md`](../demos/public-nootkatone-demo.md): route/enzyme frontier demo map.
-- [`../demos/public-huperzine-frontier-demo.md`](../demos/public-huperzine-frontier-demo.md): dark-step frontier demo map.
-
-## Product and architecture
-
-- [`product-foundation.md`](product-foundation.md): product contract and repository role.
-- [`architecture.md`](architecture.md): control-plane architecture.
-- [`GLOSSARY.md`](GLOSSARY.md): terms used across campaign docs and ledgers.
-- [`CLI_REFERENCE.md`](CLI_REFERENCE.md): local command map and common recipes.
-- [`WORKFLOWS.md`](WORKFLOWS.md): workflow recipes for local planning, trackers, providers, and closeout.
-- [`capability-map.md`](capability-map.md): capability map from scaffold to review package.
-- [`tool-stack.md`](tool-stack.md): supported local and provider-adjacent tools.
-- [`OPTIONAL_TOOLS.md`](OPTIONAL_TOOLS.md): optional bio and cloud tools the doctor checks for, with install hints per platform.
-- [`TOOL_INTEGRATIONS.md`](TOOL_INTEGRATIONS.md): consolidated map of sequence search, domain, structure, BGC, cloud, tracker, and orchestrator integrations.
-- [`opportunity-radar.md`](opportunity-radar.md): public expansion backlog and promotion rules.
-- [`USE_CASES.md`](USE_CASES.md): example workflows from a first campaign to release review.
+- [CLI reference](CLI_REFERENCE.md) · Commands and outputs.
+- [Tool guide](tool-stack.md) · Tool roles, inputs, and outputs.
+- [Integration guide](TOOL_INTEGRATIONS.md) · Supported result formats.
+- [Optional tools](OPTIONAL_TOOLS.md) · Commands the doctor checks.
+- [Tool review](opportunity-radar.md) · Releases and evaluation questions.
+- [Workflows](WORKFLOWS.md), [modes](MODES.md), and [use cases](USE_CASES.md) · Campaign workflows and examples.
+- [Capability overview](PUBLIC_LAUNCH_PAD.md) and [command and artifact map](capability-map.md) · Available toolkit components.
+- [Architecture](architecture.md) and [product foundation](product-foundation.md) · Campaign and execution model.
 
 ## Campaign contracts
 
@@ -47,7 +27,6 @@ readiness, and live-closeout workflows. [`FAQ.md`](FAQ.md) and
 - [`monitoring-provenance.md`](monitoring-provenance.md): provenance, heartbeat, and artifact proof.
 - [`stage-progress-and-provider-preflight.md`](stage-progress-and-provider-preflight.md): long-run stage contracts.
 - [`target-modularity.md`](target-modularity.md): target-swappable manifest conventions.
-- [`FIRST_CAMPAIGN.md`](FIRST_CAMPAIGN.md): create and validate a first target campaign.
 - [`self-learning-skill-runbook.md`](self-learning-skill-runbook.md): turn workflow hiccups into durable improvements.
 
 ## Search and evidence lanes

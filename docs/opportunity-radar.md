@@ -1,13 +1,8 @@
-# BioProspector opportunity radar
+# BioProspector Tool Review
 
-Reviewed: 2026-09-22. Dates identify the cited publication or release; they
-are separate from this review date.
-
-Prioritize source-linked tools and references that
-return compact evidence records. These selections are research
-recommendations, not tested integrations. **Evaluate** means prepare a bounded
-comparison; **watch** means resolve the stated gap first. BioProspector adds no
-runtime dependency for a catalog entry.
+Reviewed November 13, 2026. Use these external tools and studies to plan
+evaluations. See the [integration guide](TOOL_INTEGRATIONS.md) for supported
+formats.
 
 ## AI annotation, retrieval, and evaluation
 
@@ -29,23 +24,36 @@ runtime dependency for a catalog entry.
 | [DiscERN](https://github.com/MaxMeta/DiscERN); [paper, 2026-07-14](https://doi.org/10.1038/s41467-026-75491-x) | Related cluster-family summaries | Watch until a compact adapter and independent comparison exist. AGPL-3.0 code. Family-level similarity and the study's limited family set do not establish product identity; retain caller and model provenance. |
 | [SeqForge](https://github.com/ERBringHorvath/SeqForge); [paper, 2025-11-18](https://doi.org/10.1186/s12859-025-06297-9) | GenBank/JSON source metadata in tables | Evaluate only the metadata extraction component. MIT code. It is a utility, not a BGC caller; missing or inconsistent source records remain missing or uncertain. Keep sequence-bearing inputs external. |
 
-## Literature, citation review, and provenance
+## Literature and Citations
 
-| Tool and dated source | Useful output | Decision and limitation |
-| --- | --- | --- |
-| [Ai2 Scholar QA](https://github.com/allenai/ai2-scholarqa-lib); [preprint, 2025-04-15](https://arxiv.org/abs/2504.10861) | Paper IDs, retrieved passages, and claim-linked citations | Evaluate a literature adapter. Apache-2.0 code; corpus and model-provider terms are separate. Queries and passages can reach external services. Retain source locators, retrieval settings, model revision, and reviewer status. |
-| [OpenScholar](https://github.com/akariasai/OpenScholar); [paper, 2026-02-04](https://www.nature.com/articles/s41586-025-10072-4) | Citation-aware literature synthesis and retrieval evaluation | Watch as an architecture/evaluation reference. Apache-2.0 code; verify model and corpus rights separately. The full index is too large for this kit. Source-linked synthesis still requires claim-by-claim review. |
-| [MinerU 4.0.6](https://github.com/opendatalab/MinerU/releases/tag/mineru-4.0.6-released), 2026-09-22 | Page/block locators and extracted text, table, and formula fields | Evaluate operator-side document extraction. Custom license includes commercial and service-use conditions. Keep public-paper PDFs and raw extraction external; return short findings with parser revision, locator, and checksum. Confirm local versus remote processing. |
-| [SemanticCite](https://github.com/sebhaan/semanticcite); [preprint, 2025-11-20](https://arxiv.org/abs/2511.16198) | Citation-support classes and supporting evidence locators | Watch until packaging and model/data terms are verified. MIT code. A verifier's confidence does not prove support; retain uncertain and unsupported outcomes for a reviewer. |
-| [Flowcept 1.0.3](https://github.com/ORNL/flowcept/releases/tag/v1.0.3), 2026-07-20 | Offline JSONL task and artifact provenance | Evaluate metadata-only event capture. MIT code. The local JSONL mode needs no broker; distributed modes have additional services. Disable prompt/response capture and normalize only reviewed events into execution and package ledgers. |
+| Tool | Evaluation |
+| --- | --- |
+| [OpenAlex MCP](https://github.com/ourresearch/openalex-mcp-server) | Compare discovery results with Europe PMC. Retain the exact query and work IDs. |
+| [Crossref and Retraction Watch](https://www.crossref.org/documentation/retrieve-metadata/retraction-watch/) | Track corrections and retractions by notice DOI, relationship, and access date. |
+| [Literature Evidence MCP 0.5.1](https://github.com/Furox-Art/literature-evidence-mcp/blob/v0.5.1/README.md) | Compare JATS paragraph locators and text hashes with direct Europe PMC retrieval. Record quote matching and claim support separately. |
+| [MinerU 4.2.2](https://github.com/opendatalab/MinerU/releases/tag/mineru-4.2.2-released), [Docling 2.150.0](https://github.com/docling-project/docling/releases/tag/v2.150.0), and [GROBID 0.9.1](https://github.com/grobidOrg/grobid/releases/tag/0.9.1) | Compare source locators, table extraction, and references on the same papers. Record parser versions and per-file status. |
+| [Ai2 Scholar QA](https://github.com/allenai/ai2-scholarqa-lib), [OpenScholar](https://www.nature.com/articles/s41586-025-10072-4), and [SemanticCite](https://arxiv.org/abs/2511.16198) | Compare retrieved passages and proposed support judgments with reviewer labels. |
 
-[PaperTrail](https://arxiv.org/abs/2602.21045), submitted 2026-02-24 and
-accepted at CHI 2026, is a useful review-interface study. Its 26-participant
-study found that clearer claim/evidence links reduced trust without changing
-reliance on generated edits. Require an explicit review decision; a citation
-interface alone does not establish that review happened.
+| Preprint | How it informs evaluation |
+| --- | --- |
+| [Hybrid scientific claim verification, v2, November 12](https://arxiv.org/abs/2611.03093v2) | An agreement rule reduced macro-F1 for all three models tested. Score support, contradiction, and insufficient evidence separately. |
+| [PreprintPaperTracker, v3, October 21](https://www.biorxiv.org/content/10.64898/2026.06.30.735556v3) | The authors classified 10.2% of primary abstract claims in 72,644 matched pairs as substantially revised. Recheck the cited claim when the source changes. |
+| [TableParseMap, v1, August 10](https://arxiv.org/abs/2608.09842v1) | Include large tables and ambiguous row or column boundaries in parser comparisons. Verify values, units, and headers against the source. |
 
-## Retained baselines and deferred tools
+## Workflow Provenance
+
+| Tool | Evaluation |
+| --- | --- |
+| [Nextflow 26.10.6](https://github.com/nextflow-io/nextflow/releases/tag/v26.10.6) and [nf-prov 1.8.0](https://github.com/nextflow-io/nf-prov/releases/tag/1.8.0) | Compare run and task records. Check the export profile and trace cached tasks to the producing run. |
+| [Snakemake RO-Crate plugin 0.1.0](https://github.com/snakemake/snakemake-report-plugin-rocrate/blob/v0.1.0/README.md) | Evaluate Provenance Run Crate 0.5 metadata on completed, reused, and failed tasks. Check run status and artifact presence alongside profile conformance. |
+| [nf-core/provenancereport 1.0.1](https://nf-co.re/provenancereport/1.0.1/docs/output/) | Review report indexes, checksums, and workflow metadata as reference formats. |
+| [Flowcept 1.0.3](https://github.com/ORNL/flowcept/releases/tag/v1.0.3) | Evaluate local JSONL task events and artifact metadata. |
+
+Record the exporter and profile versions with validation results. The
+[Workflow Run RO-Crate 0.6 release](https://github.com/ResearchObject/workflow-run-crate/releases/tag/0.6.0)
+uses RO-Crate 1.3.
+
+## Release Notes for Existing Tools
 
 Retain BLAST/DIAMOND/MMseqs2, HMMER, curated reaction sources, and MIBiG as
 comparators. The [tool stack](tool-stack.md) maps these established roles.
@@ -55,11 +63,11 @@ operator-owned normalization.
 | Release reference | Consequence for an existing contract |
 | --- | --- |
 | [MMseqs2 18-8cc5c, 2025-07-27](https://github.com/soedinglab/MMseqs2/releases/tag/18-8cc5c) | Record binary and database-build revisions; GPU-compatible database ordering can change results. |
-| [DIAMOND 2.2.4](https://github.com/bbuchfink/diamond/releases/tag/v2.2.4) | Keep search and clustering output contracts separate. |
-| [nf-core/proteinfamilies 2.5.0](https://github.com/nf-core/proteinfamilies/releases/tag/2.5.0) | Iterative family generation changes workflow and membership provenance. |
+| [DIAMOND 2.2.8](https://github.com/bbuchfink/diamond/releases/tag/v2.2.8) | Changes clustering performance and temporary-file use. Check search and cluster outputs separately. |
+| [nf-core/proteinfamilies 2.6.0](https://github.com/nf-core/proteinfamilies/releases/tag/2.6.0) | Changes metadata CSV names and ordering. Check parsers against the new files. |
 | [cblaster 1.4.2](https://github.com/gamcil/cblaster/releases/tag/v1.4.2) | Retain remote-search mode, taxonomy fields, and database revision. |
 | [BiG-SLiCE 2.0.2](https://github.com/medema-group/bigslice/releases/tag/v2.0.2) | antiSMASH 8 support does not update every underlying model archive; record both releases. |
-| [runpodctl 2.14.0, 2026-09-10](https://github.com/runpod/runpodctl/releases/tag/v2.14.0) | Release adds serverless environment management and model-reference fixes. Review command compatibility separately from manual-Pod readiness. |
+| [runpodctl 3.1.1](https://github.com/runpod/runpodctl/releases/tag/v3.1.1) | REST commands use API v2. Check command compatibility before updating scripts. |
 
 Keep [ProtNote](https://github.com/microsoft/protnote) and
 [BGC-Prophet](https://github.com/HUST-NingKang-Lab/BGC-Prophet) as alternate
@@ -71,7 +79,7 @@ July 2026 preprint; code and model availability remain unverified. Existing
 CatPred-style kinetics, Folddisco motif search, and hosted design backends
 remain separate, campaign-specific review options.
 
-## Admission contract
+## Record an Evaluation
 
 Record a selected tool in `tool_registry_ledger` and its adapter in
 `adapter_contract_ledger`. Existing schema fields hold the input policy,
@@ -93,8 +101,3 @@ Map results to existing contracts:
 | Genome context | `cluster_calls.tsv`, `bgc_consensus.tsv`, `bgc-context-ledger.tsv` |
 | Literature | `literature-search-ledger.tsv`, `literature-ledger.tsv`, `evidence-event-ledger.tsv` |
 | Evaluation and provenance | `decoy-control-ledger.tsv`, `tool-execution-proof-ledger.tsv`, `run-output-package-ledger.tsv` |
-
-Execution requires the campaign's tool, provider, budget, and data-policy
-checks. Keep weights, databases, full-text articles, raw sequences, and exact
-runtime locations outside tracked artifacts. A citation supports only the
-claim a reviewer verifies in that source; an AI score remains a prediction.

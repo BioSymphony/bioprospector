@@ -158,6 +158,10 @@ control_id	control_type	control_name	required_status	verification_mode	verificat
 citation_id	source_type	identifier_or_url	claim_supported	evidence_class	license_boundary	used_in_claim_ids	notes
 ```
 
+Use a version-specific preprint URL in `identifier_or_url` when the DOI
+resolves to multiple revisions. Record the evidence locator and any linked
+journal article or update notice in `notes`.
+
 `literature_search_ledger` must use:
 
 ```text

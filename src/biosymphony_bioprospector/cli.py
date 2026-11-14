@@ -167,19 +167,12 @@ def _print_commands(*, json_output: bool = False) -> None:
 def _print_quickstart() -> None:
     print(
         "BioProspector quickstart\n\n"
-        "1. python3 skills/bioprospector/scripts/bioprospector_doctor.py --include-runtime\n"
-        "2. make local-demo\n"
-        "3. python3 scripts/public_audit.py .\n"
-        "4. make release-check\n\n"
-        "Editable CLI smoke:\n"
-        "  PYTHONPATH=src python3 -m biosymphony_bioprospector.cli commands\n\n"
-        "Packaged entry points are checkout launchers. Install editable from this "
-        "repo or set BIOPROSPECTOR_REPO_ROOT when running from another directory.\n\n"
-        "The public lane stays local and review-only: no pods, cloud jobs, database "
-        "downloads, Linear writes, or raw/private data writes into repo, tracker, "
-        "chat, or publishable artifacts."
+        "From the source checkout, run make first-look and open the report path it prints.\n"
+        "Run make local-demo to regenerate the demo outputs.\n\n"
+        "For installed campaign commands, set BIOPROSPECTOR_REPO_ROOT to the checkout "
+        "if you installed from a wheel.\n"
+        "See docs/QUICKSTART.md for an example search-result import."
     )
-
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)

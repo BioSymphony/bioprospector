@@ -5,14 +5,14 @@
   },
   "metadata": {
     "version": "0.1.0",
-    "description": "Public-safe BioProspector skills for biosynthetic pathway discovery."
+    "description": "Plan biosynthetic pathway research and compare enzyme evidence."
   },
   "plugins": [
     {
       "name": "bioprospector",
       "displayName": "BioSymphony BioProspector",
       "source": "./",
-      "description": "Plan public-safe biosynthetic pathway discovery campaigns.",
+      "description": "Plan biosynthetic pathway research and compare enzyme evidence.",
       "category": "life-sciences",
       "tags": ["biosynthesis", "bioprospecting", "agents"],
       "strict": false,

@@ -1,20 +1,29 @@
-# Tool stack reference
+# Tool knowledge base
 
-This planning index maps external tools to BioProspector evidence roles. The
-repository does not install or execute them.
+Use this reference to select tools for a research question and identify useful
+follow-up calls. The [integration guide](TOOL_INTEGRATIONS.md) lists supported
+result formats; the [dated tool review](opportunity-radar.md) covers proposed
+additions and evaluation questions.
 
-This is a discovery index, not a supported-version matrix. Before operator-run
-use, verify the primary source and record the tool version, database, model, or
-rule-set release, access date, operating mode, and output schema in the campaign
-ledgers. See the [`opportunity radar`](opportunity-radar.md) for dated upstream
-reviews and integration candidates.
+## Choose the next tool
 
-`tool_registry_ledger` and `adapter_contract_ledger` are optional schema
-contracts. A campaign that uses them must add both paths to the manifest's
-`ledgers` object and provide the TSV files before preflight. The adapter
-normalizes compact output into `evidence-event-ledger.tsv`. Tool execution proof belongs in
-`tool-execution-proof-ledger.tsv` and cannot replace execution artifacts or
-claim-audit gates.
+| You have | You need | Tools to consider |
+| --- | --- | --- |
+| A reference protein | Related sequences | DIAMOND, MMseqs2, BLAST+ |
+| Sequence hits | Family and domain evidence | HMMER with Pfam or another suitable profile database |
+| An available structure | Structural neighbors | Foldseek |
+| Candidate genome locations | Neighboring-gene context | cblaster, antiSMASH, MIBiG |
+| Conflicting annotations | Source records and published evidence | UniProt, Europe PMC, literature search |
+| A reaction question | Curated reaction references | Rhea; route-planning references listed in this guide |
+
+Your agent runs tools through its own shell, API, or MCP access. Before a call,
+check the installed version, required inputs, database or model, and expected
+output. Pass identifiers and source references between calls; retrieve sequences,
+structures, or coordinates in the permitted environment when the next tool
+requires them. Use the returned evidence to revise the search or compare candidates.
+
+Catalog entries describe research options. Dedicated import support is listed
+in the integration guide; other outputs need mapping before local processing.
 
 ## Search and clustering
 
@@ -23,7 +32,7 @@ claim-audit gates.
 - [DIAMOND](https://github.com/bbuchfink/diamond): fast protein and translated
   sequence search, plus clustering workflows that need a separate output
   contract.
-- [HMMER](http://hmmer.org/): profile HMM and domain-family searches.
+- [HMMER](https://www.hmmer.org/): profile HMM and domain-family searches.
 - [NCBI BLAST+ documentation](https://blast.ncbi.nlm.nih.gov/doc/blast-help/):
   compatibility and local exact BLAST workflows.
 - [nf-core/proteinfamilies](https://github.com/nf-core/proteinfamilies),
@@ -83,18 +92,32 @@ claim-audit gates.
   input caller and version, and reference release before normalizing compact
   outputs.
 
-## Host and provenance
+## Literature and Source Records
 
-- Ai2 Scholar QA, OpenScholar, MinerU, and SemanticCite: reviewed literature
-  and extraction candidates; Flowcept: metadata-only provenance candidate.
-  Their [review decisions](opportunity-radar.md) do not imply shipped adapters.
+| Need | Tools | Record |
+| --- | --- | --- |
+| Paper metadata, versions, and corrections | [Europe PMC](https://europepmc.org/RestfulWebService), [bioRxiv API](https://api.biorxiv.org/), and [Crossref](https://www.crossref.org/documentation/retrieve-metadata/rest-api) | Source ID, version, access date, and any update notice |
+| Text, tables, or bibliographies | Docling, MinerU, and GROBID | Parser version, source locator, and extraction status |
+| Entities mentioned in text | PubTator 3.0, Europe PMC Annotations, and SciSpaCy | Entity ID and source locator |
+| Public assembly and taxonomy records | [NCBI Datasets](https://github.com/ncbi/datasets/releases/tag/v18.41.1) | Versioned accession and retrieval date |
 
-- COBRApy, CarveMe, ModelSEEDpy/KBase, cameo, and memote-style QA for host feasibility after route candidates exist.
-- PubTator 3.0, SciSpaCy, GROBID, Semantic Scholar, Europe PMC, and PaperQA2
-  for citation and entity extraction when source access and full-text boundaries
-  are explicit.
-- Nextflow, nf-core, nf-prov, Workflow Run RO-Crate, and Snakemake: workflow and
-  provenance references. This repository does not ship runner integrations for them.
+## Host Models and Workflow Records
 
-All tool outputs are evidence inputs. The claim ledger, provenance records, and
-claim-audit gates determine the language used for each result.
+- COBRApy, CarveMe, ModelSEEDpy/KBase, cameo, and memote provide host-model
+  and model-quality checks. Record model versions and assumptions.
+- Nextflow, Snakemake, and Flowcept record workflow and artifact metadata.
+  See the [tool review](opportunity-radar.md#workflow-provenance) for exporter
+  and profile versions.
+
+## Result mapping
+
+Record tool and model versions, database releases, source IDs, and the meaning
+of each score with the results. Similarity hits and predictions contribute
+evidence; they do not establish experimental function.
+
+For custom adapters, `tool_registry_ledger` and `adapter_contract_ledger` are
+optional schema entries. Add their paths and TSV files to the campaign manifest
+before preflight. Normalize compact results into `evidence-event-ledger.tsv`
+and retain the command, version, and execution status in
+`tool-execution-proof-ledger.tsv`. See the [integration guide](TOOL_INTEGRATIONS.md)
+for output mapping.

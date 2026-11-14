@@ -1,18 +1,15 @@
 # Contributing
 
-Keep contributions public-safe, compact, and claim-bounded. Keep the local
-planning path practical on a laptop and portable across agent harnesses.
+Use synthetic or explicitly public data in examples.
 
-## Before opening a pull request
+## Before Opening a Pull Request
 
 ```bash
+python3 -m pip install -e '.[dev]'
 make release-check
 ```
 
-`release-check` runs the test suite, doctor, docs link checks, docs index
-check, release metadata check, example preflights, capability demo, public
-audit on the tree, and public audit on `.runtime/`. Before a public release,
-also review [`docs/PUBLIC_SWITCH_CHECKLIST.md`](docs/PUBLIC_SWITCH_CHECKLIST.md).
+See the [release checklist](docs/PUBLIC_SWITCH_CHECKLIST.md) before publishing.
 
 If you have `pre-commit` installed, `pre-commit install` enables a local
 hook that runs the audit and docs link checks before each commit. See
@@ -42,8 +39,7 @@ hook that runs the audit and docs link checks before each commit. See
    python3 skills/bioprospector/scripts/bioprospector_contract_self_check.py \
      --campaign skills/bioprospector/examples/<example-id>/campaign-manifest.json
    ```
-5. Add the example under "Examples" in `docs/README.md` and update the examples
-   sentence in the top-level `README.md`.
+5. Add the example under "Examples" in `docs/README.md`.
 
 ### Extend the schema
 

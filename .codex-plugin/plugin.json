@@ -1,7 +1,7 @@
 {
   "name": "bioprospector",
   "version": "0.1.0",
-  "description": "BioSymphony BioProspector campaign skills for public-safe biosynthetic pathway discovery.",
+  "description": "Plan biosynthetic pathway research and compare enzyme evidence.",
   "author": {
     "name": "BioSymphony",
     "url": "https://github.com/BioSymphony"
@@ -14,10 +14,10 @@
   "interface": {
     "displayName": "BioSymphony BioProspector",
     "shortDescription": "Biosynthetic pathway discovery",
-    "longDescription": "Public-safe BioProspector skills for biosynthetic pathway discovery, route scouting, candidate mining, and evidence-led campaign planning.",
+    "longDescription": "Record pathway hypotheses, candidate comparisons, and source evidence in a campaign.",
     "developerName": "BioSymphony",
     "category": "Research",
     "capabilities": ["Skills"],
-    "defaultPrompt": ["Use $bioprospector to plan a public-safe pathway discovery campaign."]
+    "defaultPrompt": ["Use $bioprospector to review a pathway campaign and cite the supporting evidence."]
   }
 }

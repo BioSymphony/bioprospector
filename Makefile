@@ -32,33 +32,28 @@ test:
 
 build:
 	@if [ -L .runtime ] || [ -L .runtime/package-smoke ]; then echo "FAIL package-smoke path contains a symlink; replace it with a directory and rerun" >&2; exit 1; fi
-	rm -rf .runtime/package-smoke/dist
+	rm -rf .runtime/package-smoke/dist .runtime/package-smoke/install
 	mkdir -p .runtime/package-smoke/dist
 	python3 -m pip wheel . --no-deps -w .runtime/package-smoke/dist
 
 package-smoke: wheel-smoke
 
 wheel-smoke: build
-	@if [ -L .runtime ] || [ -L .runtime/package-smoke ]; then echo "FAIL package-smoke path contains a symlink; replace it with a directory and rerun" >&2; exit 1; fi
-	rm -rf .runtime/package-smoke/install
-	python3 -m pip install --no-index --find-links .runtime/package-smoke/dist --target .runtime/package-smoke/install biosymphony-bioprospector
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli --help >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli commands --json >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli doctor --json >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli agent-brief --help >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli campaign-handoff --help >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli campaign-status --help >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli genecluster-atlas-plan --help >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli stage-contract --help >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli retrospective --help >/dev/null
-	cd .runtime/package-smoke && BIOPROSPECTOR_REPO_ROOT="$(CURDIR)" PYTHONPATH=install python3 -m biosymphony_bioprospector.cli workspace-status --help >/dev/null
 	@set -eu; \
-	smoke_tmp=$$(mktemp -d "$${TMPDIR:-/tmp}/bioprospector-wheel-no-checkout.XXXXXX"); \
+	smoke_tmp=$$(mktemp -d "$${TMPDIR:-/tmp}/bioprospector-wheel-smoke.XXXXXX"); \
 	trap 'rm -rf "$$smoke_tmp"' EXIT; \
 	python3 -m pip install --no-index --find-links .runtime/package-smoke/dist --target "$$smoke_tmp/install" biosymphony-bioprospector >/dev/null; \
 	cd "$$smoke_tmp"; \
-	PYTHONPATH="$$smoke_tmp/install" python3 -m biosymphony_bioprospector.cli --version >/dev/null; \
-	if PYTHONPATH="$$smoke_tmp/install" python3 -m biosymphony_bioprospector.cli doctor >"$$smoke_tmp/doctor.out" 2>&1; then cat "$$smoke_tmp/doctor.out"; exit 1; else grep -q "Could not locate a BioProspector checkout" "$$smoke_tmp/doctor.out"; fi
+	export PYTHONPATH="$$smoke_tmp/install"; \
+	"$$smoke_tmp/install/bin/bioprospector" --version >/dev/null; \
+	if (unset BIOPROSPECTOR_REPO_ROOT; python3 -m biosymphony_bioprospector.cli doctor) >doctor.out 2>&1; then cat doctor.out; exit 1; else grep -q "Could not locate a BioProspector checkout" doctor.out; fi; \
+	export BIOPROSPECTOR_REPO_ROOT="$(CURDIR)"; \
+	python3 -m biosymphony_bioprospector.cli --help >/dev/null; \
+	python3 -m biosymphony_bioprospector.cli commands --json >/dev/null; \
+	python3 -m biosymphony_bioprospector.cli doctor --json >/dev/null; \
+	for command in agent-brief campaign-handoff campaign-status genecluster-atlas-plan stage-contract retrospective workspace-status; do \
+		python3 -m biosymphony_bioprospector.cli "$$command" --help >/dev/null; \
+	done
 
 doctor:
 	python3 skills/bioprospector/scripts/bioprospector_doctor.py --include-runtime
