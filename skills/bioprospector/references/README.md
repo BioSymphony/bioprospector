@@ -33,19 +33,19 @@ MCP connections.
 - Compare two domain annotation methods on the same reference set.
   Use curated domain boundaries as the baseline and report disagreements.
 
-## Trace a Protein Annotation
+## Does This Enzyme Break Down Lactose?
 
-To check a lactose-hydrolysis annotation, review the experiments cited in
-the protein record.
+Your agent finds the experiments cited by UniProt and checks for corrections
+to the papers before answering.
 
 ```mermaid
 %%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"16px","lineColor":"#7C827F","edgeLabelBackground":"#F6EEE0","textColor":"#203840"},"flowchart":{"htmlLabels":false,"curve":"linear","rankSpacing":24,"padding":10,"wrappingWidth":244}}}%%
 flowchart TD
-    accTitle: Follow a protein annotation to its sources
-    accDescr: Pass linked PubMed IDs from UniProt to Europe PMC. Pass article DOIs to Crossref to check registered updates. Review the cited evidence and report open questions.
+    accTitle: Check whether an enzyme breaks down lactose
+    accDescr: Pass linked PubMed IDs from UniProt to Europe PMC. Pass article DOIs to Crossref to check registered updates. Report whether the cited experiments measured lactose breakdown.
     record["UniProt · Protein record"] -->|Linked PubMed IDs| papers["Europe PMC · Cited papers"]
     papers -->|Article DOIs| updates["Crossref · Registered updates"]
-    papers --> review["Review evidence and open questions"]
+    papers --> review["What the experiments show"]
     updates --> review
     classDef lookup fill:#203F49,stroke:#203F49,color:#FFFFFF,stroke-width:1px
     classDef result fill:#F6EEE0,stroke:#9A6248,color:#203840,stroke-width:1.5px
