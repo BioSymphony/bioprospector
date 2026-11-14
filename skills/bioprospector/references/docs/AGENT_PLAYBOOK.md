@@ -1,39 +1,26 @@
 # Agent Playbook
 
-Use the [tool guide](tool-stack.md) to choose tools and the
-[integration guide](TOOL_INTEGRATIONS.md) to map results into ledgers.
+Give your agent the repository link and describe the work you want done.
+Include your data or accessions when you have them.
 
-## Investigate a Research Question
+## Compare Vanillin Pathways
 
-```text
-Use BioProspector to answer <question> with <inputs>. Choose tools from its
-catalog and check their inputs and access. Define a comparison and controls
-if needed, then run the calls. Use each result to select the next call.
-Report what you found, source IDs, and any conflicting or missing evidence.
-```
+> I'm looking at vanillin production in yeast. Compare the proposed pathways
+> and find enzyme candidates for the missing steps.
 
-## Start a Campaign
+## Review Enzyme Candidates
 
-```text
-Set up a BioProspector campaign for <research question> using my target
-contract. Validate the manifest and audit its inputs. Write a short review
-with the questions that need a decision.
-```
+> Here are my protein search results. Which candidates are worth following
+> up on? Check their domains and published activity, and explain your ranking.
 
-See the [first campaign guide](FIRST_CAMPAIGN.md) for the target contract
-and example commands.
+## Compare Search Methods
 
-## Choose a Follow-Up
+> Would adding domain searches improve this shortlist? Run a comparison
+> against sequence search alone and show me what changes.
 
-```text
-Read the existing candidate records. Identify the uncertainty that most
-affects the comparison and choose a tool that can address it. Check its
-inputs and explain how the result affects your ranking.
-```
+## Tool and Campaign Guides
 
-## Coordinate Review
-
-Use the [workflow guide](WORKFLOWS.md) for campaign handoffs and the
-[Symphony and Linear guide](symphony-linear-sidecar.md) for tracker setup.
-Ask the agent to report output files, evidence supporting each conclusion,
-and unresolved questions.
+- [Tool catalog](tool-stack.md): tool choices, inputs, and outputs.
+- [Result formats](TOOL_INTEGRATIONS.md): mapping tool output into candidate records.
+- [Campaign setup](FIRST_CAMPAIGN.md): organizing a pathway study.
+- [Workflow guide](WORKFLOWS.md): coordinating work across a campaign.

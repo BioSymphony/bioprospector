@@ -90,15 +90,9 @@ weights, or proprietary full text.
 
 ## How should an agent use this repo?
 
-Point the agent at the checkout and ask for artifacts, not open-ended prose:
-
-```text
-Use the bioprospector skill in this checkout. Run doctor, keep everything local,
-and create a public-safe first campaign for <target molecule> in <host>. Do not
-store raw sequences, credentials, provider identifiers, or private paths.
-```
-
-More prompts are in [`AGENT_PLAYBOOK.md`](AGENT_PLAYBOOK.md).
+Share the repository and your research question with your agent. Include
+your inputs and the result you need, such as a pathway comparison or an
+enzyme shortlist. See the [agent playbook](AGENT_PLAYBOOK.md) for examples.
 
 ## Why are there so many ledgers?
 

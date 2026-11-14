@@ -17,8 +17,7 @@ provider execution. For a workflow chooser, read
 | Split a long-horizon campaign into tracker-ready lanes | [Linear Or Tracker Work Graph](#5-linear-or-tracker-work-graph) |
 | Prepare a cloud-scale search for review before launch | [Cloud Readiness And Live Handoff](#6-cloud-readiness-and-live-handoff) |
 
-Each row links to a workflow recipe below with its prompt, command path, and
-expected outputs.
+Each recipe lists commands and expected outputs.
 
 Out of scope: one-shot BLAST lookups, plasmid or strain design, and vendor
 handoff for an existing route. Use this skill when a campaign needs ledgers,
@@ -38,15 +37,6 @@ What you get:
 - input audit
 - planning-level claim ledger
 - preflight report
-
-Prompt:
-
-```text
-Use the bioprospector skill. Create a first campaign for <target> in <host>,
-keep outputs under .runtime/, run preflight and input audit, then summarize the
-route families, missing evidence, and smallest set of operator decisions needed
-before expansion.
-```
 
 Command path:
 
@@ -137,14 +127,6 @@ What you get:
 - resume commands, expected outputs, budgets, and compact returned-ledger
   contracts
 
-Prompt:
-
-```text
-Use BioProspector to prepare review-only long-run readiness for the nootkatone
-example. Validate stage contracts, generate provider readiness files under
-.runtime/, and report launch blockers. Do not launch providers.
-```
-
 Command path:
 
 ```bash
@@ -229,14 +211,6 @@ What you get:
 - route decision ledgers
 - Atlas contract ledgers
 - cluster-call and function-jury contract validation
-
-Prompt:
-
-```text
-Use BioProspector to build the Huperzine A metadata-only GeneCluster atlas
-plan. Do not download raw data. Summarize route decisions, source-context
-boundaries, and the claim ceiling.
-```
 
 Command path:
 
