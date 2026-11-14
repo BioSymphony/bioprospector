@@ -33,25 +33,30 @@ MCP connections.
 - Compare two domain annotation methods on the same reference set.
   Use curated domain boundaries as the baseline and report disagreements.
 
-## Does This Enzyme Break Down Lactose?
+## Which Enzymes Could Make Vanillin From Ferulate?
 
-Your agent finds the experiments cited by UniProt and checks for corrections
-to the papers before answering.
+Start with the [reaction in Rhea](https://www.rhea-db.org/rhea/76491). Your
+agent finds reference enzymes in UniProt, uses them to search for related
+proteins, then checks which candidates have published evidence for the same
+reaction.
 
 ```mermaid
 %%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"16px","lineColor":"#7C827F","edgeLabelBackground":"#F6EEE0","textColor":"#203840"},"flowchart":{"htmlLabels":false,"curve":"linear","rankSpacing":24,"padding":10,"wrappingWidth":244}}}%%
 flowchart TD
-    accTitle: Check whether an enzyme breaks down lactose
-    accDescr: Pass linked PubMed IDs from UniProt to Europe PMC. Pass article DOIs to Crossref to check registered updates. Report whether the cited experiments measured lactose breakdown.
-    record["UniProt · Protein record"] -->|Linked PubMed IDs| papers["Europe PMC · Cited papers"]
-    papers -->|Article DOIs| updates["Crossref · Registered updates"]
-    papers --> review["What the experiments show"]
-    updates --> review
+    accTitle: Find enzyme candidates for the vanillin pathway
+    accDescr: Use the Rhea reaction ID to find UniProt reference enzymes. Search for related proteins with DIAMOND. Use linked papers in Europe PMC to separate experimentally characterized enzymes from sequence matches.
+    reaction["Rhea · Ferulate to vanillin"] -->|Reaction ID| references["UniProt · Reference enzymes"]
+    references -->|Reference sequences| hits["DIAMOND · Related proteins"]
+    hits -->|Candidate names and accessions| evidence["Europe PMC · Published activity"]
+    evidence --> shortlist["Candidate shortlist"]
     classDef lookup fill:#203F49,stroke:#203F49,color:#FFFFFF,stroke-width:1px
     classDef result fill:#F6EEE0,stroke:#9A6248,color:#203840,stroke-width:1.5px
-    class record,papers,updates lookup
-    class review result
+    class reaction,references,hits,evidence lookup
+    class shortlist result
 ```
+
+The shortlist shows which candidates have measured activity for this reaction
+and which came from sequence matches.
 
 ## References
 
