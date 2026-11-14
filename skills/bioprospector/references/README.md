@@ -3,36 +3,40 @@
 # BioSymphony BioProspector
 
 Give your agent this repository and a computational biology question.
-BioProspector gives it a [tool catalog](docs/tool-stack.md) and an
-[agent skill](../SKILL.md) for choosing tools, setting up
-computational experiments, and deciding what to run next. Your agent makes
-the calls through its shell, APIs, or MCP connections.
+The [tool catalog](docs/tool-stack.md) explains what tools take and return.
+The [agent skill](../SKILL.md) guides experiment setup, tool
+selection, and follow-up. Your agent runs tools through its shell, APIs, or
+MCP connections.
 
-## Give Your Agent a Task
+## Tools by Research Question
 
-```text
-Use https://github.com/BioSymphony/bioprospector for this question: <question>.
-Read the BioProspector skill and tool catalog. Choose tools for the inputs
-you have, check what each call needs, and run the analysis where you have
-access. Use each result to choose the next call. Return your findings, source
-IDs, any conflicting evidence, and the follow-up most likely to change
-the conclusion.
-```
+| Question | Tools | Results |
+| --- | --- | --- |
+| Which papers support an annotation? | UniProt, PubMed, Europe PMC, OpenAlex MCP | Protein accessions, cited papers, and the evidence each paper reports |
+| Has a source changed? | bioRxiv, Crossref, Retraction Watch | Preprint versions and linked correction or retraction notices |
+| What values does the paper report? | Docling, MinerU, GROBID | Extracted table values and units, page locators, and bibliography records |
+| Which proteins have similar sequences? | BLAST+, DIAMOND, MMseqs2 | Sequence matches, alignment scores, and coverage |
+| Which domains are present? | HMMER and Pfam | Profile matches and domain boundaries |
+| Where do function predictions disagree? | CLEAN, TopEC, ProtDETR | Predicted enzyme classes to compare with curated annotations |
+| Which structures are similar? | Foldseek | Structural matches and alignment coverage |
+| What is near the candidate gene? | NCBI Datasets, cblaster, antiSMASH, MIBiG | Assembly accessions, neighboring genes, and reference cluster records |
+| Which known reactions support a proposed step? | Rhea, ChEBI | Reactants, products, and reaction identifiers |
+| What assumptions affect a metabolic model? | COBRApy, memote | Model constraints and quality checks |
+| Can I reproduce a computational comparison? | Nextflow, Snakemake, RO-Crate | Workflow steps, tool versions, and links between inputs and outputs |
 
-## What Your Agent Can Investigate
+## Example Tasks
 
-| Question | Tools and results |
-| --- | --- |
-| What evidence supports a protein annotation? | UniProt and Europe PMC return protein records and papers. Crossref returns publication updates. |
-| Which proteins share a sequence or domain? | BLAST+, DIAMOND, and MMseqs2 return sequence hits. HMMER with Pfam returns domain matches. |
-| What does the structure or genome context add? | Foldseek finds structural neighbors. cblaster compares gene neighborhoods, and MIBiG provides reference cluster records. |
-| How do proposed pathway steps compare with known reactions? | Rhea provides curated reaction records for comparing proposed steps. |
-| How can I set up and repeat an analysis? | Plan a baseline, inputs, controls, and expected outputs. Use Nextflow or Snakemake when a workflow needs repeatable steps. |
+- Compare the published activity measurements for two enzyme candidates.
+  Check whether the experiments used comparable conditions.
+- Check whether a preprint revision changes a cited claim, and point to
+  the passage in each version.
+- Compare two domain annotation methods on the same reference set.
+  Use curated domain boundaries as the baseline and report disagreements.
 
-## Use One Result to Choose the Next Tool
+## Trace a Protein Annotation
 
-To check a published lactose-hydrolysis annotation, your agent follows the
-references from the protein record to the underlying papers.
+To check a lactose-hydrolysis annotation, review the experiments cited in
+the protein record.
 
 ```mermaid
 %%{init: {"theme":"base","htmlLabels":false,"themeVariables":{"fontFamily":"Arial, sans-serif","fontSize":"16px","lineColor":"#7C827F","edgeLabelBackground":"#F6EEE0","textColor":"#203840"},"flowchart":{"htmlLabels":false,"curve":"linear","rankSpacing":24,"padding":10,"wrappingWidth":244}}}%%
@@ -49,11 +53,8 @@ flowchart TD
     class review result
 ```
 
-If the papers leave the annotation uncertain, your agent can look for a
-study that tests it directly.
+## References
 
-Use the [tool catalog](docs/tool-stack.md) for inputs and use cases, the
-[integration guide](docs/TOOL_INTEGRATIONS.md) for result formats, and the
-[tool review](docs/opportunity-radar.md) for recent releases and evaluations.
-The [CLI reference](docs/CLI_REFERENCE.md) covers bundled commands for
-importing results, validating records, and comparing candidates.
+- [Supported result formats](docs/TOOL_INTEGRATIONS.md)
+- [Tool releases and evaluations](docs/opportunity-radar.md)
+- [CLI commands](docs/CLI_REFERENCE.md)
